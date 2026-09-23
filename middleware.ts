@@ -26,6 +26,9 @@ export default auth((req) => {
 
   if (isAuthRoute) {
     if (isLoggedIn) {
+      if (!req.auth?.user?.onboarded) {
+        return NextResponse.redirect(new URL("/onboarding", nextUrl));
+      }
       return NextResponse.redirect(new URL("/dashboard", nextUrl));
     }
     return NextResponse.next();
@@ -35,7 +38,21 @@ export default auth((req) => {
     return NextResponse.redirect(new URL("/login", nextUrl));
   }
 
-  // Dashboard / Admin protection logic can go here (role checks are handled via server actions/components but this prevents unauthorized access)
+  // Onboarding Protection
+  if (isLoggedIn) {
+    const isOnboarding = nextUrl.pathname === "/onboarding";
+    const hasOnboarded = req.auth?.user?.onboarded;
+
+    // Force onboarding if incomplete
+    if (!hasOnboarded && !isOnboarding) {
+      return NextResponse.redirect(new URL("/onboarding", nextUrl));
+    }
+
+    // Prevent onboarded users from accessing onboarding
+    if (hasOnboarded && isOnboarding) {
+      return NextResponse.redirect(new URL("/dashboard", nextUrl));
+    }
+  }
 
   return NextResponse.next();
 });
