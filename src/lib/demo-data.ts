@@ -211,6 +211,17 @@ export const demoMembers = [
     github: "https://github.com/priyadharshini699",
     linkedin: "https://www.linkedin.com/in/priyadharshini-a-7066683a8",
   },
+  {
+    id: "m9",
+    name: "Sanjay V",
+    tag: "Cheesyy",
+    role: "Developer",
+    image: "", 
+    skills: ["HTML", "CSS", "React", "JavaScript", "Bootstrap", "XML"],
+    year: "Member",
+    github: "https://github.com/sanjayvisvanathan20012-source",
+    linkedin: "https://www.linkedin.com/in/sanjay-v-2207a3381",
+  },
 ];
 
 export const founderProfile = {
