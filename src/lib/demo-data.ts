@@ -200,6 +200,17 @@ export const demoMembers = [
     github: "https://github.com/arshahana68",
     linkedin: "https://www.linkedin.com/in/shahana-a-r-4076ab385",
   },
+  {
+    id: "m8",
+    name: "Priya Dharshini A",
+    tag: "Prini",
+    role: "Developer",
+    image: "", 
+    skills: ["HTML", "CSS", "JavaScript", "Java", "Python", "C++", "SQL", "SQLite"],
+    year: "Member",
+    github: "https://github.com/priyadharshini699",
+    linkedin: "https://www.linkedin.com/in/priyadharshini-a-7066683a8",
+  },
 ];
 
 export const founderProfile = {
