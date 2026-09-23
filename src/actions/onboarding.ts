@@ -38,13 +38,27 @@ export async function submitOnboarding(formData: FormData) {
   await db.user.update({
     where: { id: session.user.id },
     data: {
-      memberTag: validated.memberTag,
-      bio: validated.bio,
-      skills: skillsArray,
-      githubUrl: validated.githubUrl || null,
-      linkedinUrl: validated.linkedinUrl || null,
-      year: validated.year,
       onboarded: true,
+      profile: {
+        upsert: {
+          create: {
+            memberTag: validated.memberTag,
+            bio: validated.bio,
+            skills: skillsArray,
+            githubUrl: validated.githubUrl || null,
+            linkedinUrl: validated.linkedinUrl || null,
+            year: validated.year,
+          },
+          update: {
+            memberTag: validated.memberTag,
+            bio: validated.bio,
+            skills: skillsArray,
+            githubUrl: validated.githubUrl || null,
+            linkedinUrl: validated.linkedinUrl || null,
+            year: validated.year,
+          }
+        }
+      }
     },
   });
 
