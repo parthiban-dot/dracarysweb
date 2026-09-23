@@ -1,0 +1,235 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+enum Role {
+  MEMBER
+  PROJECT_LEAD
+  ADMIN
+  SUPER_ADMIN
+}
+
+enum ProjectStatus {
+  IN_PROGRESS
+  DELIVERED
+  INTERNAL
+  OPEN_SOURCE
+}
+
+enum Visibility {
+  PUBLIC
+  ANONYMIZED
+  PRIVATE
+}
+
+model User {
+  id            String    @id @default(cuid())
+  name          String?
+  email         String?   @unique
+  emailVerified DateTime?
+  image         String?
+  password      String?
+  role          Role      @default(MEMBER)
+  createdAt     DateTime  @default(now())
+  updatedAt     DateTime  @updatedAt
+
+  accounts      Account[]
+  sessions      Session[]
+  
+  profile       MemberProfile?
+  projects      ProjectMember[]
+  hackathons    HackathonMember[]
+  auditLogs     AuditLog[]
+}
+
+model Account {
+  id                 String  @id @default(cuid())
+  userId             String
+  type               String
+  provider           String
+  providerAccountId  String
+  refresh_token      String?  @db.Text
+  access_token       String?  @db.Text
+  expires_at         Int?
+  token_type         String?
+  scope              String?
+  id_token           String?  @db.Text
+  session_state      String?
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@unique([provider, providerAccountId])
+}
+
+model Session {
+  id           String   @id @default(cuid())
+  sessionToken String   @unique
+  userId       String
+  expires      DateTime
+  user         User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+}
+
+model VerificationToken {
+  identifier String
+  token      String   @unique
+  expires    DateTime
+
+  @@unique([identifier, token])
+}
+
+model MemberProfile {
+  id          String   @id @default(cuid())
+  userId      String   @unique
+  user        User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  bio         String?  @db.Text
+  githubUrl   String?
+  linkedinUrl String?
+  skills      String[]
+  year        String?
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+}
+
+model Project {
+  id               String        @id @default(cuid())
+  title            String
+  slug             String        @unique
+  summary          String        @db.Text
+  type             String
+  status           ProjectStatus @default(IN_PROGRESS)
+  year             String
+  problem          String        @db.Text
+  solution         String        @db.Text
+  features         String[]
+  technologyStack  String[]
+  coverImage       String?
+  screenshots      String[]
+  demoUrl          String?
+  repositoryUrl    String?
+  outcome          String?       @db.Text
+  clientVisibility Visibility    @default(PUBLIC)
+  publishedAt      DateTime?
+  createdAt        DateTime      @default(now())
+  updatedAt        DateTime      @updatedAt
+
+  teamMembers      ProjectMember[]
+
+  @@index([status])
+  @@index([type])
+  @@index([year])
+}
+
+model ProjectMember {
+  id        String   @id @default(cuid())
+  projectId String
+  project   Project  @relation(fields: [projectId], references: [id], onDelete: Cascade)
+  userId    String
+  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  role      String   // e.g., "Frontend", "Backend"
+  createdAt DateTime @default(now())
+
+  @@unique([projectId, userId])
+  @@index([userId])
+}
+
+model Hackathon {
+  id             String            @id @default(cuid())
+  slug           String            @unique
+  name           String
+  organizer      String
+  date           String
+  year           String
+  location       String
+  eventType      String
+  result         String
+  award          String?
+  problem        String            @db.Text
+  solution       String            @db.Text
+  architecture   String            @db.Text
+  technologies   String[]
+  repositoryUrl  String?
+  demoUrl        String?
+  media          String[]
+  lessonsLearned String[]
+  createdAt      DateTime          @default(now())
+  updatedAt      DateTime          @updatedAt
+
+  teamMembers    HackathonMember[]
+}
+
+model HackathonMember {
+  id          String    @id @default(cuid())
+  hackathonId String
+  hackathon   Hackathon @relation(fields: [hackathonId], references: [id], onDelete: Cascade)
+  userId      String
+  user        User      @relation(fields: [userId], references: [id], onDelete: Cascade)
+  createdAt   DateTime  @default(now())
+
+  @@unique([hackathonId, userId])
+}
+
+model Release {
+  id              String   @id @default(cuid())
+  slug            String   @unique
+  title           String
+  version         String
+  description     String   @db.Text
+  features        String[]
+  category        String
+  license         String
+  repositoryUrl   String?
+  releaseUrl      String?
+  maintainerId    String
+  releaseDate     DateTime
+  technologyStack String[]
+  coverImage      String?
+  createdAt       DateTime @default(now())
+  updatedAt       DateTime @updatedAt
+}
+
+model ContactSubmission {
+  id        String   @id @default(cuid())
+  name      String
+  email     String
+  company   String?
+  message   String   @db.Text
+  status    String   @default("NEW") // NEW, READ, REPLIED, ARCHIVED
+  createdAt DateTime @default(now())
+
+  @@index([status, createdAt])
+}
+
+model Announcement {
+  id          String   @id @default(cuid())
+  title       String
+  content     String   @db.Text
+  isPublished Boolean  @default(false)
+  authorId    String
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+}
+
+model MediaAsset {
+  id        String   @id @default(cuid())
+  url       String   @unique
+  key       String   @unique
+  type      String   // IMAGE, VIDEO, PDF
+  size      Int
+  createdAt DateTime @default(now())
+}
+
+model AuditLog {
+  id        String   @id @default(cuid())
+  userId    String
+  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  action    String
+  resource  String
+  details   String?  @db.Text
+  ipAddress String?
+  createdAt DateTime @default(now())
+}
