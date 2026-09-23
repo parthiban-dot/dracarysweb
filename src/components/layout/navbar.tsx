@@ -19,7 +19,6 @@ const links = [
   { href: "/founder", label: "Founder" },
   { href: "/projects", label: "Projects" },
   { href: "/hackathons", label: "Hackathons" },
-  { href: "/free-launchers", label: "Free Launchers" },
 ];
 
 export function Navbar() {

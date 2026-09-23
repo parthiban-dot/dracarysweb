@@ -1,8 +1,8 @@
 import { MetadataRoute } from 'next';
-import { demoProjects, demoHackathons, demoLaunchers } from '@/lib/demo-data';
+import { demoProjects, demoHackathons } from '@/lib/demo-data';
 
 export default function sitemap(): MetadataRoute.Sitemap {
-  const baseUrl = process.env.NEXT_PUBLIC_APP_URL || 'https://dracarys.local';
+  const baseUrl = process.env.NEXT_PUBLIC_APP_URL || 'https://dracarysweb.vercel.app';
 
   const staticRoutes = [
     '',
@@ -11,7 +11,6 @@ export default function sitemap(): MetadataRoute.Sitemap {
     '/hackathons',
     '/team',
     '/founder',
-    '/free-launchers',
     '/contact',
   ].map((route) => ({
     url: `${baseUrl}${route}`,
@@ -34,12 +33,5 @@ export default function sitemap(): MetadataRoute.Sitemap {
     priority: 0.6,
   }));
 
-  const launcherRoutes = demoLaunchers.map((launcher) => ({
-    url: `${baseUrl}/free-launchers/${launcher.slug}`,
-    lastModified: new Date(),
-    changeFrequency: 'monthly' as const,
-    priority: 0.6,
-  }));
-
-  return [...staticRoutes, ...projectRoutes, ...hackathonRoutes, ...launcherRoutes];
+  return [...staticRoutes, ...projectRoutes, ...hackathonRoutes];
 }

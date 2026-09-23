@@ -91,10 +91,12 @@ model MemberProfile {
   bio         String?  @db.Text
   githubUrl   String?
   linkedinUrl String?
-  skills      String[]
-  year        String?
-  createdAt   DateTime @default(now())
-  updatedAt   DateTime @updatedAt
+  skills        String[]
+  year          String?
+  isApproved    Boolean  @default(false)
+  approvalToken String?  @unique
+  createdAt     DateTime @default(now())
+  updatedAt     DateTime @updatedAt
 }
 
 model Project {

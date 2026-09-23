@@ -42,11 +42,11 @@ export default async function OnboardingPage() {
             </div>
             
             <div className="space-y-2">
-              <Label htmlFor="year">Graduation Year</Label>
+              <Label htmlFor="year">Year of Study</Label>
               <Input 
                 id="year" 
                 name="year" 
-                placeholder="e.g. 2026" 
+                placeholder="e.g. 3rd Year / 2026" 
                 required 
                 className="bg-black/50 border-white/10"
               />

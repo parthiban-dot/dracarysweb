@@ -5,7 +5,7 @@ import { NextResponse } from "next/server";
 const { auth } = NextAuth(authConfig);
 
 // Define protected and public routes
-const publicRoutes = ["/", "/team", "/founder", "/projects", "/sold-projects", "/hackathons", "/free-launchers"];
+const publicRoutes = ["/", "/team", "/founder", "/projects", "/sold-projects", "/hackathons"];
 const authRoutes = ["/login", "/register", "/forgot-password", "/reset-password"];
 const apiAuthPrefix = "/api/auth";
 
@@ -16,8 +16,7 @@ export default auth((req) => {
   const isApiAuthRoute = nextUrl.pathname.startsWith(apiAuthPrefix);
   const isPublicRoute = publicRoutes.includes(nextUrl.pathname) || 
                         nextUrl.pathname.startsWith("/projects/") || 
-                        nextUrl.pathname.startsWith("/hackathons/") || 
-                        nextUrl.pathname.startsWith("/free-launchers/");
+                        nextUrl.pathname.startsWith("/hackathons/");
   const isAuthRoute = authRoutes.includes(nextUrl.pathname);
 
   if (isApiAuthRoute) {

@@ -39,7 +39,6 @@ export default async function AdminLayout({
     { name: "Members", href: "/admin/members", icon: Users },
     { name: "Projects", href: "/admin/projects", icon: Briefcase },
     { name: "Hackathons", href: "/admin/hackathons", icon: Trophy },
-    { name: "Free Launchers", href: "/admin/free-launchers", icon: Rocket },
     { name: "Announcements", href: "/admin/announcements", icon: Bell },
     { name: "Enquiries", href: "/admin/enquiries", icon: Mail },
     { name: "Media", href: "/admin/media", icon: ImageIcon },

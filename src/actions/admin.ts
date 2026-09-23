@@ -56,6 +56,22 @@ export async function updateMemberRole(userId: string, newRole: "MEMBER" | "PROJ
   }
 }
 
+export async function toggleMemberApproval(userId: string, isApproved: boolean) {
+  try {
+    const admin = await verifyAdmin();
+    await db.memberProfile.update({
+      where: { userId },
+      data: { isApproved, approvalToken: null }
+    });
+    await logAudit(admin.id, isApproved ? "APPROVE_MEMBER" : "REVOKE_MEMBER", "USER", `User ID: ${userId}`);
+    revalidatePath("/admin/members");
+    revalidatePath("/team");
+    return { success: `Member ${isApproved ? 'approved' : 'approval revoked'}.` };
+  } catch (error: unknown) {
+    return { error: error instanceof Error ? error.message : "Failed." };
+  }
+}
+
 // --- PROJECTS ---
 
 export async function deleteProject(projectId: string) {
