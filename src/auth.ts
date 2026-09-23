@@ -3,6 +3,8 @@ import { PrismaAdapter } from "@auth/prisma-adapter";
 import { db } from "@/lib/db";
 import authConfig from "./auth.config";
 
+const FOUNDER_EMAIL = "vinayagamparthiban07@gmail.com";
+
 export const {
   handlers: { GET, POST },
   auth,
@@ -11,7 +13,7 @@ export const {
 } = NextAuth({
   pages: {
     signIn: "/login",
-    error: "/error",
+    error: "/login", // Redirect errors to /login for user friendly messages
   },
   events: {
     async linkAccount({ user }) {
@@ -21,10 +23,10 @@ export const {
       });
     },
     async createUser({ user }) {
-      if (user.email === "vinayagamparthiban07@gmail.com") {
+      if (user.email && user.email.toLowerCase() === FOUNDER_EMAIL.toLowerCase()) {
         await db.user.update({
           where: { id: user.id },
-          data: { role: "SUPER_ADMIN" },
+          data: { role: "SUPER_ADMIN", status: "APPROVED", onboarded: true },
         });
       }
     },

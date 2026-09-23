@@ -56,19 +56,28 @@ export async function updateMemberRole(userId: string, newRole: "MEMBER" | "PROJ
   }
 }
 
-export async function toggleMemberApproval(userId: string, isApproved: boolean) {
+export async function updateUserStatus(userId: string, newStatus: "PENDING" | "APPROVED" | "REJECTED") {
   try {
     const admin = await verifyAdmin();
-    await db.memberProfile.update({
-      where: { userId },
-      data: { isApproved, approvalToken: null }
-    });
-    await logAudit(admin.id, isApproved ? "APPROVE_MEMBER" : "REVOKE_MEMBER", "USER", `User ID: ${userId}`);
+    const isApproved = newStatus === "APPROVED";
+
+    await db.$transaction([
+      db.user.update({
+        where: { id: userId },
+        data: { status: newStatus as any }
+      }),
+      db.memberProfile.updateMany({
+        where: { userId },
+        data: { isApproved }
+      })
+    ]);
+
+    await logAudit(admin.id, "UPDATE_STATUS", "USER", `Updated user ${userId} status to ${newStatus}`);
     revalidatePath("/admin/members");
     revalidatePath("/team");
-    return { success: `Member ${isApproved ? 'approved' : 'approval revoked'}.` };
+    return { success: `Member status updated to ${newStatus}.` };
   } catch (error: unknown) {
-    return { error: error instanceof Error ? error.message : "Failed." };
+    return { error: error instanceof Error ? error.message : "Failed to update member status." };
   }
 }
 

@@ -1,16 +1,17 @@
 "use client";
 
 import { useState } from "react";
-import { deleteMember, updateMemberRole, toggleMemberApproval } from "@/actions/admin";
+import { deleteMember, updateMemberRole, updateUserStatus } from "@/actions/admin";
 import { ConfirmDialog } from "@/components/shared/confirm-dialog";
 import { Button } from "@/components/ui/button";
-import { Shield, Trash2, CheckCircle, XCircle } from "lucide-react";
+import { Shield, Trash2, CheckCircle, XCircle, Clock } from "lucide-react";
 
 interface UserItem {
   id: string;
   name: string | null;
   email: string | null;
   role: string;
+  status?: "PENDING" | "APPROVED" | "REJECTED";
   createdAt: Date;
   profile?: {
     memberTag?: string | null;
@@ -41,18 +42,18 @@ export function MembersClient({ initialUsers, currentUserRole }: MembersClientPr
     }
   };
 
-  const handleToggleApproval = async (id: string, currentApprovedStatus: boolean) => {
-    const newStatus = !currentApprovedStatus;
-    const res = await toggleMemberApproval(id, newStatus);
+  const handleStatusChange = async (id: string, newStatus: "PENDING" | "APPROVED" | "REJECTED") => {
+    const res = await updateUserStatus(id, newStatus);
     if (res.error) setError(res.error);
     else {
       setUsers(users.map(u => {
         if (u.id === id) {
           return {
             ...u,
+            status: newStatus,
             profile: {
               ...(u.profile || {}),
-              isApproved: newStatus,
+              isApproved: newStatus === "APPROVED",
             },
           };
         }
@@ -78,7 +79,7 @@ export function MembersClient({ initialUsers, currentUserRole }: MembersClientPr
           </thead>
           <tbody className="divide-y divide-white/5">
             {users.map(user => {
-              const isApproved = user.profile?.isApproved ?? false;
+              const status = user.status || (user.profile?.isApproved ? "APPROVED" : "PENDING");
 
               return (
                 <tr key={user.id} className="hover:bg-white/5 transition-colors group">
@@ -86,7 +87,7 @@ export function MembersClient({ initialUsers, currentUserRole }: MembersClientPr
                     <p className="font-bold">{user.name || "Unknown"}</p>
                     <p className="text-xs text-muted-foreground">{user.email}</p>
                     {user.profile?.memberTag && (
-                      <p className="text-xs text-primary/80 font-mono mt-0.5">{user.profile.memberTag}</p>
+                      <p className="text-xs text-primary/80 font-mono mt-0.5">#{user.profile.memberTag}</p>
                     )}
                   </td>
                   <td className="p-4">
@@ -100,17 +101,23 @@ export function MembersClient({ initialUsers, currentUserRole }: MembersClientPr
                   </td>
                   <td className="p-4">
                     <span className={`px-2.5 py-1 rounded-full text-xs font-semibold inline-flex items-center gap-1.5 ${
-                      isApproved 
+                      status === 'APPROVED' 
                         ? 'bg-emerald-500/10 text-emerald-400 border border-emerald-500/20' 
+                        : status === 'REJECTED'
+                        ? 'bg-rose-500/10 text-rose-400 border border-rose-500/20'
                         : 'bg-amber-500/10 text-amber-400 border border-amber-500/20'
                     }`}>
-                      {isApproved ? (
+                      {status === 'APPROVED' ? (
                         <>
                           <CheckCircle className="w-3.5 h-3.5" /> Approved
                         </>
+                      ) : status === 'REJECTED' ? (
+                        <>
+                          <XCircle className="w-3.5 h-3.5" /> Rejected
+                        </>
                       ) : (
                         <>
-                          <XCircle className="w-3.5 h-3.5" /> Pending Review
+                          <Clock className="w-3.5 h-3.5" /> Pending Review
                         </>
                       )}
                     </span>
@@ -120,14 +127,27 @@ export function MembersClient({ initialUsers, currentUserRole }: MembersClientPr
                   </td>
                   <td className="p-4 text-right space-x-2">
                     {user.role !== "SUPER_ADMIN" && (
-                      <Button
-                        variant={isApproved ? "outline" : "default"}
-                        size="sm"
-                        className={isApproved ? "border-white/10 text-xs" : "dragon-glow text-xs"}
-                        onClick={() => handleToggleApproval(user.id, isApproved)}
-                      >
-                        {isApproved ? "Revoke Access" : "Approve Member (Yes)"}
-                      </Button>
+                      <>
+                        {status !== "APPROVED" && (
+                          <Button
+                            size="sm"
+                            className="dragon-glow text-xs bg-emerald-600 hover:bg-emerald-500 text-white"
+                            onClick={() => handleStatusChange(user.id, "APPROVED")}
+                          >
+                            Approve (Yes)
+                          </Button>
+                        )}
+                        {status !== "REJECTED" && (
+                          <Button
+                            variant="outline"
+                            size="sm"
+                            className="border-rose-500/30 text-rose-400 hover:bg-rose-500/10 text-xs"
+                            onClick={() => handleStatusChange(user.id, "REJECTED")}
+                          >
+                            Reject
+                          </Button>
+                        )}
+                      </>
                     )}
 
                     {currentUserRole === "SUPER_ADMIN" && user.role !== "SUPER_ADMIN" && (

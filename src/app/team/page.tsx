@@ -10,9 +10,10 @@ export default async function TeamPage() {
   try {
     const approvedUsers = await db.user.findMany({
       where: {
-        profile: {
-          isApproved: true,
-        },
+        OR: [
+          { status: "APPROVED" },
+          { profile: { isApproved: true } },
+        ],
       },
       include: {
         profile: true,
@@ -35,7 +36,6 @@ export default async function TeamPage() {
     console.error("Could not fetch team members from DB:", error);
   }
 
-  // Combine DB members and demo members (or fallback to demo if DB is empty)
   const combinedMembers: TeamMemberItem[] = dbMembers.length > 0 ? dbMembers : demoMembers;
 
   return <TeamClient members={combinedMembers} />;

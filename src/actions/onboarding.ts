@@ -40,12 +40,15 @@ export async function submitOnboarding(formData: FormData) {
 
   const isFounder = session.user.email.toLowerCase() === FOUNDER_EMAIL.toLowerCase();
   const approvalToken = isFounder ? null : crypto.randomUUID();
-  const isApproved = isFounder; // Founder is automatically approved
+  const status = isFounder ? "APPROVED" : "PENDING";
+  const isApproved = isFounder;
 
   await db.user.update({
     where: { id: session.user.id },
     data: {
       onboarded: true,
+      status: status as any,
+      role: isFounder ? "SUPER_ADMIN" : "MEMBER",
       profile: {
         upsert: {
           create: {
@@ -73,15 +76,16 @@ export async function submitOnboarding(formData: FormData) {
     },
   });
 
-  // If not founder, send approval email to founder
+  // If non-founder, send approval email to founder
   if (!isFounder && approvalToken) {
     const baseUrl = process.env.NEXTAUTH_URL || process.env.AUTH_URL || "https://dracarysweb.vercel.app";
-    const approveUrl = `${baseUrl}/api/admin/approve-member?token=${approvalToken}`;
+    const approveUrl = `${baseUrl}/api/admin/approve-member?token=${approvalToken}&action=approve`;
+    const rejectUrl = `${baseUrl}/api/admin/approve-member?token=${approvalToken}&action=reject`;
 
     const htmlContent = `
       <div style="font-family: Arial, sans-serif; background-color: #0d1117; color: #e6edf3; padding: 24px; border-radius: 8px;">
-        <h2 style="color: #3b82f6; margin-top: 0;">🔥 DRACARYS — New Member Initialization Request</h2>
-        <p style="font-size: 16px;">A new member has completed Google Authentication & Profile Setup:</p>
+        <h2 style="color: #3b82f6; margin-top: 0;">🔥 DRACARYS — New Member Intake Application</h2>
+        <p style="font-size: 16px;">A new applicant has completed Google Authentication & Member Profile setup:</p>
         
         <table style="width: 100%; border-collapse: collapse; margin-top: 16px; margin-bottom: 24px; color: #e6edf3;">
           <tr style="border-bottom: 1px solid #30363d;">
@@ -118,9 +122,12 @@ export async function submitOnboarding(formData: FormData) {
           </tr>
         </table>
 
-        <div style="margin-top: 24px; text-align: center;">
-          <a href="${approveUrl}" style="background-color: #2563eb; color: #ffffff; padding: 14px 28px; font-size: 16px; font-weight: bold; text-decoration: none; border-radius: 6px; display: inline-block;">
-            Approve Member (Yes)
+        <div style="margin-top: 24px; text-align: center; gap: 16px;">
+          <a href="${approveUrl}" style="background-color: #16a34a; color: #ffffff; padding: 14px 28px; font-size: 15px; font-weight: bold; text-decoration: none; border-radius: 6px; display: inline-block; margin-right: 12px;">
+            ✓ Approve Member (Yes)
+          </a>
+          <a href="${rejectUrl}" style="background-color: #dc2626; color: #ffffff; padding: 14px 28px; font-size: 15px; font-weight: bold; text-decoration: none; border-radius: 6px; display: inline-block;">
+            ✗ Reject Application
           </a>
         </div>
       </div>
@@ -128,11 +135,16 @@ export async function submitOnboarding(formData: FormData) {
 
     await sendEmail({
       to: FOUNDER_EMAIL,
-      subject: `[DRACARYS] New Member Request: ${session.user.name || session.user.email}`,
+      subject: `[DRACARYS Intake] Application from ${session.user.name || session.user.email}`,
       html: htmlContent,
     });
   }
 
   revalidatePath("/", "layout");
-  redirect("/dashboard");
+  
+  if (isFounder) {
+    redirect("/dashboard");
+  } else {
+    redirect("/join");
+  }
 }

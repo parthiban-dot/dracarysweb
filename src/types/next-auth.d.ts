@@ -1,11 +1,12 @@
 import { DefaultSession } from "next-auth";
-import { Role } from "@prisma/client";
+import { Role, UserStatus } from "@prisma/client";
 
 declare module "next-auth" {
   interface Session {
     user: {
       id: string;
       role: Role;
+      status: UserStatus;
       onboarded: boolean;
     } & DefaultSession["user"];
   }
@@ -13,6 +14,7 @@ declare module "next-auth" {
   interface User {
     id: string;
     role: Role;
+    status: UserStatus;
     onboarded: boolean;
   }
 }
