@@ -1,10 +1,9 @@
 import type { NextAuthConfig } from "next-auth";
 import Credentials from "next-auth/providers/credentials";
+import Google from "next-auth/providers/google";
 import { LoginSchema } from "@/lib/validations/auth";
 import { db } from "@/lib/db";
 import bcrypt from "bcryptjs";
-
-import Google from "next-auth/providers/google";
 
 export default {
   providers: [
@@ -35,4 +34,28 @@ export default {
       },
     }),
   ],
+  callbacks: {
+    async session({ session, token }) {
+      if (token.sub && session.user) {
+        session.user.id = token.sub;
+      }
+      if (token.role && session.user) {
+        session.user.role = token.role as any;
+      }
+      if (token.onboarded !== undefined && session.user) {
+        session.user.onboarded = token.onboarded as boolean;
+      }
+      return session;
+    },
+    async jwt({ token, user, trigger, session }) {
+      if (user) {
+        token.role = (user as any).role || "MEMBER";
+        token.onboarded = (user as any).onboarded ?? false;
+      }
+      if (trigger === "update" && session?.onboarded !== undefined) {
+        token.onboarded = session.onboarded;
+      }
+      return token;
+    },
+  },
 } satisfies NextAuthConfig;

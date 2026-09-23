@@ -29,39 +29,6 @@ export const {
       }
     },
   },
-  callbacks: {
-    async session({ session, token }) {
-      if (token.sub && session.user) {
-        session.user.id = token.sub;
-      }
-      if (token.role && session.user) {
-        session.user.role = token.role as any;
-      }
-      if (token.onboarded !== undefined && session.user) {
-        session.user.onboarded = token.onboarded as boolean;
-      }
-      return session;
-    },
-    async jwt({ token, trigger, session }) {
-      if (!token.sub) return token;
-
-      const existingUser = await db.user.findUnique({
-        where: { id: token.sub },
-      });
-
-      if (!existingUser) return token;
-
-      token.role = existingUser.role;
-      token.onboarded = existingUser.onboarded;
-
-      // Handle session updates (when user completes onboarding)
-      if (trigger === "update" && session?.onboarded !== undefined) {
-        token.onboarded = session.onboarded;
-      }
-
-      return token;
-    },
-  },
   adapter: PrismaAdapter(db),
   session: { strategy: "jwt" },
   ...authConfig,
