@@ -4,6 +4,7 @@ import { Container } from "@/components/layout/container";
 import { Section } from "@/components/layout/section";
 import { SectionHeader } from "@/components/shared/section-header";
 import { MemberCard } from "@/components/features/member-card";
+import { MemberTagFan } from "@/components/features/member-tag-fan";
 import { Input } from "@/components/ui/input";
 import { useState, useMemo } from "react";
 import { Search } from "lucide-react";
@@ -28,9 +29,11 @@ interface TeamClientProps {
 
 export function TeamClient({ members }: TeamClientProps) {
   const [searchQuery, setSearchQuery] = useState("");
+  const [selectedTag, setSelectedTag] = useState("All");
   const [roleFilter, setRoleFilter] = useState("All");
   const [yearFilter, setYearFilter] = useState("All");
 
+  const tagsList = useMemo(() => Array.from(new Set(members.map(m => m.tag).filter(Boolean))), [members]);
   const roles = ["All", ...Array.from(new Set(members.map(m => m.role).filter(Boolean)))];
   const years = ["All", ...Array.from(new Set(members.map(m => m.year).filter((y): y is string => Boolean(y))))];
 
@@ -39,23 +42,31 @@ export function TeamClient({ members }: TeamClientProps) {
       const matchesSearch = member.name.toLowerCase().includes(searchQuery.toLowerCase()) || 
                             member.tag.toLowerCase().includes(searchQuery.toLowerCase()) ||
                             member.skills.some(s => s.toLowerCase().includes(searchQuery.toLowerCase()));
+      const matchesTag = selectedTag === "All" || member.tag.toLowerCase() === selectedTag.toLowerCase();
       const matchesRole = roleFilter === "All" || member.role === roleFilter;
       const matchesYear = yearFilter === "All" || member.year === yearFilter;
       
-      return matchesSearch && matchesRole && matchesYear;
+      return matchesSearch && matchesTag && matchesRole && matchesYear;
     });
-  }, [searchQuery, roleFilter, yearFilter, members]);
+  }, [searchQuery, selectedTag, roleFilter, yearFilter, members]);
 
   return (
     <>
-      <Section className="pt-20 pb-12 bg-background/40 border-b border-white/5">
+      <Section className="pt-20 pb-8 bg-background/40 border-b border-white/5">
         <Container>
           <SectionHeader 
             title="The Dragons"
             description="Our collective of engineers, designers, and visionaries."
           />
+
+          {/* Member Tag Fan Wing Carousel */}
+          <MemberTagFan 
+            tags={tagsList} 
+            selectedTag={selectedTag}
+            onSelectTag={(tag) => setSelectedTag(tag)}
+          />
           
-          <div className="max-w-4xl mx-auto flex flex-col md:flex-row gap-4">
+          <div className="max-w-4xl mx-auto flex flex-col md:flex-row gap-4 mt-6">
             <div className="relative flex-1">
               <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-muted-foreground" />
               <Input 
