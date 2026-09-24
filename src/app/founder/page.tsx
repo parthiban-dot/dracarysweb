@@ -1,132 +1,144 @@
 "use client";
 
 import { Container } from "@/components/layout/container";
-import { Section } from "@/components/layout/section";
-import { LiquidGlass } from "@/components/shared/liquid-glass";
-import { founderProfile } from "@/lib/demo-data";
 import { motion } from "framer-motion";
-import { Terminal, Users, Quote } from "lucide-react";
 import { GithubIcon, LinkedinIcon } from "@/components/shared/icons";
 import Link from "next/link";
-import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
+import { founderProfile } from "@/lib/demo-data";
 
 export default function FounderPage() {
   return (
-    <>
-      {/* Hero Section */}
-      <Section className="relative pt-24 overflow-hidden border-b border-white/5 bg-background/20">
-        <Container className="relative z-10 flex flex-col items-center text-center">
-          <motion.div initial={{ opacity: 0, scale: 0.9 }} animate={{ opacity: 1, scale: 1 }} transition={{ duration: 0.8 }}>
-            <div className="w-32 h-32 md:w-48 md:h-48 rounded-full bg-gradient-to-tr from-primary/30 to-secondary/30 border-2 border-primary/50 mx-auto mb-8 relative flex items-center justify-center">
-              <div className="absolute inset-0 bg-background/40 backdrop-blur-sm rounded-full" />
-              <span className="text-5xl md:text-7xl font-extrabold text-foreground/50 z-10 relative">
-                {founderProfile.name.charAt(0)}
-              </span>
-              <div className="absolute -bottom-4 right-0 bg-background border border-white/10 px-4 py-1 rounded-full text-xs font-bold text-primary flex items-center gap-2">
-                <span className="w-2 h-2 rounded-full bg-primary animate-pulse" />
-                ONLINE
-              </div>
+    <div className="relative min-h-screen bg-background overflow-hidden selection:bg-primary/30">
+      
+      {/* 1. Subtle Glow Backgrounds (No Hex Pattern) */}
+      <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[800px] h-[500px] bg-primary/10 rounded-full blur-[120px] pointer-events-none opacity-60" />
+      <div className="absolute bottom-0 right-0 w-[600px] h-[600px] bg-secondary/5 rounded-full blur-[150px] pointer-events-none" />
+
+      {/* Main Content Container - Max width 750px approx for readability */}
+      <Container className="relative z-10 max-w-3xl mx-auto pt-32 pb-24 px-6 md:px-8">
+        
+        {/* Founder Header */}
+        <motion.div 
+          initial={{ opacity: 0, y: 20 }} 
+          animate={{ opacity: 1, y: 0 }} 
+          transition={{ duration: 0.8 }}
+          className="mb-16 border-b border-white/10 pb-12 text-center md:text-left flex flex-col md:flex-row items-center md:items-start gap-8"
+        >
+          {/* Minimal Avatar */}
+          <div className="w-28 h-28 shrink-0 rounded-full bg-gradient-to-tr from-primary/20 to-transparent border border-primary/30 flex items-center justify-center relative">
+            <span className="text-4xl font-extrabold text-white/50 tracking-tighter">{founderProfile.name.charAt(0)}</span>
+            <div className="absolute -bottom-2 right-4 bg-background border border-white/10 px-3 py-1 rounded-full text-[10px] font-bold text-primary flex items-center gap-1.5 shadow-sm">
+              <span className="w-1.5 h-1.5 rounded-full bg-primary animate-pulse" />
+              ONLINE
             </div>
-          </motion.div>
-
-          <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.2, duration: 0.8 }}>
-            <h1 className="text-4xl md:text-6xl font-extrabold heading-dragon mb-2">
-              {founderProfile.name}
-            </h1>
-            <p className="text-2xl font-bold text-primary tracking-widest uppercase mb-4">
-              {founderProfile.tag}
-            </p>
-            <p className="text-lg text-muted-foreground mb-8">
-              {founderProfile.role}
-            </p>
-
-            <div className="flex gap-4 justify-center">
-              <Button asChild variant="outline" className="border-white/10 hover:bg-white/5 text-muted-foreground">
-                <Link href={founderProfile.socials.github} target="_blank"><GithubIcon className="w-4 h-4 mr-2" /> GitHub</Link>
-              </Button>
-              <Button asChild variant="outline" className="border-white/10 hover:bg-white/5 text-muted-foreground">
-                <Link href={founderProfile.socials.linkedin} target="_blank"><LinkedinIcon className="w-4 h-4 mr-2" /> LinkedIn</Link>
-              </Button>
-            </div>
-          </motion.div>
-        </Container>
-      </Section>
-
-      <Section className="relative z-10">
-        <Container>
-          <div className="grid grid-cols-1 lg:grid-cols-3 gap-12">
-            
-            {/* Left Column (Main Content) */}
-            <div className="lg:col-span-2 space-y-12">
-              <motion.div initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }}>
-                <div className="flex items-center gap-3 mb-6">
-                  <Terminal className="w-6 h-6 text-primary" />
-                  <h2 className="text-3xl font-bold">The Origin</h2>
-                </div>
-                <LiquidGlass className="p-8 space-y-6">
-                  <p className="text-muted-foreground text-lg leading-relaxed">
-                    {founderProfile.story}
-                  </p>
-                </LiquidGlass>
-              </motion.div>
-
-              <motion.div initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }}>
-                <div className="flex items-center gap-3 mb-6">
-                  <Users className="w-6 h-6 text-secondary" />
-                  <h2 className="text-3xl font-bold">Leadership Philosophy</h2>
-                </div>
-                <LiquidGlass heavy className="p-8 border-secondary/20">
-                  <Quote className="w-10 h-10 text-secondary/30 mb-4" />
-                  <p className="text-xl italic text-foreground/90 leading-relaxed font-medium">
-                    &quot;{founderProfile.philosophy}&quot;
-                  </p>
-                </LiquidGlass>
-              </motion.div>
-            </div>
-
-            {/* Right Column (Sidebar) */}
-            <div className="space-y-8">
-              <motion.div initial={{ opacity: 0, x: 20 }} whileInView={{ opacity: 1, x: 0 }} viewport={{ once: true }}>
-                <LiquidGlass className="p-6">
-                  <h3 className="text-lg font-bold mb-4 claw-border pl-3">The Vision</h3>
-                  <p className="text-muted-foreground text-sm leading-relaxed">
-                    {founderProfile.vision}
-                  </p>
-                </LiquidGlass>
-              </motion.div>
-
-              <motion.div initial={{ opacity: 0, x: 20 }} whileInView={{ opacity: 1, x: 0 }} viewport={{ once: true }} transition={{ delay: 0.1 }}>
-                <LiquidGlass className="p-6">
-                  <h3 className="text-lg font-bold mb-4 claw-border pl-3">Arsenal</h3>
-                  <div className="flex flex-wrap gap-2">
-                    {founderProfile.skills.map(skill => (
-                      <Badge key={skill} variant="secondary" className="bg-primary/10 text-primary border-primary/20">
-                        {skill}
-                      </Badge>
-                    ))}
-                  </div>
-                </LiquidGlass>
-              </motion.div>
-
-              <motion.div initial={{ opacity: 0, x: 20 }} whileInView={{ opacity: 1, x: 0 }} viewport={{ once: true }} transition={{ delay: 0.2 }}>
-                <LiquidGlass className="p-6 dragon-eye">
-                  <h3 className="text-lg font-bold mb-4 claw-border pl-3 border-secondary">Selected Work</h3>
-                  <ul className="space-y-4">
-                    {founderProfile.selectedWork.map((work, i) => (
-                      <li key={i} className="border-b border-white/5 pb-3 last:border-0 last:pb-0">
-                        <p className="font-semibold">{work.title}</p>
-                        <p className="text-xs text-muted-foreground mt-1">{work.role}</p>
-                      </li>
-                    ))}
-                  </ul>
-                </LiquidGlass>
-              </motion.div>
-            </div>
-
           </div>
-        </Container>
-      </Section>
-    </>
+
+          <div>
+            <h1 className="text-3xl md:text-4xl font-bold text-white mb-2 tracking-tight">{founderProfile.name}</h1>
+            <p className="text-primary font-medium tracking-widest uppercase text-sm mb-4">
+              {founderProfile.tag} • {founderProfile.role}
+            </p>
+            
+            <div className="flex gap-6 justify-center md:justify-start">
+              <Link href={founderProfile.socials.github} target="_blank" className="text-white/60 hover:text-white transition-colors flex items-center text-sm font-medium">
+                <GithubIcon className="w-4 h-4 mr-2" /> GitHub
+              </Link>
+              <Link href={founderProfile.socials.linkedin} target="_blank" className="text-white/60 hover:text-white transition-colors flex items-center text-sm font-medium">
+                <LinkedinIcon className="w-4 h-4 mr-2" /> LinkedIn
+              </Link>
+            </div>
+          </div>
+        </motion.div>
+
+        {/* Minimalist Text Sections */}
+        <div className="space-y-16">
+          
+          {/* The Origin */}
+          <motion.section initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }}>
+            <h2 className="text-xl font-semibold text-white mb-4">The Origin</h2>
+            <div className="text-white/80 leading-loose space-y-4">
+              <p>
+                DRACARYS started with a simple idea — learning by building.
+              </p>
+              <p>
+                Instead of stopping at college projects, we wanted to create a space where students could work together, build real products, participate in hackathons, and turn ideas into something useful.
+              </p>
+              <p>
+                A year ago, I was looking for opportunities. Today, I’m finally in a position to create opportunities for others.
+              </p>
+            </div>
+          </motion.section>
+
+          {/* The Vision */}
+          <motion.section initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }}>
+            <h2 className="text-xl font-semibold text-white mb-4">The Vision</h2>
+            <p className="text-white/80 leading-loose">
+              To bridge the gap between academic theory and production-grade engineering by building a collective that treats every project like a real-world startup.
+            </p>
+          </motion.section>
+
+          {/* How We Work */}
+          <motion.section initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }}>
+            <h2 className="text-xl font-semibold text-white mb-4">How We Work</h2>
+            <p className="text-white/80 leading-loose mb-6">
+              We learn together, build together, and grow through real projects.
+            </p>
+            <ul className="grid grid-cols-1 sm:grid-cols-2 gap-4 text-white/80">
+              <li className="flex items-center gap-3 bg-white/[0.02] border border-white/5 px-4 py-3 rounded-lg">
+                <span className="text-primary font-bold">01.</span> Build with purpose
+              </li>
+              <li className="flex items-center gap-3 bg-white/[0.02] border border-white/5 px-4 py-3 rounded-lg">
+                <span className="text-primary font-bold">02.</span> Learn from each other
+              </li>
+              <li className="flex items-center gap-3 bg-white/[0.02] border border-white/5 px-4 py-3 rounded-lg">
+                <span className="text-primary font-bold">03.</span> Take ownership
+              </li>
+              <li className="flex items-center gap-3 bg-white/[0.02] border border-white/5 px-4 py-3 rounded-lg">
+                <span className="text-primary font-bold">04.</span> Ship real products
+              </li>
+            </ul>
+          </motion.section>
+
+          {/* Tech Stack */}
+          <motion.section initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }}>
+            <h2 className="text-xl font-semibold text-white mb-4">Tech Stack</h2>
+            <p className="text-primary/90 font-mono text-sm leading-loose tracking-wide">
+              Next.js <span className="text-white/20 mx-2">·</span> React <span className="text-white/20 mx-2">·</span> TypeScript <span className="text-white/20 mx-2">·</span> Python <span className="text-white/20 mx-2">·</span> AI/ML <span className="text-white/20 mx-2">·</span> FastAPI <span className="text-white/20 mx-2">·</span> PostgreSQL <span className="text-white/20 mx-2">·</span> Cloud
+            </p>
+          </motion.section>
+
+          {/* What We Build */}
+          <motion.section initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }}>
+            <h2 className="text-xl font-semibold text-white mb-6 border-b border-white/10 pb-4">What We Build</h2>
+            <div className="space-y-6">
+              
+              <div className="group cursor-default">
+                <h3 className="text-lg font-medium text-white mb-1 transition-colors">Industrial Workshop Platform</h3>
+                <p className="text-sm text-white/50 tracking-wide font-mono">Full-Stack <span className="mx-2">·</span> AI Chatbot</p>
+              </div>
+
+              <div className="group cursor-default">
+                <h3 className="text-lg font-medium text-white mb-1 transition-colors">AI Jewellery Design Platform</h3>
+                <p className="text-sm text-white/50 tracking-wide font-mono">Computer Vision <span className="mx-2">·</span> AI <span className="mx-2">·</span> Full-Stack</p>
+              </div>
+
+              <div className="group cursor-default">
+                <h3 className="text-lg font-medium text-white mb-1 transition-colors">DRACARYS Website</h3>
+                <p className="text-sm text-white/50 tracking-wide font-mono">Next.js <span className="mx-2">·</span> TypeScript <span className="mx-2">·</span> Vercel</p>
+              </div>
+
+            </div>
+          </motion.section>
+
+          <motion.div initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} className="pt-12 text-center md:text-left">
+             <Button asChild className="bg-primary text-primary-foreground hover:bg-primary/90">
+               <Link href="/projects">Explore DRACARYS</Link>
+             </Button>
+          </motion.div>
+          
+        </div>
+      </Container>
+    </div>
   );
 }
