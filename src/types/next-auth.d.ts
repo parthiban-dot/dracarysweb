@@ -1,20 +1,11 @@
-import { DefaultSession } from "next-auth";
-import { Role, UserStatus } from "@prisma/client";
+import NextAuth, { type DefaultSession } from "next-auth"
 
 declare module "next-auth" {
   interface Session {
     user: {
-      id: string;
-      role: Role;
-      status: UserStatus;
-      onboarded: boolean;
-    } & DefaultSession["user"];
-  }
-
-  interface User {
-    id: string;
-    role: Role;
-    status: UserStatus;
-    onboarded: boolean;
+      id: string
+      role: "MEMBER" | "PROJECT_LEAD" | "ADMIN" | "SUPER_ADMIN"
+      status: "PENDING" | "APPROVED" | "REJECTED"
+    } & DefaultSession["user"]
   }
 }

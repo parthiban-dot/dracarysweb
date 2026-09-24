@@ -1,37 +1,35 @@
-import NextAuth from "next-auth";
-import { PrismaAdapter } from "@auth/prisma-adapter";
-import { db } from "@/lib/db";
-import authConfig from "./auth.config";
+import NextAuth from "next-auth"
+import Google from "next-auth/providers/google"
+import { PrismaAdapter } from "@auth/prisma-adapter"
+import { PrismaClient } from "@prisma/client"
 
-const FOUNDER_EMAIL = "vinayagamparthiban07@gmail.com";
+const prisma = new PrismaClient()
 
-export const {
-  handlers: { GET, POST },
-  auth,
-  signIn,
-  signOut,
-} = NextAuth({
-  pages: {
-    signIn: "/login",
-    error: "/login", // Redirect errors to /login for user friendly messages
+export const { handlers, auth, signIn, signOut } = NextAuth({
+  adapter: PrismaAdapter(prisma),
+  providers: [Google],
+  session: {
+    strategy: "database"
   },
   events: {
-    async linkAccount({ user }) {
-      await db.user.update({
-        where: { id: user.id },
-        data: { emailVerified: new Date() },
-      });
-    },
     async createUser({ user }) {
-      if (user.email && user.email.toLowerCase() === FOUNDER_EMAIL.toLowerCase()) {
-        await db.user.update({
+      if (user.email === "vinayagamparthiban07@gmail.com") {
+        await prisma.user.update({
           where: { id: user.id },
-          data: { role: "SUPER_ADMIN", status: "APPROVED", onboarded: true },
-        });
+          data: { role: "SUPER_ADMIN", status: "APPROVED" }
+        })
       }
-    },
+    }
   },
-  adapter: PrismaAdapter(db),
-  session: { strategy: "jwt" },
-  ...authConfig,
-});
+  callbacks: {
+    async session({ session, user }) {
+      if (session.user && user) {
+        session.user.id = user.id
+        const dbUser = user as any; 
+        session.user.role = dbUser.role || "MEMBER"
+        session.user.status = dbUser.status || "PENDING"
+      }
+      return session
+    }
+  }
+})
