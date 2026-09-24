@@ -1,3 +1,4 @@
+
 "use client";
 
 import { Container } from "@/components/layout/container";
@@ -23,55 +24,61 @@ import { ProjectCard } from "@/components/features/project-card";
 import { HackathonCard } from "@/components/features/hackathon-card";
 import { MemberCard } from "@/components/features/member-card";
 
+// New components
+import { TerminalAnimation } from "@/components/features/terminal-animation";
+
 export default function Home() {
   const jsonLd = {
     "@context": "https://schema.org",
     "@type": "Organization",
     "name": "DRACARYS",
-    "url": "https://dracarys.tech",
-    "logo": "https://dracarys.tech/og-image.jpg",
-    "description": "DRACARYS is a student-led technology collective building production-grade applications.",
+    "url": "https://dracarysweb.vercel.app",
+    "logo": "https://dracarysweb.vercel.app/logo.png",
+    "description": "Student-led technology organization forging academic potential into production-grade engineering excellence."
   };
 
   return (
-    <>
+    <main className="flex min-h-screen flex-col bg-[#05050a]">
       <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
       />
+      
+      {/* GLOBAL BACKGROUND SETTINGS (Dark navy/black, very subtle hex) */}
+      <div className="fixed inset-0 z-0 scale-texture opacity-[0.03] pointer-events-none" />
+      <div className="fixed top-0 left-1/4 w-[500px] h-[500px] bg-primary/5 rounded-full blur-[150px] pointer-events-none z-0" />
+      <div className="fixed bottom-0 right-1/4 w-[400px] h-[400px] bg-secondary/5 rounded-full blur-[120px] pointer-events-none z-0" />
+
       {/* 1. HERO SECTION */}
-      <Section className="relative flex items-center min-h-[90vh] overflow-hidden pt-20">
-        <Container className="relative z-10 flex flex-col items-center text-center space-y-8">
-          <motion.div
-            initial={{ opacity: 0, y: 30 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8, ease: "easeOut" }}
-            className="space-y-6 flex flex-col items-center"
-          >
-            <div className="inline-flex items-center rounded-full border border-primary/30 bg-primary/10 px-3 py-1 text-sm font-medium text-primary mb-4 backdrop-blur-md">
-              <span className="flex h-2 w-2 rounded-full bg-primary animate-pulse mr-2"></span>
-              Development Environment (Demo Data)
-            </div>
-            <h1 className="text-5xl md:text-7xl lg:text-8xl font-extrabold heading-dragon">
-              WE BUILD BEYOND <br /> THE EXPECTED.
+      <Section className="relative pt-32 pb-16 md:pt-48 md:pb-32 overflow-hidden z-10">
+        <Container className="relative z-10 flex flex-col items-center text-center">
+          <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.8 }}>
+            <h1 className="text-5xl md:text-7xl lg:text-8xl font-extrabold heading-dragon mb-6 tracking-tight text-white drop-shadow-lg">
+              Forge The <br />
+              <span className="text-transparent bg-clip-text bg-gradient-to-r from-primary to-secondary">
+                Future.
+              </span>
             </h1>
-            <p className="max-w-[700px] text-lg md:text-xl text-muted-foreground">
-              DRACARYS is a student-led technology team building real products, solving real problems, and competing on real-world stages.
+            <p className="text-lg md:text-xl text-white/70 max-w-2xl mx-auto mb-10 leading-relaxed font-medium">
+              We are a collective of developers, designers, and architects. 
+              Treating every project like a real-world startup.
             </p>
-            <div className="flex flex-col sm:flex-row gap-4 pt-6">
-              <Button asChild size="lg" className="dragon-glow h-12 px-8 text-sm font-semibold">
-                <Link href="/projects">Explore Our Work <ArrowRight className="ml-2 w-4 h-4" /></Link>
+            <div className="flex flex-col sm:flex-row gap-4 justify-center items-center">
+              <Button asChild size="lg" className="bg-primary text-primary-foreground hover:bg-primary/90 font-bold px-8 shadow-[0_0_20px_rgba(59,130,246,0.3)]">
+                <Link href="/projects">
+                  Explore Projects <ArrowRight className="w-4 h-4 ml-2" />
+                </Link>
               </Button>
-              <Button asChild size="lg" variant="outline" className="glass-panel text-foreground border-white/10 hover:bg-white/5 h-12 px-8 text-sm">
-                <Link href="/team">Meet The Team</Link>
+              <Button asChild size="lg" variant="outline" className="border-white/10 hover:bg-white/5 font-bold px-8 text-white">
+                <Link href="/join">Join The Cohort</Link>
               </Button>
             </div>
           </motion.div>
         </Container>
       </Section>
 
-      {/* 2. TRUST / STATISTICS */}
-      <div className="border-y border-white/5 bg-background/40 backdrop-blur-md">
+      {/* 2. STATS MARQUEE OR BAR */}
+      <div className="border-y border-white/5 bg-background/50 backdrop-blur-md relative z-10">
         <Container>
           <div className="grid grid-cols-2 md:grid-cols-4 gap-8 py-12">
             {[
@@ -85,111 +92,134 @@ export default function Home() {
                 initial={{ opacity: 0, y: 20 }}
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}
-                transition={{ delay: i * 0.1, duration: 0.5 }}
+                transition={{ delay: i * 0.1 }}
                 className="text-center"
               >
-                <p className="text-4xl md:text-5xl font-bold text-transparent bg-clip-text bg-gradient-to-br from-white to-white/50 mb-2">
+                <div className="text-4xl md:text-5xl font-extrabold text-white mb-2 font-mono">
                   {stat.value}+
-                </p>
-                <p className="text-sm font-medium text-muted-foreground uppercase tracking-wider">{stat.label}</p>
+                </div>
+                <div className="text-xs md:text-sm font-bold text-muted-foreground uppercase tracking-widest">
+                  {stat.label}
+                </div>
               </motion.div>
             ))}
           </div>
         </Container>
       </div>
 
-      {/* 3. ABOUT DRACARYS */}
-      <Section className="relative z-10">
+      {/* 3. ABOUT DRACARYS (REDESIGNED) */}
+      <Section className="relative z-10 py-24">
         <Container>
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
             <motion.div initial={{ opacity: 0, x: -30 }} whileInView={{ opacity: 1, x: 0 }} viewport={{ once: true }} transition={{ duration: 0.6 }}>
-              <SectionHeader 
-                title="Forged in Code." 
-                description="We are not just a club. We are a collective of developers, designers, and architects who treat every project like a production-grade startup."
-                align="left"
-                className="mb-6"
-              />
-              <ul className="space-y-4 mb-8 text-muted-foreground">
-                <li className="flex items-start"><ChevronRight className="w-5 h-5 text-primary mr-2 shrink-0 mt-0.5" /> We build real solutions for real clients.</li>
-                <li className="flex items-start"><ChevronRight className="w-5 h-5 text-primary mr-2 shrink-0 mt-0.5" /> We compete in global hackathons.</li>
-                <li className="flex items-start"><ChevronRight className="w-5 h-5 text-primary mr-2 shrink-0 mt-0.5" /> We release open-source tools for the community.</li>
+              
+              <h2 className="text-4xl md:text-5xl font-extrabold text-white mb-6 tracking-tight">
+                Built Beyond the <span className="text-transparent bg-clip-text bg-gradient-to-r from-primary to-secondary">Classroom.</span>
+              </h2>
+              
+              <p className="text-lg text-white/70 leading-relaxed mb-8">
+                We are a student-led technology team building real projects, exploring new ideas, and turning opportunities into things people can actually use.
+              </p>
+              
+              <ul className="space-y-4 mb-10 text-white/80 font-medium">
+                <li className="flex items-center"><ChevronRight className="w-5 h-5 text-primary mr-2 shrink-0" /> Build real-world projects</li>
+                <li className="flex items-center"><ChevronRight className="w-5 h-5 text-primary mr-2 shrink-0" /> Compete, collaborate, and learn</li>
+                <li className="flex items-center"><ChevronRight className="w-5 h-5 text-primary mr-2 shrink-0" /> Turn ideas into working products</li>
               </ul>
-              <Button asChild variant="outline" className="border-white/10 hover:bg-white/5">
-                <Link href="/about">Read Our Manifesto</Link>
-              </Button>
+              
+              <div className="flex flex-col sm:flex-row gap-4">
+                <Button asChild variant="default" className="bg-white text-black hover:bg-gray-200 font-bold px-8">
+                  <Link href="/projects">Explore Our Work</Link>
+                </Button>
+                <Button asChild variant="outline" className="border-white/10 hover:bg-white/5 font-bold px-8 text-white">
+                  <Link href="/team">Meet The Team</Link>
+                </Button>
+              </div>
+
             </motion.div>
+            
             <motion.div initial={{ opacity: 0, x: 30 }} whileInView={{ opacity: 1, x: 0 }} viewport={{ once: true }} transition={{ duration: 0.6 }}>
-              <LiquidGlass heavy className="aspect-video relative flex items-center justify-center border-primary/20">
-                <div className="absolute inset-0 bg-gradient-to-br from-primary/10 to-transparent" />
-                <Terminal className="w-16 h-16 text-primary/50" />
-              </LiquidGlass>
+              <TerminalAnimation />
             </motion.div>
           </div>
         </Container>
       </Section>
 
       {/* 4. FEATURED PROJECTS */}
-      <Section className="bg-background/40 border-y border-white/5 relative z-10">
+      <Section className="bg-background/40 border-y border-white/5 relative z-10 py-24">
         <Container>
-          <SectionHeader 
-            title="Featured Projects" 
-            description="Production-grade applications built and delivered by our team."
-          />
+          <div className="flex flex-col items-center mb-16 text-center">
+            <h2 className="text-4xl font-extrabold text-white mb-4">Featured Projects</h2>
+            <p className="text-white/60 max-w-2xl">
+              Production-grade applications built and delivered by our team.
+            </p>
+          </div>
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-            {demoProjects.map((project, i) => (
+            {demoProjects.slice(0, 3).map((project, i) => (
               <motion.div key={project.id} initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ delay: i * 0.1, duration: 0.5 }}>
                 <ProjectCard {...project} />
               </motion.div>
             ))}
           </div>
           <div className="mt-12 text-center">
-            <Button asChild variant="ghost" className="text-primary hover:text-primary hover:bg-primary/10">
-              <Link href="/projects">View All Projects <ArrowRight className="ml-2 w-4 h-4" /></Link>
+            <Button asChild variant="ghost" className="text-white hover:bg-white/5">
+              <Link href="/projects">View All Projects <ArrowRight className="w-4 h-4 ml-2" /></Link>
             </Button>
           </div>
         </Container>
       </Section>
 
-      {/* 5. HACKATHON HIGHLIGHTS */}
-      <Section className="relative z-10">
+      {/* 5. TECH ARSENAL */}
+      <Section className="relative z-10 py-24">
         <Container>
-          <SectionHeader 
-            title="Hackathon Glory" 
-            description="Where we test our limits against the best."
-          />
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-6 max-w-4xl mx-auto">
-            {demoHackathons.map((hack, i) => (
-              <motion.div key={hack.id} initial={{ opacity: 0, scale: 0.95 }} whileInView={{ opacity: 1, scale: 1 }} viewport={{ once: true }} transition={{ delay: i * 0.1, duration: 0.5 }}>
-                <HackathonCard {...hack} />
-              </motion.div>
-            ))}
-          </div>
-        </Container>
-      </Section>
-
-      {/* 6. TECHNOLOGY ECOSYSTEM */}
-      <Section className="bg-background/40 border-y border-white/5 relative z-10 overflow-hidden">
-        <Container className="text-center">
-          <h3 className="text-sm font-semibold tracking-widest text-muted-foreground uppercase mb-8">Our Technology Arsenal</h3>
-          <div className="flex flex-wrap justify-center gap-3 max-w-3xl mx-auto">
-            {coreTechnologies.map((tech, i) => (
-              <motion.div key={tech} initial={{ opacity: 0 }} whileInView={{ opacity: 1 }} viewport={{ once: true }} transition={{ delay: i * 0.05, duration: 0.3 }}>
-                <div className="px-4 py-2 rounded-full border border-white/10 bg-white/5 text-sm font-medium text-foreground/80 hover:bg-white/10 hover:border-primary/50 transition-colors cursor-default">
+          <div className="text-center mb-12">
+            <h3 className="text-sm font-bold tracking-[0.2em] text-primary uppercase mb-8">Our Technology Arsenal</h3>
+            <div className="flex flex-wrap justify-center gap-3 max-w-4xl mx-auto">
+              {coreTechnologies.map((tech, i) => (
+                <motion.div
+                  key={tech}
+                  initial={{ opacity: 0, scale: 0.9 }}
+                  whileInView={{ opacity: 1, scale: 1 }}
+                  viewport={{ once: true }}
+                  transition={{ delay: i * 0.02 }}
+                  className="px-4 py-2 rounded-full bg-white/5 border border-white/10 text-sm font-medium text-white/80 hover:bg-white/10 hover:border-primary/50 transition-colors cursor-default"
+                >
                   {tech}
-                </div>
+                </motion.div>
+              ))}
+            </div>
+          </div>
+        </Container>
+      </Section>
+
+      {/* 6. HACKATHONS */}
+      <Section className="bg-background/40 border-y border-white/5 relative z-10 py-24">
+        <Container>
+          <div className="flex flex-col items-center mb-16 text-center">
+            <h2 className="text-4xl font-extrabold text-white mb-4">Battle Tested</h2>
+            <p className="text-white/60 max-w-2xl">
+              We constantly test our skills against global competition in hackathons.
+            </p>
+          </div>
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+            {demoHackathons.slice(0, 3).map((hackathon, i) => (
+              <motion.div key={hackathon.id} initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ delay: i * 0.1, duration: 0.5 }}>
+                <HackathonCard {...hackathon} />
               </motion.div>
             ))}
           </div>
         </Container>
       </Section>
 
-      {/* 7. TEAM PREVIEW & 8. FOUNDER PREVIEW */}
-      <Section className="relative z-10">
+      {/* 7. THE DRAGONS */}
+      <Section className="relative z-10 py-24">
         <Container>
-          <SectionHeader 
-            title="The Dragons" 
-            description="Meet the architects, engineers, and designers behind the code."
-          />
+          <div className="flex flex-col items-center mb-16 text-center">
+            <h2 className="text-4xl font-extrabold text-white mb-4">The Dragons</h2>
+            <p className="text-white/60 max-w-2xl">
+              Meet the architects, engineers, and designers behind the code.
+            </p>
+          </div>
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
             {demoMembers.map((member, i) => (
               <motion.div key={member.id} initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ delay: i * 0.1, duration: 0.5 }}>
@@ -200,29 +230,28 @@ export default function Home() {
         </Container>
       </Section>
 
-
-      {/* 10. FINAL CTA */}
+      {/* 8. FINAL CTA */}
       <Section className="relative z-10 py-24 lg:py-32">
         <Container>
-          <LiquidGlass heavy className="p-12 md:p-20 text-center relative overflow-hidden">
-            <div className="absolute inset-0 bg-gradient-to-t from-primary/10 to-transparent" />
+          <div className="p-12 md:p-20 text-center relative overflow-hidden bg-white/5 border border-white/10 rounded-3xl">
+            <div className="absolute inset-0 bg-gradient-to-t from-primary/10 to-transparent pointer-events-none" />
             <div className="relative z-10 max-w-2xl mx-auto space-y-8">
-              <h2 className="text-4xl md:text-5xl font-extrabold heading-dragon">Ready to build something extraordinary?</h2>
-              <p className="text-lg text-muted-foreground">
+              <h2 className="text-4xl md:text-5xl font-extrabold heading-dragon text-white">Ready to build something extraordinary?</h2>
+              <p className="text-lg text-white/70">
                 Whether you want to hire us for a project or join our ranks as a developer, the gates are open.
               </p>
-              <div className="flex flex-col sm:flex-row justify-center gap-4">
-                <Button asChild size="lg" className="dragon-glow h-12 px-8">
-                  <Link href="/contact">Collaborate With Us</Link>
+              <div className="flex flex-col sm:flex-row gap-4 justify-center pt-4">
+                <Button asChild size="lg" className="bg-primary text-primary-foreground hover:bg-primary/90 font-bold px-8">
+                  <Link href="/contact">Hire Us</Link>
                 </Button>
-                <Button asChild size="lg" variant="outline" className="border-white/10 hover:bg-white/5 h-12 px-8">
-                  <Link href="/join">Apply to Join</Link>
+                <Button asChild size="lg" variant="outline" className="border-white/10 hover:bg-white/5 font-bold px-8 text-white">
+                  <Link href="/join">Join Us</Link>
                 </Button>
               </div>
             </div>
-          </LiquidGlass>
+          </div>
         </Container>
       </Section>
-    </>
+    </main>
   );
 }
