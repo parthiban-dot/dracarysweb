@@ -6,6 +6,7 @@ declare module "next-auth" {
       id: string
       role: "MEMBER" | "PROJECT_LEAD" | "ADMIN" | "SUPER_ADMIN"
       status: "PENDING" | "APPROVED" | "REJECTED"
+      onboarded: boolean
     } & DefaultSession["user"]
   }
 }
