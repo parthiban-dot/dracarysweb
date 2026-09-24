@@ -8,15 +8,15 @@ import { DragonAtmosphere } from "@/components/shared/dragon-atmosphere";
 const inter = Inter({ subsets: ["latin"] });
 
 export const metadata: Metadata = {
-  metadataBase: new URL(process.env.NEXT_PUBLIC_APP_URL || "https://dracarys.local"),
+  metadataBase: new URL(process.env.NEXT_PUBLIC_APP_URL || "https://dracarysweb.vercel.app"),
   title: {
-    default: "DRACARYS | Ancient Dragon × Modern Technology",
+    default: "DRACARYS | Ancient Dragon Ã— Modern Technology",
     template: "%s | DRACARYS"
   },
-  description: "DRACARYS is a student-led technology collective building real products, solving real problems, and competing on global stages.",
+  description: "DRACARYS is a student-led engineering team building real-world software, experimenting with AI and competing in hackathons.",
   openGraph: {
-    title: "DRACARYS | Ancient Dragon × Modern Technology",
-    description: "A student-led technology collective building production-grade applications.",
+    title: "DRACARYS | Ancient Dragon Ã— Modern Technology",
+    description: "DRACARYS is a student-led engineering team building real-world software, experimenting with AI and competing in hackathons.",
     url: "/",
     siteName: "DRACARYS",
     images: [{ url: "/og-image.jpg", width: 1200, height: 630 }],

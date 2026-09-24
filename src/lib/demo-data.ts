@@ -10,7 +10,7 @@ import { Project } from "@/types/project";
 export const demoProjects: Project[] = [
   {
     id: "p1",
-    title: "HostelHub – AI-Powered Hostel Security & Management System",
+    title: "HostelHub Ã¢â‚¬â€œ AI-Powered Hostel Security & Management System",
     slug: "hostelhub",
     summary: "Distributed college hostel security and management platform combining automated AI facial recognition with administrative modules.",
     type: "AI & Security System",
@@ -63,7 +63,7 @@ export const demoProjects: Project[] = [
   },
   {
     id: "p3",
-    title: "TrueVault — Decentralized Digital Identity & Asset Verification",
+    title: "TrueVault Ã¢â‚¬â€ Decentralized Digital Identity & Asset Verification",
     slug: "truevault",
     summary: "Blockchain-based digital identity and asset verification platform for secure, tamper-resistant ownership.",
     type: "Web3 / Blockchain Platform",
@@ -196,10 +196,7 @@ export const demoHackathons: Hackathon[] = [
 
 export const demoMembers = [
   {
-    id: "m1",
-    name: "Parthiban V",
-    tag: "Prince",
-    role: "Founder & Lead Architect",
+    id: "m1", name: "Parthiban V", tag: "Prince", role: "Founder & Lead Architect", bio: "I build architecture that scales and sleep when the servers do.",
     image: "", 
     skills: ["Architecture", "Next.js", "AI/ML"],
     year: "Senior",
@@ -207,10 +204,7 @@ export const demoMembers = [
     linkedin: "https://linkedin.com",
   },
   {
-    id: "m2",
-    name: "Sindhuja S M",
-    tag: "sindhu",
-    role: "Developer",
+    id: "m2", name: "Sindhuja S M", tag: "sindhu", role: "Developer", bio: "I turn rough ideas into interfaces that actually work.",
     image: "", 
     skills: ["Java", "Python", "HTML", "CSS", "JavaScript", "React.js", "SQL"],
     year: "Member",
@@ -218,10 +212,7 @@ export const demoMembers = [
     linkedin: "https://www.linkedin.com/in/sindhu-sm-bb56683b0",
   },
   {
-    id: "m3",
-    name: "Rithika",
-    tag: "Aira",
-    role: "Developer",
+    id: "m3", name: "Rithika", tag: "Aira", role: "Developer", bio: "I spend too much time experimenting with LLMs to see what breaks.",
     image: "", 
     skills: ["HTML", "CSS", "JavaScript", "Java", "SQL", "Git", "AI/LLM"],
     year: "Member",
@@ -229,10 +220,7 @@ export const demoMembers = [
     linkedin: "https://www.linkedin.com/in/rithika-r-b13b41377",
   },
   {
-    id: "m4",
-    name: "Shrivarsha M",
-    tag: "Neko",
-    role: "Developer",
+    id: "m4", name: "Shrivarsha M", tag: "Neko", role: "Developer", bio: "I organize chaos into clean logic and backend services.",
     image: "", 
     skills: ["Java", "Python", "HTML", "CSS", "JavaScript", "SQL"],
     year: "Member",
@@ -301,7 +289,7 @@ export const founderProfile = {
   tag: "Prince",
   role: "Founder & Lead Architect",
   vision: "To bridge the gap between academic theory and production-grade engineering by building a collective that treats every project like a real-world startup.",
-  story: "DRACARYS was born from the realization that standard college portfolios weren't enough. We needed a crucible—an environment where passion for modern technology could be forged into real, impactful products.",
+  story: "DRACARYS was born from the realization that standard college portfolios weren't enough. We needed a crucibleÃ¢â‚¬â€an environment where passion for modern technology could be forged into real, impactful products.",
   philosophy: "Code is temporary, but the architecture of a team is permanent. True leadership in engineering means writing code that others can read, building systems that scale, and creating an environment where developers can transcend their limits.",
   skills: ["System Architecture", "Next.js ecosystem", "Cloud Infrastructure", "AI/ML Integration"],
   selectedWork: [
