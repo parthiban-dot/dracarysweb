@@ -219,6 +219,7 @@ model Announcement {
   id          String   @id @default(cuid())
   title       String
   content     String   @db.Text
+  priority    String   @default("NORMAL")
   isPublished Boolean  @default(false)
   authorId    String
   createdAt   DateTime @default(now())

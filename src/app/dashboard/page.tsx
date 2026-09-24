@@ -1,134 +1,113 @@
-"use client";
-
-import { motion } from "framer-motion";
+import { auth } from "@/auth";
+import { PrismaClient } from "@prisma/client";
 import { LiquidGlass } from "@/components/shared/liquid-glass";
-import { EmptyState } from "@/components/shared/empty-state";
-import { FolderGit2, Trophy, Bell, ChevronRight, CheckCircle2 } from "lucide-react";
+import { FolderGit2, Megaphone, Terminal, User as UserIcon } from "lucide-react";
 import Link from "next/link";
 
-// Framer motion variants for staggering children
-const container = {
-  hidden: { opacity: 0 },
-  show: {
-    opacity: 1,
-    transition: { staggerChildren: 0.1 }
-  }
-};
+const prisma = new PrismaClient();
 
-const item = {
-  hidden: { opacity: 0, y: 20 },
-  show: { opacity: 1, y: 0, transition: { type: "spring" as const, stiffness: 300, damping: 24 } }
-};
+export default async function DashboardOverview() {
+  const session = await auth();
+  
+  if (!session?.user) return null;
 
-export default function DashboardOverview() {
+  const userWithAssignments = await prisma.user.findUnique({
+    where: { id: session.user.id },
+    include: {
+      projects: {
+        include: { project: true }
+      }
+    }
+  });
+
+  const announcements = await prisma.announcement.findMany({
+    where: { isPublished: true },
+    orderBy: { createdAt: "desc" },
+    take: 5
+  });
+
   return (
-    <motion.div variants={container} initial="hidden" animate="show" className="space-y-8">
+    <div className="space-y-8 animate-in fade-in slide-in-from-bottom-4 duration-500">
       
       {/* Header */}
-      <motion.div variants={item} className="mb-10">
-        <h1 className="text-4xl md:text-5xl font-extrabold tracking-tighter text-transparent bg-clip-text bg-gradient-to-r from-white to-white/60 mb-2">
-          Welcome back, <span className="text-primary">PARTHI</span>
-        </h1>
-        <p className="text-muted-foreground text-lg">Here is what is happening across the organization today.</p>
-      </motion.div>
-
-      {/* Bento Grid Metrics */}
-      <motion.div variants={item} className="grid grid-cols-1 md:grid-cols-3 gap-6">
-        {/* Active Projects Card */}
-        <LiquidGlass className="p-6 relative overflow-hidden group hover:border-primary/40 dragon-glow cursor-pointer">
-          <div className="absolute top-0 right-0 p-4 opacity-10 group-hover:opacity-20 transition-opacity">
-            <FolderGit2 className="w-24 h-24 text-primary"/>
-          </div>
-          <div className="relative z-10 flex flex-col h-full justify-between">
-            <div className="flex items-center gap-3 mb-8">
-              <div className="p-2 rounded-lg bg-primary/10 text-primary border border-primary/20">
-                <FolderGit2 className="w-5 h-5"/>
-              </div>
-              <h3 className="font-semibold text-muted-foreground">Active Projects</h3>
-            </div>
-            <div>
-              <span className="text-5xl font-black text-white">0</span>
-            </div>
-          </div>
-        </LiquidGlass>
-
-        {/* Hackathons Won Card */}
-        <LiquidGlass className="p-6 relative overflow-hidden group hover:border-secondary/40 dragon-glow-violet cursor-pointer">
-          <div className="absolute top-0 right-0 p-4 opacity-10 group-hover:opacity-20 transition-opacity">
-            <Trophy className="w-24 h-24 text-secondary"/>
-          </div>
-          <div className="relative z-10 flex flex-col h-full justify-between">
-            <div className="flex items-center gap-3 mb-8">
-              <div className="p-2 rounded-lg bg-secondary/10 text-secondary border border-secondary/20">
-                <Trophy className="w-5 h-5"/>
-              </div>
-              <h3 className="font-semibold text-muted-foreground">Hackathons Won</h3>
-            </div>
-            <div>
-              <span className="text-5xl font-black text-white">0</span>
-            </div>
-          </div>
-        </LiquidGlass>
-
-        {/* Profile Setup Progress Card */}
-        <LiquidGlass className="p-6 flex flex-col justify-center bg-gradient-to-br from-white/[0.02] to-primary/[0.05]">
-          <div className="flex justify-between items-end mb-4">
-            <h3 className="font-semibold text-white">Profile Setup</h3>
-            <span className="text-2xl font-black text-primary">100%</span>
-          </div>
-          <div className="w-full h-3 bg-black/50 rounded-full overflow-hidden border border-white/5 shadow-inner">
-            <motion.div 
-              initial={{ width: 0 }} 
-              animate={{ width: "100%" }} 
-              transition={{ duration: 1.5, ease: "easeOut", delay: 0.2 }}
-              className="h-full bg-gradient-to-r from-primary to-secondary relative"
-            >
-              <div className="absolute inset-0 bg-[linear-gradient(45deg,transparent_25%,rgba(255,255,255,0.2)_50%,transparent_75%)] bg-[length:20px_20px] animate-[shimmer_1s_linear_infinite]" />
-            </motion.div>
-          </div>
-          <p className="text-xs text-muted-foreground mt-4 flex items-center gap-1.5">
-            <CheckCircle2 className="w-4 h-4 text-emerald-500"/> Your profile is ready for production.
-          </p>
-        </LiquidGlass>
-      </motion.div>
-
-      {/* Bottom Content Area */}
-      <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 pt-4">
-        {/* Announcements */}
-        <motion.div variants={item} className="space-y-4">
-          <div className="flex items-center justify-between">
-            <h2 className="text-xl font-bold flex items-center gap-2">
-              <Bell className="w-5 h-5 text-primary"/> Recent Announcements
-            </h2>
-            <Link className="text-xs text-primary hover:underline flex items-center" href="/dashboard/announcements">
-              View all <ChevronRight className="w-3 h-3 ml-1"/>
-            </Link>
-          </div>
-          <EmptyState 
-            icon={<Bell className="w-8 h-8 text-primary/50" />}
-            title="All caught up!" 
-            description="There are no new announcements from the DRACARYS admin team at this time." 
-          />
-        </motion.div>
-
-        {/* Projects */}
-        <motion.div variants={item} className="space-y-4">
-          <div className="flex items-center justify-between">
-            <h2 className="text-xl font-bold flex items-center gap-2">
-              <FolderGit2 className="w-5 h-5 text-secondary"/> Your Projects
-            </h2>
-            <Link className="text-xs text-secondary hover:underline flex items-center" href="/dashboard/projects">
-              Browse projects <ChevronRight className="w-3 h-3 ml-1"/>
-            </Link>
-          </div>
-          <EmptyState 
-            icon={<FolderGit2 className="w-8 h-8 text-secondary/50" />}
-            title="No Active Assignments" 
-            description="You are not currently assigned to any active production projects." 
-          />
-        </motion.div>
+      <div className="flex items-center justify-between mb-8">
+        <div>
+          <h1 className="text-3xl font-extrabold tracking-tighter text-white mb-2">
+            Welcome back, <span className="text-primary">{session.user.name?.split(" ")[0]}</span>
+          </h1>
+          <p className="text-muted-foreground text-lg">Your DRACARYS member portal.</p>
+        </div>
       </div>
 
-    </motion.div>
+      <div className="grid lg:grid-cols-3 gap-8">
+        
+        {/* Left Column - My Projects */}
+        <div className="lg:col-span-2 space-y-6">
+          <div className="flex items-center gap-2 mb-4">
+            <FolderGit2 className="w-6 h-6 text-primary" />
+            <h2 className="text-xl font-bold text-white">My Assigned Projects</h2>
+          </div>
+          
+          {userWithAssignments?.projects && userWithAssignments.projects.length > 0 ? (
+            <div className="grid sm:grid-cols-2 gap-4">
+              {userWithAssignments.projects.map(assignment => (
+                <LiquidGlass key={assignment.id} className="p-6 border-white/10 hover:border-primary/30 transition-colors group">
+                  <div className="flex justify-between items-start mb-4">
+                    <div className="w-10 h-10 bg-primary/10 rounded-lg flex items-center justify-center text-primary group-hover:scale-110 transition-transform">
+                      <Terminal className="w-5 h-5" />
+                    </div>
+                    <span className="text-xs font-semibold px-2 py-1 bg-white/5 rounded-full border border-white/10 text-white/70">
+                      {assignment.role}
+                    </span>
+                  </div>
+                  <h3 className="text-lg font-bold text-white mb-2">{assignment.project.title}</h3>
+                  <p className="text-sm text-muted-foreground line-clamp-2">{assignment.project.summary}</p>
+                </LiquidGlass>
+              ))}
+            </div>
+          ) : (
+            <LiquidGlass className="p-8 text-center text-muted-foreground border-white/10 border-dashed">
+              <FolderGit2 className="w-10 h-10 mx-auto text-white/20 mb-3" />
+              <p>You have not been assigned to any projects yet.</p>
+            </LiquidGlass>
+          )}
+        </div>
+
+        {/* Right Column - Announcements */}
+        <div className="space-y-6">
+          <div className="flex items-center gap-2 mb-4">
+            <Megaphone className="w-6 h-6 text-primary" />
+            <h2 className="text-xl font-bold text-white">Announcements</h2>
+          </div>
+          
+          <LiquidGlass className="p-1 border-white/10">
+            <div className="divide-y divide-white/5">
+              {announcements.length > 0 ? announcements.map(announcement => (
+                <div key={announcement.id} className="p-4 hover:bg-white/[0.02] transition-colors">
+                  <div className="flex items-center justify-between mb-2">
+                    <span className={`text-[10px] uppercase font-bold px-2 py-0.5 rounded-full border ${
+                      announcement.priority === 'URGENT' ? 'bg-red-500/10 text-red-500 border-red-500/20' : 
+                      announcement.priority === 'IMPORTANT' ? 'bg-amber-500/10 text-amber-500 border-amber-500/20' :
+                      'bg-blue-500/10 text-blue-500 border-blue-500/20'
+                    }`}>
+                      {announcement.priority}
+                    </span>
+                    <span className="text-xs text-muted-foreground">
+                      {new Date(announcement.createdAt).toLocaleDateString()}
+                    </span>
+                  </div>
+                  <h4 className="font-bold text-white text-sm mb-1">{announcement.title}</h4>
+                  <p className="text-xs text-muted-foreground line-clamp-3">{announcement.content}</p>
+                </div>
+              )) : (
+                <div className="p-6 text-center text-sm text-muted-foreground">
+                  No announcements yet.
+                </div>
+              )}
+            </div>
+          </LiquidGlass>
+        </div>
+      </div>
+    </div>
   );
 }
