@@ -76,7 +76,7 @@ export default function Home() {
           <div className="grid grid-cols-2 md:grid-cols-4 gap-8 py-12">
             {[
               { label: "Projects Delivered", value: siteStats.projectsDelivered },
-              { label: "Hackathons Won", value: siteStats.hackathonsWon },
+              { label: "Hackathons Participated", value: siteStats.hackathonsWon },
               { label: "Team Members", value: siteStats.teamMembers },
               { label: "Technologies", value: siteStats.technologiesUsed },
             ].map((stat, i) => (

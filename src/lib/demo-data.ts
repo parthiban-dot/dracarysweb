@@ -1,8 +1,8 @@
 export const siteStats = {
-  projectsDelivered: 12,
-  hackathonsWon: 8,
-  teamMembers: 24,
-  technologiesUsed: 15,
+  projectsDelivered: 5,
+  hackathonsWon: 4,
+  teamMembers: 16,
+  technologiesUsed: 35,
 };
 
 import { Project } from "@/types/project";
