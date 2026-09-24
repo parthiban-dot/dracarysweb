@@ -4,7 +4,7 @@ import { Container } from "@/components/layout/container";
 import { Section } from "@/components/layout/section";
 import { SectionHeader } from "@/components/shared/section-header";
 import { MemberCard } from "@/components/features/member-card";
-import { MemberTagCarousel } from "@/components/features/member-tag-carousel";
+import { MemberTagFan } from "@/components/features/member-tag-fan";
 import { Input } from "@/components/ui/input";
 import { useState, useMemo } from "react";
 import { Search } from "lucide-react";
@@ -59,7 +59,7 @@ export function TeamClient({ members }: TeamClientProps) {
             description="Our collective of engineers, designers, and visionaries."
           />
 
-          <MemberTagCarousel 
+          <MemberTagFan 
             tags={tagsList} 
             selectedTag={selectedTag}
             onSelectTag={(tag) => setSelectedTag(tag)}
