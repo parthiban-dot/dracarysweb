@@ -315,7 +315,11 @@ export const founderProfile = {
 };
 
 export const coreTechnologies = [
-  "Next.js", "TypeScript", "React", "Tailwind CSS", 
-  "PostgreSQL", "Prisma", "Python", "FastAPI",
-  "Docker", "AWS", "Framer Motion", "Zod"
+  "Next.js", "TypeScript", "React", "Tailwind CSS", "Framer Motion", "shadcn/ui",
+  "SvelteKit", "Zod", "Vite", "Three.js", "Python", "FastAPI", "Node.js", "Flask",
+  "Express.js", "Go (Golang)", "Rust", "tRPC", "GraphQL", "NestJS", "PostgreSQL",
+  "Prisma", "SQLite", "Redis", "Supabase", "Drizzle ORM", "MongoDB", "SQLAlchemy",
+  "LangChain", "LlamaIndex", "ChromaDB", "Pinecone", "OpenCV", "PyTorch",
+  "Hugging Face", "Docker", "AWS", "Vercel", "GitHub Actions", "Cloudflare",
+  "Kubernetes", "Solidity", "Hardhat", "Ethers.js"
 ];
