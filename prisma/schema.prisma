@@ -245,3 +245,40 @@ model AuditLog {
   ipAddress String?
   createdAt DateTime @default(now())
 }
+
+model JoinApplication {
+  id        String   @id @default(cuid())
+  name      String
+  email     String
+  phone     String?
+  college   String
+  year      String
+  skills    String   @db.Text
+  interests String   @db.Text
+  github    String?
+  linkedin  String?
+  portfolio String?
+  reason    String   @db.Text
+  status    String   @default("NEW")
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model ProjectInquiry {
+  id          String   @id @default(cuid())
+  name        String
+  company     String?
+  email       String
+  phone       String?
+  projectType String
+  description String   @db.Text
+  problem     String   @db.Text
+  features    String   @db.Text
+  targetUsers String
+  timeline    String
+  budget      String?
+  status      String   @default("NEW")
+  adminNotes  String?  @db.Text
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+}
