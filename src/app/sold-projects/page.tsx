@@ -12,7 +12,7 @@ import { Badge } from "@/components/ui/badge";
 
 export default function SoldProjectsPage() {
   const soldProjects = useMemo(() => {
-    return demoProjects.filter(project => project.status === "DELIVERED");
+    return demoProjects.filter(project => project.status === "COMPLETED");
   }, []);
 
   return (

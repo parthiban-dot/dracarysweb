@@ -1,4 +1,4 @@
-export type ProjectStatus = 'DELIVERED' | 'INTERNAL' | 'OPEN SOURCE' | 'IN PROGRESS';
+export type ProjectStatus = 'COMPLETED' | 'INTERNAL' | 'OPEN SOURCE' | 'IN PROGRESS';
 export type ClientVisibility = 'PUBLIC' | 'ANONYMIZED' | 'PRIVATE';
 
 export interface Project {

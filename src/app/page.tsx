@@ -15,7 +15,6 @@ import {
   demoProjects, 
   demoHackathons, 
   demoMembers, 
-  demoLaunchers, 
   coreTechnologies 
 } from "@/lib/demo-data";
 
@@ -23,7 +22,6 @@ import {
 import { ProjectCard } from "@/components/features/project-card";
 import { HackathonCard } from "@/components/features/hackathon-card";
 import { MemberCard } from "@/components/features/member-card";
-import { LauncherCard } from "@/components/features/launcher-card";
 
 export default function Home() {
   const jsonLd = {
@@ -202,22 +200,6 @@ export default function Home() {
         </Container>
       </Section>
 
-      {/* 9. FREE LAUNCHERS */}
-      <Section className="bg-background/40 border-y border-white/5 relative z-10">
-        <Container>
-          <SectionHeader 
-            title="Free Launchers" 
-            description="Open-source tools and starter kits built for the community."
-          />
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-6 max-w-4xl mx-auto">
-            {demoLaunchers.map((launcher, i) => (
-              <motion.div key={launcher.id} initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ delay: i * 0.1, duration: 0.5 }}>
-                <LauncherCard {...launcher} />
-              </motion.div>
-            ))}
-          </div>
-        </Container>
-      </Section>
 
       {/* 10. FINAL CTA */}
       <Section className="relative z-10 py-24 lg:py-32">

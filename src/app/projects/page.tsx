@@ -13,7 +13,7 @@ export default function ProjectsPage() {
   const [statusFilter, setStatusFilter] = useState("All");
   const [techFilter, setTechFilter] = useState("All");
 
-  const statuses = ["All", "IN PROGRESS", "DELIVERED", "INTERNAL", "OPEN SOURCE"];
+  const statuses = ["All", "IN PROGRESS", "COMPLETED", "INTERNAL", "OPEN SOURCE"];
   
   // Extract unique technologies without useMemo
   const allTechs = ["All", ...Array.from(new Set(demoProjects.flatMap(p => p.technologyStack)))];

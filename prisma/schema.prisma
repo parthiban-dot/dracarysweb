@@ -16,7 +16,7 @@ enum Role {
 
 enum ProjectStatus {
   IN_PROGRESS
-  DELIVERED
+  COMPLETED
   INTERNAL
   OPEN_SOURCE
 }
