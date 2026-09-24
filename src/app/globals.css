@@ -48,7 +48,7 @@
 @layer utilities {
   :root {
     /* Deep navy/near-black background */
-    --background: 222 47% 4%;
+    --background: 240 33% 3%;
     --foreground: 210 40% 98%;
 
     --card: 222 47% 4%;
@@ -81,7 +81,7 @@
   }
 
   .dark {
-    --background: 222 47% 4%;
+    --background: 240 33% 3%;
     --foreground: 210 40% 98%;
   }
 

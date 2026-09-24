@@ -38,17 +38,12 @@ export default function Home() {
   };
 
   return (
-    <main className="flex min-h-screen flex-col bg-[#05050a]">
+    <main className="flex min-h-screen flex-col bg-transparent">
       <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
       />
       
-      {/* GLOBAL BACKGROUND SETTINGS (Dark navy/black, very subtle hex) */}
-      <div className="fixed inset-0 z-0 scale-texture opacity-[0.03] pointer-events-none" />
-      <div className="fixed top-0 left-1/4 w-[500px] h-[500px] bg-primary/5 rounded-full blur-[150px] pointer-events-none z-0" />
-      <div className="fixed bottom-0 right-1/4 w-[400px] h-[400px] bg-secondary/5 rounded-full blur-[120px] pointer-events-none z-0" />
-
       {/* 1. HERO SECTION */}
       <Section className="relative pt-32 pb-16 md:pt-48 md:pb-32 overflow-hidden z-10">
         <Container className="relative z-10 flex flex-col items-center text-center">

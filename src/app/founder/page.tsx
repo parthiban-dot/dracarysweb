@@ -9,12 +9,8 @@ import { founderProfile } from "@/lib/demo-data";
 
 export default function FounderPage() {
   return (
-    <div className="relative min-h-screen bg-background overflow-hidden selection:bg-primary/30">
+    <div className="relative min-h-screen bg-transparent overflow-hidden selection:bg-primary/30">
       
-      {/* 1. Subtle Glow Backgrounds (No Hex Pattern) */}
-      <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[800px] h-[500px] bg-primary/10 rounded-full blur-[120px] pointer-events-none opacity-60" />
-      <div className="absolute bottom-0 right-0 w-[600px] h-[600px] bg-secondary/5 rounded-full blur-[150px] pointer-events-none" />
-
       {/* Main Content Container - Max width 750px approx for readability */}
       <Container className="relative z-10 max-w-3xl mx-auto pt-32 pb-24 px-6 md:px-8">
         

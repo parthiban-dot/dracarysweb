@@ -39,9 +39,6 @@ export default function AboutPage() {
     <div className="pt-24 pb-16 overflow-hidden">
       <Section className="relative z-10">
         
-        {/* Background Effects */}
-        <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[800px] h-[500px] bg-primary/10 rounded-full blur-[120px] pointer-events-none" />
-        
         <Container>
           
           <AboutHero3D />
