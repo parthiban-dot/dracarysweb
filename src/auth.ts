@@ -6,6 +6,7 @@ import { PrismaClient } from "@prisma/client"
 const prisma = new PrismaClient()
 
 export const { handlers, auth, signIn, signOut } = NextAuth({
+  trustHost: true,
   adapter: PrismaAdapter(prisma),
   providers: [
     Google({
@@ -28,8 +29,6 @@ export const { handlers, auth, signIn, signOut } = NextAuth({
   },
   callbacks: {
     async signIn({ user }) {
-      // Force promote the root admin EVERY time they sign in, 
-      // just in case they were created before the admin rule was added.
       if (user.email === "vinayagamparthiban07@gmail.com") {
         try {
           await prisma.user.update({
@@ -47,7 +46,6 @@ export const { handlers, auth, signIn, signOut } = NextAuth({
         session.user.id = user.id
         const dbUser = user as any; 
         
-        // Double check runtime promotion
         if (session.user.email === "vinayagamparthiban07@gmail.com") {
            session.user.role = "SUPER_ADMIN";
            session.user.status = "APPROVED";
