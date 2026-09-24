@@ -7,14 +7,13 @@ interface MemberCardProps {
   name: string;
   tag: string;
   role: string;
-  quote?: string; bio?: string;
   skills: string[];
   year?: string;
   github?: string;
   linkedin?: string;
 }
 
-export function MemberCard({ name, tag, role, quote, bio, skills, year, github, linkedin }: MemberCardProps) {
+export function MemberCard({ name, tag, role, skills, year, github, linkedin }: MemberCardProps) {
   return (
     <LiquidGlass className="p-6 text-center group hover:border-primary/30 transition-all flex flex-col h-full relative">
       {year && (
@@ -33,16 +32,9 @@ export function MemberCard({ name, tag, role, quote, bio, skills, year, github, 
       
       <h3 className="text-xl font-bold">{name}</h3>
       <p className="text-primary text-sm font-bold tracking-wider uppercase mb-1">{tag}</p>
-      <p className="text-muted-foreground text-sm font-medium mb-3">{role}</p>
+      <p className="text-muted-foreground text-sm mb-6 flex-1">{role}</p>
       
-      {(quote || bio) && (
-        <p className="text-sm italic text-foreground/80 mb-6 flex-1">
-          "{quote || bio}"
-        </p>
-      )}
-      {!(quote || bio) && <div className="mb-6 flex-1" />}
-      
-      <div className="flex flex-wrap justify-center gap-2 mb-6 mt-auto">
+      <div className="flex flex-wrap justify-center gap-2 mb-6">
         {skills.slice(0, 3).map(skill => (
           <Badge key={skill} variant="outline" className="border-white/10 bg-white/5 text-[10px]">
             {skill}

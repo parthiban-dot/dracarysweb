@@ -5,6 +5,7 @@ import { Section } from "@/components/layout/section";
 import { SectionHeader } from "@/components/shared/section-header";
 import { MemberCard } from "@/components/features/member-card";
 import { MemberTagFan } from "@/components/features/member-tag-fan";
+import { TeamCarousel } from "@/components/features/team-carousel";
 import { Input } from "@/components/ui/input";
 import { useState, useMemo } from "react";
 import { Search } from "lucide-react";
@@ -59,10 +60,17 @@ export function TeamClient({ members }: TeamClientProps) {
             description="Our collective of engineers, designers, and visionaries."
           />
 
+          <TeamCarousel members={members.filter(m => m.bio)} />
+          
+          <div className="mt-16 text-center">
+            <h3 className="text-xl font-bold text-white mb-2">Member Directory</h3>
+            <p className="text-muted-foreground text-sm">Select a tag to filter members</p>
+          </div>
+
           <MemberTagFan 
             tags={tagsList} 
             selectedTag={selectedTag}
-            onSelectTag={(tag) => setSelectedTag(tag)}
+            onSelectTag={(tag) => setSelectedTag(tag === selectedTag ? "All" : tag)}
           />
           
           <div className="max-w-4xl mx-auto flex flex-col md:flex-row gap-4 mt-6">

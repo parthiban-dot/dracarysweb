@@ -1,12 +1,13 @@
+
 import { Container } from "@/components/layout/container";
 import { Section } from "@/components/layout/section";
 import { SectionHeader } from "@/components/shared/section-header";
-import { Rocket, Target, Shield, Zap, Camera } from "lucide-react";
+import { Rocket, Target, Shield, Zap } from "lucide-react";
 import { Metadata } from "next";
 import { AboutHero3D } from "@/components/features/about-hero-3d";
 
 export const metadata: Metadata = {
-  title: "About DRACARYS | Our Journey & Motive",
+  title: "About DRACARYS | Our Motive & Innovation",
   description: "Bridging the gap between academic theory and production-grade engineering.",
 };
 
@@ -63,70 +64,6 @@ export default function AboutPage() {
                   </div>
                 );
               })}
-            </div>
-          </div>
-
-          {/* TIMELINE SECTION */}
-          <div className="mt-32">
-            <div className="flex flex-col items-center mb-16 text-center">
-              <h2 className="text-4xl font-extrabold text-white mb-4">DRACARYS Journey</h2>
-              <p className="text-white/60 max-w-2xl">
-                Our evolution from a small group of ambitious students to an active engineering team.
-              </p>
-            </div>
-            
-            <div className="max-w-2xl mx-auto relative border-l-2 border-white/10 pl-8 pb-4 space-y-12">
-              <div className="relative">
-                <div className="absolute -left-[41px] top-1 w-5 h-5 rounded-full border-4 border-background bg-secondary" />
-                <h4 className="text-xl font-bold text-white">DRACARYS Founded</h4>
-                <p className="text-sm font-bold text-secondary mb-2">Early 2026</p>
-                <p className="text-muted-foreground">The vision was simple: stop building tutorial projects and start solving real problems.</p>
-              </div>
-              
-              <div className="relative">
-                <div className="absolute -left-[41px] top-1 w-5 h-5 rounded-full border-4 border-background bg-primary" />
-                <h4 className="text-xl font-bold text-white">First Major Project: HostelHub</h4>
-                <p className="text-sm font-bold text-primary mb-2">Mid 2026</p>
-                <p className="text-muted-foreground">Designed and built an AI-powered facial recognition platform to replace legacy attendance ledgers.</p>
-              </div>
-              
-              <div className="relative">
-                <div className="absolute -left-[41px] top-1 w-5 h-5 rounded-full border-4 border-background bg-amber-500" />
-                <h4 className="text-xl font-bold text-white">Hackathon Entry: YHACK '26</h4>
-                <p className="text-sm font-bold text-amber-500 mb-2">Late 2026</p>
-                <p className="text-muted-foreground">Entered the competitive stage with TrueVault, learning how to pitch, present, and survive 24-hour dev cycles.</p>
-              </div>
-              
-              <div className="relative">
-                <div className="absolute -left-[41px] top-1 w-5 h-5 rounded-full border-4 border-background bg-emerald-500" />
-                <h4 className="text-xl font-bold text-white">First Achievement</h4>
-                <p className="text-sm font-bold text-emerald-500 mb-2">Late 2026</p>
-                <p className="text-muted-foreground">Recognized as finalists, cementing our belief that our engineering could stand against the best.</p>
-              </div>
-              
-              <div className="relative">
-                <div className="absolute -left-[41px] top-1 w-5 h-5 rounded-full border-4 border-background bg-blue-400" />
-                <h4 className="text-xl font-bold text-white">Scaling the Vision</h4>
-                <p className="text-sm font-bold text-blue-400 mb-2">Present</p>
-                <p className="text-muted-foreground">Continuing to ship products, experiment with LLMs, and forge the future.</p>
-              </div>
-            </div>
-          </div>
-
-          {/* REAL HUMAN SECTION */}
-          <div className="mt-32 pb-16">
-            <div className="flex flex-col items-center mb-16 text-center">
-              <h2 className="text-4xl font-extrabold text-white mb-4">Behind The Code</h2>
-              <p className="text-white/60 max-w-2xl italic font-medium">
-                "The code is only half the story."
-              </p>
-            </div>
-            
-            <div className="max-w-4xl mx-auto border border-white/10 bg-white/5 rounded-2xl p-12 text-center flex flex-col items-center justify-center min-h-[300px] border-dashed">
-              <Camera className="w-12 h-12 text-white/20 mb-4" />
-              <p className="text-muted-foreground max-w-lg mb-6">
-                (This space is reserved for real team photography. We believe in authenticity over stock images. Real photos of our hackathon trips and late-night coding sessions go here.)
-              </p>
             </div>
           </div>
 
