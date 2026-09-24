@@ -65,7 +65,7 @@ export default async function DashboardProjectsPage() {
                 {project.summary}
               </p>
               <div className="flex items-center justify-between border-t border-white/10 pt-4 mt-auto">
-                <span className={`text-xs font-bold px-2 py-1 rounded ${project.status === 'DELIVERED' ? 'bg-secondary/20 text-secondary' : 'bg-white/10'}`}>
+                <span className={`text-xs font-bold px-2 py-1 rounded ${project.status === 'COMPLETED' ? 'bg-secondary/20 text-secondary' : 'bg-white/10'}`}>
                   {project.status.replace("_", " ")}
                 </span>
                 <Button asChild variant="ghost" size="sm" className="hover:bg-primary/20 hover:text-primary">
