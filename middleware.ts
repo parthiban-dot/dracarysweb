@@ -6,12 +6,15 @@ const { auth } = NextAuth(authConfig);
 
 const publicRoutes = [
   "/",
+  "/about",
   "/team",
   "/founder",
   "/projects",
   "/sold-projects",
   "/hackathons",
-  "/onboarding",
+  "/join",
+  "/hire",
+  "/contact"
 ];
 const authRoutes = ["/login", "/register", "/forgot-password", "/reset-password"];
 const apiAuthPrefix = "/api/auth";
