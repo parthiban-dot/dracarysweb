@@ -33,7 +33,7 @@ export default function FounderPage() {
           <div>
             <h1 className="text-3xl md:text-4xl font-bold text-white mb-2 tracking-tight">{founderProfile.name}</h1>
             <p className="text-primary font-medium tracking-widest uppercase text-sm mb-4">
-              {founderProfile.tag} • {founderProfile.role}
+              {founderProfile.tag} â€¢ {founderProfile.role}
             </p>
             
             <div className="flex gap-6 justify-center md:justify-start">
@@ -55,13 +55,13 @@ export default function FounderPage() {
             <h2 className="text-xl font-semibold text-white mb-4">The Origin</h2>
             <div className="text-white/80 leading-loose space-y-4">
               <p>
-                DRACARYS started with a simple idea — learning by building.
+                DRACARYS started with a simple idea â€” learning by building.
               </p>
               <p>
                 Instead of stopping at college projects, we wanted to create a space where students could work together, build real products, participate in hackathons, and turn ideas into something useful.
               </p>
               <p>
-                A year ago, I was looking for opportunities. Today, I’m finally in a position to create opportunities for others.
+                A year ago, I was looking for opportunities. Today, Iâ€™m finally in a position to create opportunities for others.
               </p>
             </div>
           </motion.section>
@@ -96,14 +96,6 @@ export default function FounderPage() {
             </ul>
           </motion.section>
 
-          {/* Tech Stack */}
-          <motion.section initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }}>
-            <h2 className="text-xl font-semibold text-white mb-4">Tech Stack</h2>
-            <p className="text-primary/90 font-mono text-sm leading-loose tracking-wide">
-              Next.js <span className="text-white/20 mx-2">·</span> React <span className="text-white/20 mx-2">·</span> TypeScript <span className="text-white/20 mx-2">·</span> Python <span className="text-white/20 mx-2">·</span> AI/ML <span className="text-white/20 mx-2">·</span> FastAPI <span className="text-white/20 mx-2">·</span> PostgreSQL <span className="text-white/20 mx-2">·</span> Cloud
-            </p>
-          </motion.section>
-
           {/* What We Build */}
           <motion.section initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }}>
             <h2 className="text-xl font-semibold text-white mb-6 border-b border-white/10 pb-4">What We Build</h2>
@@ -111,17 +103,17 @@ export default function FounderPage() {
               
               <div className="group cursor-default">
                 <h3 className="text-lg font-medium text-white mb-1 transition-colors">Industrial Workshop Platform</h3>
-                <p className="text-sm text-white/50 tracking-wide font-mono">Full-Stack <span className="mx-2">·</span> AI Chatbot</p>
+                <p className="text-sm text-white/50 tracking-wide font-mono">Full-Stack <span className="mx-2">Â·</span> AI Chatbot</p>
               </div>
 
               <div className="group cursor-default">
                 <h3 className="text-lg font-medium text-white mb-1 transition-colors">AI Jewellery Design Platform</h3>
-                <p className="text-sm text-white/50 tracking-wide font-mono">Computer Vision <span className="mx-2">·</span> AI <span className="mx-2">·</span> Full-Stack</p>
+                <p className="text-sm text-white/50 tracking-wide font-mono">Computer Vision <span className="mx-2">Â·</span> AI <span className="mx-2">Â·</span> Full-Stack</p>
               </div>
 
               <div className="group cursor-default">
                 <h3 className="text-lg font-medium text-white mb-1 transition-colors">DRACARYS Website</h3>
-                <p className="text-sm text-white/50 tracking-wide font-mono">Next.js <span className="mx-2">·</span> TypeScript <span className="mx-2">·</span> Vercel</p>
+                <p className="text-sm text-white/50 tracking-wide font-mono">Next.js <span className="mx-2">Â·</span> TypeScript <span className="mx-2">Â·</span> Vercel</p>
               </div>
 
             </div>
