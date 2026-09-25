@@ -1,5 +1,5 @@
 import { PrismaClient } from "@prisma/client";
-import { demoMembers } from "@/lib/demo-data";
+
 import { TeamClient, TeamMemberItem } from "./team-client";
 
 const prisma = new PrismaClient();
@@ -33,12 +33,7 @@ export default async function TeamPage() {
     image: user.image || undefined,
   }));
 
-  // Prevent duplicates if an admin adds someone who is already in the hardcoded demoMembers by name
-  const existingNames = new Set(demoMembers.map(m => m.name.toLowerCase()));
-  const newCustomMembers = customMembers.filter(m => !existingNames.has(m.name.toLowerCase()));
-
-  // Combine original hardcoded members with new custom members from the database
-  const combinedMembers: TeamMemberItem[] = [...demoMembers, ...newCustomMembers];
+  const combinedMembers: TeamMemberItem[] = customMembers;
 
   return <TeamClient members={combinedMembers} />;
 }

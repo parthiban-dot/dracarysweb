@@ -2,8 +2,8 @@ import { auth } from "@/auth";
 import { redirect } from "next/navigation";
 import { PrismaClient } from "@prisma/client";
 import { LiquidGlass } from "@/components/shared/liquid-glass";
-import { ShieldAlert, Check, X, Shield, User as UserIcon } from "lucide-react";
-import { updateUserApproval, promoteToAdmin } from "@/actions/admin";
+import { ShieldAlert, Check, X, Shield, User as UserIcon, Trash2 } from "lucide-react";
+import { updateUserApproval, promoteToAdmin, deleteUser } from "@/actions/admin";
 
 const prisma = new PrismaClient();
 
@@ -23,7 +23,7 @@ export default async function AdminUsersPage() {
     <div className="space-y-8">
       <div className="mb-10">
         <h1 className="text-3xl font-extrabold tracking-tighter text-white mb-2 flex items-center gap-3">
-          <ShieldAlert className="w-8 h-8 text-primary" /> Users & Access Control
+          <ShieldAlert className="w-8 h-8 text-primary" /> Manage Members
         </h1>
         <p className="text-muted-foreground text-lg">Manage member approvals, roles, and platform access.</p>
       </div>
@@ -96,6 +96,13 @@ export default async function AdminUsersPage() {
                       <form action={promoteToAdmin.bind(null, u.id)}>
                         <button type="submit" className="px-3 py-1.5 rounded-md bg-primary/10 text-primary text-xs font-bold hover:bg-primary/20 transition-colors">
                           Make Admin
+                        </button>
+                      </form>
+                    )}
+                    {session?.user?.id !== u.id && (
+                      <form action={deleteUser.bind(null, u.id)}>
+                        <button type="submit" className="p-2 rounded-md bg-red-500/10 text-red-500 hover:bg-red-500/20 transition-colors ml-2" title="Remove Member">
+                          <Trash2 className="w-4 h-4" />
                         </button>
                       </form>
                     )}

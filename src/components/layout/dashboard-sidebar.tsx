@@ -87,7 +87,7 @@ export function DashboardSidebar({ session }: { session: Session | null }) {
                   pathname.startsWith("/dashboard/admin/users") ? "bg-primary/20 text-primary" : "text-muted-foreground hover:bg-primary/10 hover:text-primary"
                 )}
               >
-                <Users className="w-4 h-4" /> Users & Access
+                <Users className="w-4 h-4" /> Manage Members
               </Link>
               <Link 
                 href="/dashboard/admin/add-member"

@@ -79,3 +79,19 @@ export async function updateProjectInquiryStatus(id: string, status: string, adm
   });
   revalidatePath("/dashboard/admin/inquiries");
 }
+export async function deleteUser(userId: string) {
+  await requireAdmin();
+  
+  // Verify it's not the super admin deleting themselves
+  const session = await auth();
+  if (session?.user?.id === userId) {
+    throw new Error("Cannot delete yourself");
+  }
+
+  await prisma.user.delete({
+    where: { id: userId }
+  });
+  
+  revalidatePath("/dashboard/admin/users");
+  revalidatePath("/team");
+}
