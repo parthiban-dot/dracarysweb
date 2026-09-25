@@ -122,3 +122,13 @@
     @apply tracking-tighter text-transparent bg-clip-text bg-gradient-to-br from-white via-foreground to-primary/80 font-extrabold;
   }
 }
+
+@layer utilities {
+  .hide-scrollbar {
+    -ms-overflow-style: none;  /* IE and Edge */
+    scrollbar-width: none;  /* Firefox */
+  }
+  .hide-scrollbar::-webkit-scrollbar {
+    display: none; /* Chrome, Safari and Opera */
+  }
+}
