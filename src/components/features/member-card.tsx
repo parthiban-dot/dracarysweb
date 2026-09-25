@@ -1,6 +1,6 @@
 import { LiquidGlass } from "@/components/shared/liquid-glass";
 import { Badge } from "@/components/ui/badge";
-import { GithubIcon, LinkedinIcon } from "@/components/shared/icons";
+import { GithubIcon, LinkedinIcon, InstagramIcon } from "@/components/shared/icons";
 import Link from "next/link";
 
 interface MemberCardProps {
@@ -11,9 +11,10 @@ interface MemberCardProps {
   year?: string;
   github?: string;
   linkedin?: string;
+  instagram?: string;
 }
 
-export function MemberCard({ name, tag, role, skills, year, github, linkedin }: MemberCardProps) {
+export function MemberCard({ name, tag, role, skills, year, github, linkedin, instagram }: MemberCardProps) {
   return (
     <LiquidGlass className="p-6 text-center group hover:border-primary/30 transition-all flex flex-col h-full relative">
       {year && (
@@ -49,8 +50,13 @@ export function MemberCard({ name, tag, role, skills, year, github, linkedin }: 
           </Link>
         )}
         {linkedin && (
-          <Link href={linkedin} target="_blank" className="text-muted-foreground hover:text-foreground transition-colors">
+          <Link href={linkedin} target="_blank" className="p-2 rounded-full bg-white/5 hover:bg-white/10 hover:text-white text-muted-foreground transition-colors">
             <LinkedinIcon className="w-4 h-4" />
+          </Link>
+        )}
+        {instagram && (
+          <Link href={instagram} target="_blank" className="p-2 rounded-full bg-white/5 hover:bg-white/10 hover:text-white text-muted-foreground transition-colors">
+            <InstagramIcon className="w-4 h-4" />
           </Link>
         )}
       </div>

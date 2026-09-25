@@ -22,6 +22,7 @@ export interface TeamMemberItem {
   bio?: string;
   github?: string;
   linkedin?: string;
+  instagram?: string;
 }
 
 interface TeamClientProps {

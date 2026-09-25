@@ -4,7 +4,7 @@ import { useRef, useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { cn } from "@/lib/utils";
 import { ChevronLeft, ChevronRight } from "lucide-react";
-import { GithubIcon, LinkedinIcon } from "@/components/shared/icons";
+import { GithubIcon, LinkedinIcon, InstagramIcon } from "@/components/shared/icons";
 import { TeamMemberItem } from "@/app/team/team-client";
 import Link from "next/link";
 import { Badge } from "@/components/ui/badge";
@@ -76,7 +76,7 @@ export function TeamCarousel({ members }: TeamCarouselProps) {
                     {members[activeIndex].name}
                   </h3>
                   <p className="text-primary font-medium tracking-wide">
-                    {members[activeIndex].role} {members[activeIndex].year && `• ${members[activeIndex].year}`}
+                    {members[activeIndex].role} {members[activeIndex].year && `Ã¢â‚¬Â¢ ${members[activeIndex].year}`}
                   </p>
                 </div>
 
@@ -106,6 +106,11 @@ export function TeamCarousel({ members }: TeamCarouselProps) {
                   {members[activeIndex].linkedin && (
                     <Link href={members[activeIndex].linkedin} target="_blank" className="p-2 rounded-full bg-white/5 border border-white/10 hover:bg-white/10 hover:text-white text-muted-foreground transition-colors">
                       <LinkedinIcon className="w-5 h-5" />
+                    </Link>
+                  )}
+                  {members[activeIndex].instagram && (
+                    <Link href={members[activeIndex].instagram} target="_blank" className="p-2 rounded-full bg-white/5 border border-white/10 hover:bg-white/10 hover:text-white text-muted-foreground transition-colors">
+                      <InstagramIcon className="w-5 h-5" />
                     </Link>
                   )}
                 </div>
