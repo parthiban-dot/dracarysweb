@@ -5,7 +5,7 @@ import { Section } from "@/components/layout/section";
 import { SectionHeader } from "@/components/shared/section-header";
 import { MemberCard } from "@/components/features/member-card";
 
-import { MemberTagCarousel } from "@/components/features/member-tag-carousel";
+import { MemberTagFan } from "@/components/features/member-tag-fan";
 import { Input } from "@/components/ui/input";
 import { useState, useMemo } from "react";
 import { Search } from "lucide-react";
@@ -31,7 +31,7 @@ interface TeamClientProps {
 
 export function TeamClient({ members }: TeamClientProps) {
   const [searchQuery, setSearchQuery] = useState("");
-  const [selectedTag, setSelectedTag] = useState("All");
+  const [selectedTag] = useState("All");
   const [roleFilter, setRoleFilter] = useState("All");
   
 
@@ -61,11 +61,7 @@ export function TeamClient({ members }: TeamClientProps) {
             description="Our collective of engineers, designers, and visionaries."
           />
 
-          <MemberTagCarousel 
-            tags={tagsList} 
-            selectedTag={selectedTag}
-            onSelectTag={(tag) => setSelectedTag(tag)}
-          />
+          <MemberTagFan tags={tagsList} />
           
           <div className="max-w-4xl mx-auto flex flex-col md:flex-row gap-4 mt-6">
             <div className="relative flex-1">
