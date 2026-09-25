@@ -53,11 +53,9 @@ export default {
         where: { email: user.email },
       });
 
-      // If user exists, verify they are APPROVED
+      // We no longer block login here. 
+      // We let them log in, and dashboard/layout.tsx redirects them to /pending-approval if they are not approved.
       if (existingUser) {
-        if (existingUser.status !== "APPROVED") {
-          return false; // Blocks login if PENDING or REJECTED
-        }
         return true;
       }
 
