@@ -2,8 +2,9 @@ import { auth } from "@/auth";
 import { redirect } from "next/navigation";
 import { PrismaClient } from "@prisma/client";
 import { LiquidGlass } from "@/components/shared/liquid-glass";
-import { ShieldAlert, Check, X, Shield, User as UserIcon, Trash2 } from "lucide-react";
+import { ShieldAlert, Check, X, Shield, User as UserIcon, Trash2, Pencil } from "lucide-react";
 import { updateUserApproval, promoteToAdmin, deleteUser } from "@/actions/admin";
+import Link from "next/link";
 
 const prisma = new PrismaClient();
 
@@ -99,6 +100,9 @@ export default async function AdminUsersPage() {
                         </button>
                       </form>
                     )}
+                    <Link href={`/dashboard/admin/users/${u.id}/edit`} className="p-2 rounded-md bg-primary/10 text-primary hover:bg-primary/20 transition-colors ml-2" title="Edit Member">
+                      <Pencil className="w-4 h-4" />
+                    </Link>
                     {session?.user?.id !== u.id && (
                       <form action={deleteUser.bind(null, u.id)}>
                         <button type="submit" className="p-2 rounded-md bg-red-500/10 text-red-500 hover:bg-red-500/20 transition-colors ml-2" title="Remove Member">
