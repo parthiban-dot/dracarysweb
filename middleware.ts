@@ -45,6 +45,15 @@ export default auth((req) => {
     return NextResponse.redirect(new URL("/login", nextUrl));
   }
 
+  // Hardened Security: Defense-in-depth for Admin Routes
+  if (nextUrl.pathname.startsWith("/dashboard/admin")) {
+    const role = req.auth?.user?.role;
+    if (role !== "ADMIN" && role !== "SUPER_ADMIN") {
+      // If a non-admin tries to access admin routes, kick them to dashboard
+      return NextResponse.redirect(new URL("/dashboard", nextUrl));
+    }
+  }
+
   return NextResponse.next();
 });
 
