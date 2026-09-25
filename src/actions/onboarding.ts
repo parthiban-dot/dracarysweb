@@ -3,7 +3,6 @@
 import { auth } from "@/auth";
 import { db } from "@/lib/db";
 import { revalidatePath } from "next/cache";
-import { redirect } from "next/navigation";
 import { z } from "zod";
 
 const onboardingSchema = z.object({
@@ -18,65 +17,72 @@ const onboardingSchema = z.object({
 const FOUNDER_EMAIL = "vinayagamparthiban07@gmail.com";
 
 export async function submitOnboarding(formData: FormData) {
-  const session = await auth();
-  
-  if (!session?.user?.id || !session.user.email) {
-    throw new Error("Unauthorized");
-  }
+  try {
+    const session = await auth();
+    
+    if (!session?.user?.id || !session.user.email) {
+      return { error: "Unauthorized" };
+    }
 
-  const rawData = {
-    memberTag: formData.get("memberTag") as string,
-    bio: formData.get("bio") as string,
-    skills: formData.get("skills") as string,
-    githubUrl: formData.get("githubUrl") as string,
-    linkedinUrl: formData.get("linkedinUrl") as string,
-    year: formData.get("year") as string,
-  };
+    const rawData = {
+      memberTag: formData.get("memberTag") as string,
+      bio: formData.get("bio") as string,
+      skills: formData.get("skills") as string,
+      githubUrl: formData.get("githubUrl") as string,
+      linkedinUrl: formData.get("linkedinUrl") as string,
+      year: formData.get("year") as string,
+    };
 
-  const validated = onboardingSchema.parse(rawData);
-  const skillsArray = validated.skills.split(",").map(s => s.trim()).filter(Boolean);
+    const validated = onboardingSchema.safeParse(rawData);
+    if (!validated.success) {
+      return { error: validated.error.issues[0].message };
+    }
 
-  const isFounder = session.user.email.toLowerCase() === FOUNDER_EMAIL.toLowerCase();
-  
-  // Keep their existing status, or if somehow not set, default to their current session status
-  const currentStatus = session.user.status || "PENDING";
-  const finalStatus = isFounder ? "APPROVED" : currentStatus;
-  const isApproved = finalStatus === "APPROVED";
-  const approvalToken = null; // No longer needed since approval happens via JoinApplication
+    const skillsArray = validated.data.skills.split(",").map(s => s.trim()).filter(Boolean);
+    const isFounder = session.user.email.toLowerCase() === FOUNDER_EMAIL.toLowerCase();
+    
+    const currentStatus = session.user.status || "PENDING";
+    const finalStatus = isFounder ? "APPROVED" : currentStatus;
+    const isApproved = finalStatus === "APPROVED";
+    const approvalToken = null; 
 
-  await db.user.update({
-    where: { id: session.user.id },
-    data: {
-      onboarded: true,
-      status: finalStatus as any,
-      role: isFounder ? "SUPER_ADMIN" : "MEMBER",
-      profile: {
-        upsert: {
-          create: {
-            memberTag: validated.memberTag,
-            bio: validated.bio,
-            skills: skillsArray,
-            githubUrl: validated.githubUrl || null,
-            linkedinUrl: validated.linkedinUrl || null,
-            year: validated.year,
-            isApproved,
-            approvalToken,
-          },
-          update: {
-            memberTag: validated.memberTag,
-            bio: validated.bio,
-            skills: skillsArray,
-            githubUrl: validated.githubUrl || null,
-            linkedinUrl: validated.linkedinUrl || null,
-            year: validated.year,
-            isApproved,
-            approvalToken,
+    await db.user.update({
+      where: { id: session.user.id },
+      data: {
+        onboarded: true,
+        status: finalStatus as any,
+        role: isFounder ? "SUPER_ADMIN" : "MEMBER",
+        profile: {
+          upsert: {
+            create: {
+              memberTag: validated.data.memberTag,
+              bio: validated.data.bio,
+              skills: skillsArray,
+              githubUrl: validated.data.githubUrl || null,
+              linkedinUrl: validated.data.linkedinUrl || null,
+              year: validated.data.year,
+              isApproved,
+              approvalToken,
+            },
+            update: {
+              memberTag: validated.data.memberTag,
+              bio: validated.data.bio,
+              skills: skillsArray,
+              githubUrl: validated.data.githubUrl || null,
+              linkedinUrl: validated.data.linkedinUrl || null,
+              year: validated.data.year,
+              isApproved,
+              approvalToken,
+            }
           }
         }
-      }
-    },
-  });
+      },
+    });
 
-  revalidatePath("/", "layout");
-  redirect("/dashboard");
+    revalidatePath("/", "layout");
+    return { success: true };
+  } catch (error) {
+    console.error(error);
+    return { error: "Failed to initialize profile. Please try again." };
+  }
 }
