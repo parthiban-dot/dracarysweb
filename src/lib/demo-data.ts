@@ -15,6 +15,7 @@ export const demoProjects: Project[] = [
     summary: "Distributed college hostel security and management platform combining automated AI facial recognition with administrative modules.",
     type: "AI & Security System",
     status: "COMPLETED",
+    year: "2026",
     problem: "Traditional hostels rely on manual security registers, tedious attendance, and lack real-time alerts for unauthorized access.",
     solution: "Automates perimeter security integrating deep learning (RetinaFace/ArcFace) to process camera feeds, logging attendance and flagging intruders via a decoupled 3-tier architecture.",
     features: [
@@ -41,6 +42,7 @@ export const demoProjects: Project[] = [
     summary: "Automated evaluation system to detect, measure, and mitigate hallucinations in Large Language Models.",
     type: "AI Reliability Framework",
     status: "OPEN SOURCE",
+    year: "2026",
     problem: "LLMs frequently generate plausible but factually incorrect information, and manual auditing is unscalable in production.",
     solution: "A modular programmatic pipeline that evaluates LLM outputs against source reference documents using automated metrics and heuristic checks.",
     features: [
@@ -66,6 +68,7 @@ export const demoProjects: Project[] = [
     summary: "Blockchain-based digital identity and asset verification platform for secure, tamper-resistant ownership.",
     type: "Web3 / Blockchain Platform",
     status: "COMPLETED",
+    year: "2026",
     problem: "Centralized databases are single points of failure, ownership records can be manipulated, and transferring secure access requires manual processes.",
     solution: "Combines cryptographic identity, ERC-721 ownership records, RBAC, and AES-256-GCM encrypted off-chain storage to secure digital assets.",
     features: [
@@ -92,6 +95,7 @@ export const demoProjects: Project[] = [
     summary: "Institutional web platform for corporate employers to verify educational credentials and degree authenticity.",
     type: "Institutional Web Portal",
     status: "COMPLETED",
+    year: "2026",
     problem: "Manual credential verification is slow, paper certificates risk forgery, and admin staff face high operational overhead.",
     solution: "A digital portal with a strict pipeline utilizing secure SMTP OTP authentication and automated algorithmic matching against institutional databases.",
     features: [
@@ -122,6 +126,7 @@ export const demoHackathons: Hackathon[] = [
     name: "HACKSPRINT '26",
     organizer: "HACKSPRINT",
     date: "July 2026",
+    year: "2026",
     location: "Offline",
     eventType: "GLOBAL",
     problem: "Traditional college hostels rely heavily on manual security registers, creating critical security and operational vulnerabilities.",
@@ -145,6 +150,7 @@ export const demoHackathons: Hackathon[] = [
     name: "AI Innovation Hackathon 2026",
     organizer: "AI Innovation",
     date: "September 2026",
+    year: "2026",
     location: "Offline",
     eventType: "GLOBAL",
     problem: "Building an Interactive AI Teacher capable of delivering personalized and adaptive learning rather than simply generating static educational content.",
@@ -168,6 +174,7 @@ export const demoHackathons: Hackathon[] = [
     name: "YHACK'26",
     organizer: "YHACK",
     date: "September 2026",
+    year: "2026",
     location: "Offline",
     eventType: "GLOBAL",
     problem: "Developing a secure software solution around digital data/file security, controlled access, and identity-based authorization.",

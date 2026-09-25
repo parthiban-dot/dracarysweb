@@ -50,7 +50,7 @@ export function TeamClient({ members }: TeamClientProps) {
       
       return matchesSearch && matchesTag && matchesRole && matchesYear;
     });
-  }, [searchQuery, selectedTag, roleFilter, yearFilter, members]);
+  }, [searchQuery, selectedTag, roleFilter, members]);
 
   return (
     <>
