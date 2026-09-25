@@ -12,7 +12,8 @@ import Link from "next/link";
 
 const prisma = new PrismaClient();
 
-export default async function EditMemberPage({ params }: { params: { id: string } }) {
+export default async function EditMemberPage({ params }: { params: Promise<{ id: string }> }) {
+  const { id } = await params;
   const session = await auth();
 
   if (session?.user?.role !== "ADMIN" && session?.user?.role !== "SUPER_ADMIN") {
@@ -20,7 +21,7 @@ export default async function EditMemberPage({ params }: { params: { id: string 
   }
 
   const user = await prisma.user.findUnique({
-    where: { id: params.id },
+    where: { id },
     include: { profile: true }
   });
 
