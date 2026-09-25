@@ -39,6 +39,7 @@ export function LinkedinIcon(props: SVGProps<SVGSVGElement>) {
     </svg>
   );
 }
+
 export function InstagramIcon(props: SVGProps<SVGSVGElement>) {
   return (
     <svg
