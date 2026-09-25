@@ -3,7 +3,7 @@
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { cn } from "@/lib/utils";
-import { LayoutDashboard, User, FolderGit2, Bell, LogOut, Settings, ShieldAlert } from "lucide-react";
+import { LayoutDashboard, User, FolderGit2, Bell, LogOut, Settings, ShieldAlert, FileText, MessageSquare, Megaphone, Users } from "lucide-react";
 import { signOut } from "next-auth/react";
 import type { Session } from "next-auth";
 
@@ -63,13 +63,40 @@ export function DashboardSidebar({ session }: { session: Session | null }) {
             </p>
             <nav className="space-y-1">
               <Link 
+                href="/dashboard/admin/applications"
+                className={cn(
+                  "flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm font-medium transition-all duration-300 relative group",
+                  pathname.startsWith("/dashboard/admin/applications") ? "bg-primary/20 text-primary" : "text-muted-foreground hover:bg-primary/10 hover:text-primary"
+                )}
+              >
+                <FileText className="w-4 h-4" /> Applications
+              </Link>
+              <Link 
+                href="/dashboard/admin/inquiries"
+                className={cn(
+                  "flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm font-medium transition-all duration-300 relative group",
+                  pathname.startsWith("/dashboard/admin/inquiries") ? "bg-primary/20 text-primary" : "text-muted-foreground hover:bg-primary/10 hover:text-primary"
+                )}
+              >
+                <MessageSquare className="w-4 h-4" /> Inquiries
+              </Link>
+              <Link 
                 href="/dashboard/admin/users"
                 className={cn(
                   "flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm font-medium transition-all duration-300 relative group",
                   pathname.startsWith("/dashboard/admin/users") ? "bg-primary/20 text-primary" : "text-muted-foreground hover:bg-primary/10 hover:text-primary"
                 )}
               >
-                <User className="w-4 h-4" /> Users & Access
+                <Users className="w-4 h-4" /> Users & Access
+              </Link>
+              <Link 
+                href="/dashboard/admin/announcements"
+                className={cn(
+                  "flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm font-medium transition-all duration-300 relative group",
+                  pathname.startsWith("/dashboard/admin/announcements") ? "bg-primary/20 text-primary" : "text-muted-foreground hover:bg-primary/10 hover:text-primary"
+                )}
+              >
+                <Megaphone className="w-4 h-4" /> Announcements
               </Link>
               <Link 
                 href="/dashboard/admin/projects"
