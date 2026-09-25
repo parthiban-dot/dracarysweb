@@ -16,12 +16,25 @@ export default async function DashboardLayout({ children }: { children: React.Re
     redirect("/api/auth/signin");
   }
 
+  // DB self-healing check in case JWT cookie is stale
+  let currentStatus = session.user.status;
+  let currentOnboarded = session.user.onboarded;
+
+  if (currentStatus !== "APPROVED" || !currentOnboarded) {
+    const { db } = await import("@/lib/db");
+    const dbUser = await db.user.findUnique({ where: { id: session.user.id } });
+    if (dbUser) {
+      currentStatus = dbUser.status;
+      currentOnboarded = dbUser.onboarded;
+    }
+  }
+
   // If user is PENDING or REJECTED, they cannot access the dashboard
-  if (session.user.status !== "APPROVED") {
+  if (currentStatus !== "APPROVED") {
     redirect("/pending-approval");
   }
 
-  if (session.user.status === "APPROVED" && !session.user.onboarded) {
+  if (currentStatus === "APPROVED" && !currentOnboarded) {
     redirect("/onboarding");
   }
 

@@ -25,7 +25,11 @@ export default function OnboardingPage() {
         setError(res.error);
         setLoading(false);
       } else {
-        router.push("/dashboard");
+        // Because Next-Auth uses a JWT for sessions, the cookie still thinks onboarded is false.
+        // But our new dashboard layout checks the database on the first request if it sees false,
+        // so it will correctly let the user in and self-heal!
+        // We use window.location to force a full hard reload so the RSC layout runs again properly.
+        window.location.href = "/dashboard";
       }
     } catch (err) {
       setError("An unexpected error occurred. Please check your inputs.");
