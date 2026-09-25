@@ -2,11 +2,9 @@
 
 import { auth } from "@/auth";
 import { db } from "@/lib/db";
-import { sendEmail } from "@/lib/email";
 import { revalidatePath } from "next/cache";
 import { redirect } from "next/navigation";
 import { z } from "zod";
-import crypto from "crypto";
 
 const onboardingSchema = z.object({
   memberTag: z.string().min(2, "Tag must be at least 2 characters").max(50),
@@ -39,15 +37,18 @@ export async function submitOnboarding(formData: FormData) {
   const skillsArray = validated.skills.split(",").map(s => s.trim()).filter(Boolean);
 
   const isFounder = session.user.email.toLowerCase() === FOUNDER_EMAIL.toLowerCase();
-  const approvalToken = isFounder ? null : crypto.randomUUID();
-  const status = isFounder ? "APPROVED" : "PENDING";
-  const isApproved = isFounder;
+  
+  // Keep their existing status, or if somehow not set, default to their current session status
+  const currentStatus = session.user.status || "PENDING";
+  const finalStatus = isFounder ? "APPROVED" : currentStatus;
+  const isApproved = finalStatus === "APPROVED";
+  const approvalToken = null; // No longer needed since approval happens via JoinApplication
 
   await db.user.update({
     where: { id: session.user.id },
     data: {
       onboarded: true,
-      status: status as any,
+      status: finalStatus as any,
       role: isFounder ? "SUPER_ADMIN" : "MEMBER",
       profile: {
         upsert: {
@@ -76,75 +77,6 @@ export async function submitOnboarding(formData: FormData) {
     },
   });
 
-  // If non-founder, send approval email to founder
-  if (!isFounder && approvalToken) {
-    const baseUrl = process.env.NEXTAUTH_URL || process.env.AUTH_URL || "https://dracarysweb.vercel.app";
-    const approveUrl = `${baseUrl}/api/admin/approve-member?token=${approvalToken}&action=approve`;
-    const rejectUrl = `${baseUrl}/api/admin/approve-member?token=${approvalToken}&action=reject`;
-
-    const htmlContent = `
-      <div style="font-family: Arial, sans-serif; background-color: #0d1117; color: #e6edf3; padding: 24px; border-radius: 8px;">
-        <h2 style="color: #3b82f6; margin-top: 0;">🔥 DRACARYS — New Member Intake Application</h2>
-        <p style="font-size: 16px;">A new applicant has completed Google Authentication & Member Profile setup:</p>
-        
-        <table style="width: 100%; border-collapse: collapse; margin-top: 16px; margin-bottom: 24px; color: #e6edf3;">
-          <tr style="border-bottom: 1px solid #30363d;">
-            <td style="padding: 8px; font-weight: bold; width: 140px;">Full Name:</td>
-            <td style="padding: 8px;">${session.user.name || "N/A"}</td>
-          </tr>
-          <tr style="border-bottom: 1px solid #30363d;">
-            <td style="padding: 8px; font-weight: bold;">Email:</td>
-            <td style="padding: 8px;">${session.user.email}</td>
-          </tr>
-          <tr style="border-bottom: 1px solid #30363d;">
-            <td style="padding: 8px; font-weight: bold;">Member Tag:</td>
-            <td style="padding: 8px;">${validated.memberTag}</td>
-          </tr>
-          <tr style="border-bottom: 1px solid #30363d;">
-            <td style="padding: 8px; font-weight: bold;">Year of Study:</td>
-            <td style="padding: 8px;">${validated.year}</td>
-          </tr>
-          <tr style="border-bottom: 1px solid #30363d;">
-            <td style="padding: 8px; font-weight: bold;">Tech Stack:</td>
-            <td style="padding: 8px;">${skillsArray.join(", ")}</td>
-          </tr>
-          <tr style="border-bottom: 1px solid #30363d;">
-            <td style="padding: 8px; font-weight: bold;">Bio:</td>
-            <td style="padding: 8px;">${validated.bio}</td>
-          </tr>
-          <tr style="border-bottom: 1px solid #30363d;">
-            <td style="padding: 8px; font-weight: bold;">GitHub:</td>
-            <td style="padding: 8px;">${validated.githubUrl ? `<a href="${validated.githubUrl}" style="color: #60a5fa;">${validated.githubUrl}</a>` : "None"}</td>
-          </tr>
-          <tr style="border-bottom: 1px solid #30363d;">
-            <td style="padding: 8px; font-weight: bold;">LinkedIn:</td>
-            <td style="padding: 8px;">${validated.linkedinUrl ? `<a href="${validated.linkedinUrl}" style="color: #60a5fa;">${validated.linkedinUrl}</a>` : "None"}</td>
-          </tr>
-        </table>
-
-        <div style="margin-top: 24px; text-align: center; gap: 16px;">
-          <a href="${approveUrl}" style="background-color: #16a34a; color: #ffffff; padding: 14px 28px; font-size: 15px; font-weight: bold; text-decoration: none; border-radius: 6px; display: inline-block; margin-right: 12px;">
-            ✓ Approve Member (Yes)
-          </a>
-          <a href="${rejectUrl}" style="background-color: #dc2626; color: #ffffff; padding: 14px 28px; font-size: 15px; font-weight: bold; text-decoration: none; border-radius: 6px; display: inline-block;">
-            ✗ Reject Application
-          </a>
-        </div>
-      </div>
-    `;
-
-    await sendEmail({
-      to: FOUNDER_EMAIL,
-      subject: `[DRACARYS Intake] Application from ${session.user.name || session.user.email}`,
-      html: htmlContent,
-    });
-  }
-
   revalidatePath("/", "layout");
-  
-  if (isFounder) {
-    redirect("/dashboard");
-  } else {
-    redirect("/join");
-  }
+  redirect("/dashboard");
 }

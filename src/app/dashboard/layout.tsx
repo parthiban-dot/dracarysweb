@@ -21,6 +21,10 @@ export default async function DashboardLayout({ children }: { children: React.Re
     redirect("/pending-approval");
   }
 
+  if (session.user.status === "APPROVED" && !session.user.onboarded) {
+    redirect("/onboarding");
+  }
+
   return (
     <div className="fixed inset-0 z-50 flex overflow-hidden bg-background">
       <DragonAtmosphere />

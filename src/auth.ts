@@ -24,6 +24,16 @@ export const { handlers, auth, signIn, signOut } = NextAuth({
           where: { id: user.id },
           data: { role: "SUPER_ADMIN", status: "APPROVED" }
         })
+      } else if (user.email) {
+        const application = await prisma.joinApplication.findFirst({
+          where: { email: user.email, status: "ACCEPTED" }
+        });
+        if (application) {
+          await prisma.user.update({
+            where: { id: user.id },
+            data: { status: "APPROVED" }
+          });
+        }
       }
     }
   },
