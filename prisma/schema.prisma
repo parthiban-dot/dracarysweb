@@ -98,6 +98,7 @@ model MemberProfile {
   bio         String?  @db.Text
   githubUrl   String?
   linkedinUrl String?
+  instagramUrl String?
   skills        String[]
   year          String?
   isApproved    Boolean  @default(false)

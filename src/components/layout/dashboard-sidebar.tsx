@@ -3,7 +3,7 @@
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { cn } from "@/lib/utils";
-import { LayoutDashboard, User, FolderGit2, Bell, LogOut, Settings, ShieldAlert, FileText, MessageSquare, Megaphone, Users } from "lucide-react";
+import { LayoutDashboard, User, FolderGit2, Bell, LogOut, Settings, ShieldAlert, FileText, MessageSquare, Megaphone, Users, UserPlus } from "lucide-react";
 import { signOut } from "next-auth/react";
 import type { Session } from "next-auth";
 
@@ -88,6 +88,15 @@ export function DashboardSidebar({ session }: { session: Session | null }) {
                 )}
               >
                 <Users className="w-4 h-4" /> Users & Access
+              </Link>
+              <Link 
+                href="/dashboard/admin/add-member"
+                className={cn(
+                  "flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm font-medium transition-all duration-300 relative group",
+                  pathname.startsWith("/dashboard/admin/add-member") ? "bg-primary/20 text-primary" : "text-muted-foreground hover:bg-primary/10 hover:text-primary"
+                )}
+              >
+                <UserPlus className="w-4 h-4" /> Add Member
               </Link>
               <Link 
                 href="/dashboard/admin/announcements"
