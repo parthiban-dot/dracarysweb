@@ -7,26 +7,28 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
 import { adminUpdateMember } from "@/actions/admin-edit-member";
-import { Loader2, AlertCircle } from "lucide-react";
+import { Loader2, AlertCircle, CheckCircle2 } from "lucide-react";
 import Link from "next/link";
 
 export function EditMemberForm({ user }: { user: any }) {
   const router = useRouter();
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
+  const [success, setSuccess] = useState("");
 
   const handleSubmit = async (formData: FormData) => {
     setLoading(true);
     setError("");
+    setSuccess("");
     
     try {
       const res = await adminUpdateMember(user.id, formData);
       if (res?.error) {
         setError(res.error);
-        setLoading(false);
       } else {
-        router.push("/dashboard/admin/users");
+        setSuccess("Member profile updated successfully.");
       }
+      setLoading(false);
     } catch (err) {
       setError("An unexpected error occurred. Please check your inputs.");
       setLoading(false);
@@ -39,6 +41,12 @@ export function EditMemberForm({ user }: { user: any }) {
         <div className="mb-6 p-4 rounded-md bg-red-500/10 border border-red-500/20 text-red-500 flex items-center gap-2 text-sm">
           <AlertCircle className="w-4 h-4 shrink-0" />
           <p>{error}</p>
+        </div>
+      )}
+      {success && (
+        <div className="mb-6 p-4 rounded-md bg-green-500/10 border border-green-500/20 text-green-500 flex items-center gap-2 text-sm animate-in fade-in zoom-in duration-300">
+          <CheckCircle2 className="w-5 h-5 shrink-0" />
+          <p className="font-medium">{success}</p>
         </div>
       )}
 
