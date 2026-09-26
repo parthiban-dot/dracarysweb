@@ -21,6 +21,7 @@ export async function createProject(data: {
   year: string;
   problem: string;
   solution: string;
+  memberIds?: string[];
 }) {
   await requireAdmin();
   
@@ -36,11 +37,18 @@ export async function createProject(data: {
       problem: data.problem,
       solution: data.solution,
       status: "IN_PROGRESS",
-      clientVisibility: "PUBLIC"
+      clientVisibility: "PUBLIC",
+      teamMembers: (data.memberIds && data.memberIds.length > 0) ? {
+        create: data.memberIds.map(userId => ({
+          userId,
+          role: "Developer"
+        }))
+      } : undefined
     }
   });
 
   revalidatePath("/dashboard/admin/projects");
+  revalidatePath("/projects");
 }
 
 export async function assignProjectMember(projectId: string, userId: string, role: string) {

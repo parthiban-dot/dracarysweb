@@ -3,15 +3,18 @@ import { Badge } from "@/components/ui/badge";
 import { ArrowRight } from "lucide-react";
 import Link from "next/link";
 
+
+
 interface ProjectCardProps {
   title: string;
   summary: string;
   slug: string;
   technologyStack: string[];
   status: string;
+  teamMembers?: any[];
 }
 
-export function ProjectCard({ title, summary, slug, technologyStack, status }: ProjectCardProps) {
+export function ProjectCard({ title, summary, slug, technologyStack, status, teamMembers = [] }: ProjectCardProps) {
   return (
     <Link href={`/projects/${slug}`} className="group block h-full">
       <LiquidGlass className="h-full p-0 flex flex-col dragon-eye transition-all duration-300 group-hover:border-primary/50 group-hover:shadow-[0_0_20px_rgba(59,130,246,0.15)]">
@@ -30,13 +33,26 @@ export function ProjectCard({ title, summary, slug, technologyStack, status }: P
             {summary}
           </p>
           
-          <div className="flex flex-wrap gap-2 mb-6 mt-auto">
-            {technologyStack.slice(0, 3).map(tech => (
+          <div className="flex flex-wrap gap-2 mb-4 mt-auto">
+            {technologyStack && technologyStack.slice(0, 3).map(tech => (
               <Badge key={tech} variant="outline" className="border-white/10 text-xs">
                 {tech}
               </Badge>
             ))}
           </div>
+
+          {teamMembers.length > 0 && (
+            <div className="mb-6 pt-4 border-t border-white/5">
+              <p className="text-xs font-semibold text-muted-foreground uppercase tracking-wider mb-2">Team</p>
+              <div className="flex flex-wrap gap-1">
+                {teamMembers.map((tm, idx) => (
+                  <span key={idx} className="text-xs bg-white/5 border border-white/10 rounded-sm px-2 py-1 text-white/80">
+                    {tm.user?.name || (typeof tm === "string" ? tm : "Unknown")}
+                  </span>
+                ))}
+              </div>
+            </div>
+          )}
 
           <div className="flex items-center text-sm font-medium text-primary mt-auto">
             View Project <ArrowRight className="ml-2 w-4 h-4 group-hover:translate-x-1 transition-transform" />

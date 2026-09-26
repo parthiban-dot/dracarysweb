@@ -6,6 +6,13 @@ import { Button } from "@/components/ui/button";
 
 export function ProjectForm({ users }: { users: any[] }) {
   const [pending, setPending] = useState(false);
+  const [selectedMembers, setSelectedMembers] = useState<string[]>([]);
+
+  const toggleMember = (userId: string) => {
+    setSelectedMembers(prev => 
+      prev.includes(userId) ? prev.filter(id => id !== userId) : [...prev, userId]
+    );
+  };
 
   async function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault();
@@ -19,8 +26,10 @@ export function ProjectForm({ users }: { users: any[] }) {
         year: new Date().getFullYear().toString(),
         problem: formData.get("problem") as string || "TBD",
         solution: formData.get("solution") as string || "TBD",
+        memberIds: selectedMembers,
       });
       (e.target as HTMLFormElement).reset();
+      setSelectedMembers([]);
     } catch (err) {
       console.error(err);
       alert("Failed to create project");
@@ -48,6 +57,30 @@ export function ProjectForm({ users }: { users: any[] }) {
           <option value="SYSTEMS" className="bg-slate-900">Systems</option>
         </select>
       </div>
+
+      <div>
+        <label className="block text-xs font-semibold text-muted-foreground uppercase tracking-wider mb-2">Assign Team Members</label>
+        <div className="max-h-48 overflow-y-auto space-y-2 bg-white/5 border border-white/10 rounded-md p-3">
+          {users.map(u => (
+            <div key={u.id} className="flex items-center space-x-2">
+              <input 
+                type="checkbox" 
+                id={`user-${u.id}`}
+                checked={selectedMembers.includes(u.id)}
+                onChange={() => toggleMember(u.id)}
+                className="rounded border-white/20 bg-black/40 text-primary focus:ring-primary/50"
+              />
+              <label htmlFor={`user-${u.id}`} className="text-sm text-white cursor-pointer select-none">
+                {u.name} <span className="text-muted-foreground text-xs">({u.email})</span>
+              </label>
+            </div>
+          ))}
+          {users.length === 0 && (
+            <p className="text-xs text-muted-foreground">No approved members found.</p>
+          )}
+        </div>
+      </div>
+
       <Button type="submit" disabled={pending} className="w-full dragon-glow">
         {pending ? "Creating..." : "Create Project"}
       </Button>
