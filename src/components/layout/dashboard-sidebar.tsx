@@ -21,7 +21,7 @@ export function DashboardSidebar({ session }: { session: Session | null }) {
   const isAdmin = session?.user?.role === "SUPER_ADMIN" || session?.user?.role === "ADMIN";
 
   return (
-    <aside className="w-64 border-r border-white/5 bg-black/40 backdrop-blur-2xl flex flex-col relative z-20">
+    <aside className="w-64 border-r border-white/5 bg-black/40 backdrop-blur-md flex flex-col relative z-20">
       <div className="absolute inset-0 scale-texture opacity-[0.03] pointer-events-none" />
       
       <div className="h-16 flex items-center px-6 border-b border-white/5">
