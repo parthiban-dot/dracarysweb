@@ -5,7 +5,7 @@ import { Container } from "./container"
 
 export function Footer() {
   return (
-    <footer className="border-t border-white/5 bg-background/80 backdrop-blur-md py-12 relative overflow-hidden">
+    <footer className="border-t border-white/5 bg-background/80 backdrop-blur-sm py-12 relative overflow-hidden">
       <div className="absolute inset-0 scale-texture opacity-[0.03] pointer-events-none" />
       <Container className="relative z-10">
         <div className="grid grid-cols-1 md:grid-cols-4 gap-8 mb-8">

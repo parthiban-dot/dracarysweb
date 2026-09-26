@@ -27,7 +27,7 @@ export function Navbar() {
   const pathname = usePathname()
 
   return (
-    <header className="sticky top-0 z-50 w-full border-b border-white/5 bg-background/40 backdrop-blur-md">
+    <header className="sticky top-0 z-50 w-full border-b border-white/5 bg-background/40 backdrop-blur-sm">
       <Container>
         <div className="flex h-16 items-center justify-between">
           <div className="flex items-center gap-8">
@@ -73,7 +73,7 @@ export function Navbar() {
                   <span className="sr-only">Toggle menu</span>
                 </Button>
               </SheetTrigger>
-              <SheetContent side="right" className="bg-background/95 backdrop-blur-md border-l-white/10 w-full sm:w-[300px]">
+              <SheetContent side="right" className="bg-background/95 backdrop-blur-sm border-l-white/10 w-full sm:w-[300px]">
                 <nav className="flex flex-col gap-4 mt-8">
                   {links.map((link) => (
                     <Link

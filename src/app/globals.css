@@ -94,10 +94,10 @@
 @layer utilities {
   /* Liquid Glass */
   .glass-panel {
-    @apply bg-white/[0.02] backdrop-blur-md border border-white/[0.05] shadow-[0_4px_30px_rgba(0,0,0,0.3)];
+    @apply bg-white/[0.02] backdrop-blur-sm border border-white/[0.05] shadow-[0_4px_30px_rgba(0,0,0,0.3)];
   }
   .glass-panel-heavy {
-    @apply bg-black/40 backdrop-blur-xl border border-white/[0.08] shadow-[0_8px_40px_rgba(0,0,0,0.5)];
+    @apply bg-black/40 backdrop-blur-sm border border-white/[0.08] shadow-[0_8px_40px_rgba(0,0,0,0.5)];
   }
 
   /* Dragon Glow & Shadows */
