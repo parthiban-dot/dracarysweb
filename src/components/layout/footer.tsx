@@ -1,5 +1,6 @@
 import Link from "next/link"
 import Image from "next/image"
+import logoImage from "../../../public/dracarys-logo.jpg"
 import { Container } from "./container"
 
 export function Footer() {
@@ -10,7 +11,7 @@ export function Footer() {
         <div className="grid grid-cols-1 md:grid-cols-4 gap-8 mb-8">
           <div className="col-span-1 md:col-span-2">
             <div className="flex items-center gap-3 mb-4">
-              <Image src="/dracarys-logo.jpg" alt="DRACARYS Logo" width={40} height={40} className="w-10 h-10 rounded-lg object-cover border border-white/10 shadow-[0_0_15px_rgba(239,68,68,0.2)]" />
+              <Image src={logoImage} alt="DRACARYS Logo" width={40} height={40} className="w-10 h-10 rounded-lg object-cover border border-white/10 shadow-[0_0_15px_rgba(239,68,68,0.2)]" />
               <span className="text-2xl font-extrabold tracking-tighter text-transparent bg-clip-text bg-gradient-to-r from-primary to-secondary">
                 DRACARYS
               </span>

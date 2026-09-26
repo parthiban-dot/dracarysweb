@@ -2,6 +2,7 @@
 
 import Link from "next/link"
 import Image from "next/image"
+import logoImage from "../../../public/dracarys-logo.jpg"
 import { usePathname } from "next/navigation"
 import { Container } from "./container"
 import { cn } from "@/lib/utils"
@@ -31,7 +32,7 @@ export function Navbar() {
         <div className="flex h-16 items-center justify-between">
           <div className="flex items-center gap-8">
             <Link href="/" className="flex items-center space-x-3 group">
-              <Image src="/dracarys-logo.jpg" alt="DRACARYS Logo" width={32} height={32} className="w-8 h-8 rounded-md object-cover border border-white/10 group-hover:border-primary/50 transition-colors" />
+              <Image src={logoImage} alt="DRACARYS Logo" width={32} height={32} className="w-8 h-8 rounded-md object-cover border border-white/10 group-hover:border-primary/50 transition-colors" />
               <span className="text-xl font-extrabold tracking-tighter text-transparent bg-clip-text bg-gradient-to-r from-primary to-secondary group-hover:opacity-80 transition-opacity hidden sm:inline-block">
                 DRACARYS
               </span>
