@@ -29,8 +29,9 @@ export function Navbar() {
       <Container>
         <div className="flex h-16 items-center justify-between">
           <div className="flex items-center gap-8">
-            <Link href="/" className="flex items-center space-x-2 group">
-              <span className="text-xl font-extrabold tracking-tighter text-transparent bg-clip-text bg-gradient-to-r from-primary to-secondary group-hover:opacity-80 transition-opacity">
+            <Link href="/" className="flex items-center space-x-3 group">
+              <img src="/dracarys-logo.jpg" alt="DRACARYS Logo" className="w-8 h-8 rounded-md object-cover border border-white/10 group-hover:border-primary/50 transition-colors" />
+              <span className="text-xl font-extrabold tracking-tighter text-transparent bg-clip-text bg-gradient-to-r from-primary to-secondary group-hover:opacity-80 transition-opacity hidden sm:inline-block">
                 DRACARYS
               </span>
             </Link>
