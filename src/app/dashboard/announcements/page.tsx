@@ -28,19 +28,10 @@ export default async function DashboardAnnouncementsPage() {
 
   return (
     <div className="max-w-4xl space-y-8 animate-in fade-in slide-in-from-bottom-4 duration-500">
-      <LiquidGlass className="relative overflow-hidden p-8 md:p-12 border-white/10 mb-8 flex flex-col items-center justify-center text-center">
-        <div className="absolute inset-0 scale-texture opacity-[0.05]" />
-        <div className="absolute -top-40 left-20 w-80 h-80 bg-red-500/10 rounded-full blur-[100px]" />
-        
-        <Bell className="w-12 h-12 text-primary mb-6 animate-bounce" style={{ animationDuration: '3s' }} />
-        
-        <h1 className="heading-dragon text-4xl md:text-5xl mb-4 text-white">
-          TEAM <span className="text-transparent bg-clip-text bg-gradient-to-r from-red-500 to-orange-500">ALERTS</span>
-        </h1>
-        <p className="text-lg text-muted-foreground max-w-2xl relative z-10">
-          Important updates, mission briefings, and broadcasts from the collective leadership.
-        </p>
-      </LiquidGlass>
+      <header>
+        <h1 className="text-3xl font-bold mb-2">Announcements</h1>
+        <p className="text-muted-foreground">Important updates and broadcasts from the collective leadership.</p>
+      </header>
 
       {!hasDbConnection ? (
          <EmptyState 

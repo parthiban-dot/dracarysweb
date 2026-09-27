@@ -3,7 +3,7 @@ import { redirect } from "next/navigation";
 import { db } from "@/lib/db";
 import { LiquidGlass } from "@/components/shared/liquid-glass";
 import { ProfileForm } from "@/components/features/profile-form";
-import { Shield, Lock, User as UserIcon } from "lucide-react";
+import { Shield, Lock } from "lucide-react";
 
 export const dynamic = "force-dynamic";
 
@@ -36,19 +36,10 @@ export default async function ProfilePage() {
 
   return (
     <div className="max-w-4xl space-y-8 animate-in fade-in slide-in-from-bottom-4 duration-500">
-      <LiquidGlass className="relative overflow-hidden p-8 md:p-12 border-white/10 mb-8 flex flex-col items-center justify-center text-center">
-        <div className="absolute inset-0 scale-texture opacity-[0.05]" />
-        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-full h-full bg-primary/5 rounded-full blur-[100px]" />
-        
-        <UserIcon className="w-12 h-12 text-primary mb-6" />
-        
-        <h1 className="heading-dragon text-4xl md:text-5xl mb-4 text-white">
-          MY <span className="text-transparent bg-clip-text bg-gradient-to-r from-primary to-secondary">PROFILE</span>
-        </h1>
-        <p className="text-lg text-muted-foreground max-w-2xl relative z-10">
-          Manage your public presence, skills, and roles within the collective.
-        </p>
-      </LiquidGlass>
+      <header>
+        <h1 className="text-3xl font-bold mb-2">My Profile</h1>
+        <p className="text-muted-foreground">Manage your public presence within the collective.</p>
+      </header>
 
       <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
         

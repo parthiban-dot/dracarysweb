@@ -29,21 +29,15 @@ export default async function DashboardOverview() {
   return (
     <div className="space-y-8 animate-in fade-in slide-in-from-bottom-4 duration-500">
       
-      {/* Epic Hero Header */}
-      <LiquidGlass className="relative overflow-hidden p-8 md:p-12 border-white/10 mb-12 flex flex-col items-center justify-center text-center">
-        <div className="absolute inset-0 scale-texture opacity-[0.05]" />
-        <div className="absolute -top-40 -right-40 w-80 h-80 bg-primary/20 rounded-full blur-[100px]" />
-        <div className="absolute -bottom-40 -left-40 w-80 h-80 bg-secondary/20 rounded-full blur-[100px]" />
-        
-        <Terminal className="w-12 h-12 text-primary mb-6 animate-pulse" />
-        
-        <h1 className="heading-dragon text-4xl md:text-6xl mb-4">
-          COMMAND <span className="text-transparent bg-clip-text bg-gradient-to-r from-primary via-blue-400 to-secondary">CENTER</span>
-        </h1>
-        <p className="text-lg md:text-xl text-muted-foreground max-w-2xl relative z-10">
-          Welcome back, <span className="text-white font-bold">{session.user.name?.split(" ")[0]}</span>. This is your DRACARYS member portal. Let's forge the future.
-        </p>
-      </LiquidGlass>
+      {/* Header */}
+      <div className="flex items-center justify-between mb-8">
+        <div>
+          <h1 className="text-3xl font-extrabold tracking-tighter text-white mb-2">
+            Welcome back, <span className="text-primary">{session.user.name?.split(" ")[0]}</span>
+          </h1>
+          <p className="text-muted-foreground text-lg">Your DRACARYS member portal.</p>
+        </div>
+      </div>
 
       <div className="grid lg:grid-cols-3 gap-8">
         
