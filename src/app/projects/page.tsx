@@ -19,12 +19,7 @@ export default async function ProjectsPage() {
     orderBy: { createdAt: "desc" }
   });
 
-  const projects = dbProjects.map(p => ({
-    ...p,
-    createdAt: p.createdAt.toISOString(),
-    updatedAt: p.updatedAt.toISOString(),
-    publishedAt: p.publishedAt ? p.publishedAt.toISOString() : null
-  }));
+  const projects: any[] = JSON.parse(JSON.stringify(dbProjects));
 
   return (
     <>

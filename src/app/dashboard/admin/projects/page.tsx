@@ -15,7 +15,7 @@ export default async function AdminProjectsPage() {
     redirect("/dashboard");
   }
 
-  const projects = await prisma.project.findMany({
+  const dbProjects = await prisma.project.findMany({
     orderBy: { createdAt: "desc" },
     include: {
       teamMembers: {
@@ -23,18 +23,15 @@ export default async function AdminProjectsPage() {
       }
     }
   });
+  
+  const projects: any[] = JSON.parse(JSON.stringify(dbProjects));
 
   const dbUsers = await prisma.user.findMany({
     where: { status: "APPROVED" },
     orderBy: { name: "asc" }
   });
 
-  const allUsers = dbUsers.map(u => ({
-    ...u,
-    createdAt: u.createdAt.toISOString(),
-    updatedAt: u.updatedAt.toISOString(),
-    emailVerified: u.emailVerified ? u.emailVerified.toISOString() : null
-  }));
+  const allUsers = JSON.parse(JSON.stringify(dbUsers));
 
   return (
     <div className="space-y-8">
@@ -74,7 +71,7 @@ export default async function AdminProjectsPage() {
                 </h4>
                 {project.teamMembers.length > 0 ? (
                   <div className="flex flex-wrap gap-2">
-                    {project.teamMembers.map(member => (
+                    {project.teamMembers.map((member: any) => (
                       <div key={member.id} className="flex items-center gap-2 bg-white/5 rounded-full px-3 py-1 text-sm border border-white/10">
                         {member.user.image && <img src={member.user.image} className="w-5 h-5 rounded-full" alt="" />}
                         <span className="text-white/90">{member.user.name}</span>
