@@ -5,7 +5,6 @@ import { db } from "@/lib/db";
 import { EmptyState } from "@/components/shared/empty-state";
 import { Bell } from "lucide-react";
 
-export const dynamic = "force-dynamic";
 
 export default async function DashboardAnnouncementsPage() {
   const session = await auth();
