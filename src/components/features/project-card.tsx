@@ -17,7 +17,7 @@ interface ProjectCardProps {
 export function ProjectCard({ title, summary, slug, technologyStack, status, teamMembers = [] }: ProjectCardProps) {
   return (
     <Link href={`/projects/${slug}`} className="group block h-full">
-      <LiquidGlass className="h-full p-0 flex flex-col dragon-eye transition-all duration-300 group-hover:border-primary/50 group-hover:shadow-[0_0_20px_rgba(59,130,246,0.15)]">
+      <LiquidGlass className="h-full p-0 flex flex-col dragon-eye transition-all duration-300 group-hover:border-primary/50 group-hover:shadow-[0_0_20px_rgba(59,130,246,0.15)] group-hover:-translate-y-1 group-hover:scale-[1.01]">
         {/* Abstract image placeholder using CSS gradient instead of missing image */}
         <div className="w-full h-48 bg-gradient-to-br from-primary/20 via-background to-secondary/20 relative overflow-hidden">
           <div className="absolute inset-0 bg-background/50 backdrop-blur-[2px]" />
