@@ -31,7 +31,7 @@ export function Navbar() {
       <Container>
         <div className="flex h-16 items-center justify-between">
           <div className="flex items-center gap-8">
-            <Link href="/" className="flex items-center space-x-3 group">
+            <Link prefetch={true} href="/" className="flex items-center space-x-3 group">
               <Image src={logoImage} alt="DRACARYS Logo" width={32} height={32} className="w-8 h-8 rounded-md object-cover border border-white/10 group-hover:border-primary/50 transition-colors" />
               <span className="text-xl font-extrabold tracking-tighter text-transparent bg-clip-text bg-gradient-to-r from-primary to-secondary group-hover:opacity-80 transition-opacity hidden sm:inline-block">
                 DRACARYS
@@ -57,11 +57,11 @@ export function Navbar() {
           </div>
           <div className="flex items-center gap-4">
             <div className="hidden md:flex items-center gap-4">
-              <Link href="/join" className="text-sm font-medium text-foreground/60 hover:text-primary transition-colors">
+              <Link prefetch={true} href="/join" className="text-sm font-medium text-foreground/60 hover:text-primary transition-colors">
                 Join
               </Link>
               <Button asChild variant="outline" className="glass-panel text-foreground border-white/10 hover:bg-white/5 h-8 px-4 text-xs">
-                <Link href="/login">Login</Link>
+                <Link prefetch={true} href="/login">Login</Link>
               </Button>
             </div>
             
@@ -88,10 +88,10 @@ export function Navbar() {
                     </Link>
                   ))}
                   <div className="h-px bg-white/10 my-4" />
-                  <Link href="/join" className="text-lg font-medium text-foreground/70 hover:text-primary transition-colors">
+                  <Link prefetch={true} href="/join" className="text-lg font-medium text-foreground/70 hover:text-primary transition-colors">
                     Join
                   </Link>
-                  <Link href="/login" className="text-lg font-medium text-foreground/70 hover:text-primary transition-colors">
+                  <Link prefetch={true} href="/login" className="text-lg font-medium text-foreground/70 hover:text-primary transition-colors">
                     Login
                   </Link>
                 </nav>
