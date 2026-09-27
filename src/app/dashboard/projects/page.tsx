@@ -33,10 +33,19 @@ export default async function DashboardProjectsPage() {
 
   return (
     <div className="max-w-6xl space-y-8 animate-in fade-in slide-in-from-bottom-4 duration-500">
-      <header>
-        <h1 className="text-3xl font-bold mb-2">My Projects</h1>
-        <p className="text-muted-foreground">Projects you are actively assigned to or have contributed to.</p>
-      </header>
+      <LiquidGlass className="relative overflow-hidden p-8 md:p-12 border-white/10 mb-8 flex flex-col items-center justify-center text-center">
+        <div className="absolute inset-0 scale-texture opacity-[0.05]" />
+        <div className="absolute top-0 right-0 w-80 h-80 bg-blue-500/10 rounded-full blur-[100px]" />
+        
+        <Code2 className="w-12 h-12 text-primary mb-6 animate-pulse" />
+        
+        <h1 className="heading-dragon text-4xl md:text-5xl mb-4 text-white">
+          ACTIVE <span className="text-transparent bg-clip-text bg-gradient-to-r from-blue-400 to-indigo-500">PROJECTS</span>
+        </h1>
+        <p className="text-lg text-muted-foreground max-w-2xl relative z-10">
+          Projects you are actively assigned to or have contributed to.
+        </p>
+      </LiquidGlass>
 
       {!hasDbConnection ? (
          <EmptyState 
