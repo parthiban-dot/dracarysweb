@@ -12,7 +12,7 @@ export async function sendEmail({ to, subject, html }: EmailPayload) {
   // Mock email in development or if API key is missing
   if (process.env.NODE_ENV === "development" || !process.env.RESEND_API_KEY) {
     console.log("==========================================");
-    console.log("📨 MOCK EMAIL INTERCEPTED");
+    console.log("ðŸ“¨ MOCK EMAIL INTERCEPTED");
     console.log(`To: ${to}`);
     console.log(`Subject: ${subject}`);
     console.log("Body:");
@@ -23,7 +23,7 @@ export async function sendEmail({ to, subject, html }: EmailPayload) {
 
   try {
     const data = await resend.emails.send({
-      from: process.env.EMAIL_FROM || "DRACARYS <hello@dracarys.tech>",
+      from: process.env.EMAIL_FROM || "onboarding@resend.dev",
       to,
       subject,
       html,
