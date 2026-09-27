@@ -119,6 +119,15 @@ export function DashboardSidebar({ session }: { session: Session | null }) {
               >
                 <FolderGit2 className="w-4 h-4" /> Manage Projects
               </Link>
+              <Link 
+                href="/dashboard/admin/hackathons"
+                className={cn(
+                  "flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm font-medium transition-all duration-300 relative group",
+                  pathname.startsWith("/dashboard/admin/hackathons") ? "bg-primary/20 text-primary" : "text-muted-foreground hover:bg-primary/10 hover:text-primary"
+                )}
+              >
+                <Trophy className="w-4 h-4" /> Manage Hackathons
+              </Link>
             </nav>
           </>
         )}
