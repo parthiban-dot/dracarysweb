@@ -5,7 +5,7 @@ import Image from "next/image";
 import logoImage from "../../../public/dracarys-logo.jpg";
 import { usePathname } from "next/navigation";
 import { cn } from "@/lib/utils";
-import { LayoutDashboard, User, FolderGit2, Bell, LogOut, Settings, ShieldAlert, FileText, MessageSquare, Megaphone, Users, UserPlus , Trophy } from "lucide-react";
+import {  LayoutDashboard, User, FolderGit2, Bell, LogOut, Settings, ShieldAlert, FileText, MessageSquare, Megaphone, Users, UserPlus , Trophy , Activity } from "lucide-react";
 import { signOut } from "next-auth/react";
 import type { Session } from "next-auth";
 
@@ -65,6 +65,15 @@ export function DashboardSidebar({ session }: { session: Session | null }) {
               <ShieldAlert className="w-3 h-3" /> Admin Tools
             </p>
             <nav className="space-y-1">
+              <Link 
+                href="/dashboard/admin"
+                className={cn(
+                  "flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm font-medium transition-all duration-300 relative group",
+                  pathname === "/dashboard/admin" ? "bg-primary/20 text-primary" : "text-muted-foreground hover:bg-primary/10 hover:text-primary"
+                )}
+              >
+                <Activity className="w-4 h-4" /> Analytics Overview
+              </Link>
               <Link 
                 href="/dashboard/admin/applications"
                 className={cn(
