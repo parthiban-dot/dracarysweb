@@ -8,7 +8,8 @@ import { EditProjectForm } from "./edit-project-form";
 
 const prisma = new PrismaClient();
 
-export default async function EditProjectPage({ params }: { params: { id: string } }) {
+export default async function EditProjectPage({ params }: { params: Promise<{ id: string }> }) {
+  const { id } = await params;
   const session = await auth();
 
   if (session?.user?.role !== "ADMIN" && session?.user?.role !== "SUPER_ADMIN") {
@@ -16,18 +17,13 @@ export default async function EditProjectPage({ params }: { params: { id: string
   }
 
   const dbProject = await prisma.project.findUnique({
-    where: { id: params.id },
+    where: { id },
     include: {
       teamMembers: true
     }
   });
 
-  const project = dbProject ? {
-    ...dbProject,
-    createdAt: dbProject.createdAt.toISOString(),
-    updatedAt: dbProject.updatedAt.toISOString(),
-    publishedAt: dbProject.publishedAt ? dbProject.publishedAt.toISOString() : null
-  } : null;
+  const project = dbProject ? JSON.parse(JSON.stringify(dbProject)) : null;
 
   if (!project) {
     redirect("/dashboard/admin/projects");
@@ -38,12 +34,7 @@ export default async function EditProjectPage({ params }: { params: { id: string
     orderBy: { name: "asc" }
   });
 
-  const allUsers = dbUsers.map(u => ({
-    ...u,
-    createdAt: u.createdAt.toISOString(),
-    updatedAt: u.updatedAt.toISOString(),
-    emailVerified: u.emailVerified ? u.emailVerified.toISOString() : null
-  }));
+  const allUsers = JSON.parse(JSON.stringify(dbUsers));
 
   return (
     <div className="space-y-8 max-w-3xl mx-auto">
