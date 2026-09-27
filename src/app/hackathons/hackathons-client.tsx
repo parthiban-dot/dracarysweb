@@ -10,18 +10,18 @@ export function HackathonsClient({ initialHackathons }: { initialHackathons: any
   const [techFilter, setTechFilter] = useState("All");
   const [resultFilter, setResultFilter] = useState("All");
 
-  const years = ["All", ...Array.from(new Set(initialHackathons.map(h => h.year)))].sort((a, b) => b.localeCompare(a));
+  const years = ["All", ...Array.from(new Set(initialHackathons.map(h => h.year || "")))].filter(Boolean).sort((a, b) => b.localeCompare(a));
   const results = ["All", "WINNER", "FINALIST", "PARTICIPANT", "SPECIAL_RECOGNITION"];
   
   const allTechs = useMemo(() => {
     const techs = new Set<string>();
-    initialHackathons.forEach(h => h.technologies.forEach((t: string) => techs.add(t)));
+    initialHackathons.forEach(h => (h.technologies || []).forEach((t: string) => techs.add(t)));
     return ["All", ...Array.from(techs)];
   }, [initialHackathons]);
 
   const filteredHackathons = initialHackathons.filter(hack => {
     const matchesYear = yearFilter === "All" || hack.year === yearFilter;
-    const matchesTech = techFilter === "All" || hack.technologies.includes(techFilter);
+    const matchesTech = techFilter === "All" || (hack.technologies || []).includes(techFilter);
     const matchesResult = resultFilter === "All" || hack.result === resultFilter;
     return matchesYear && matchesTech && matchesResult;
   });
