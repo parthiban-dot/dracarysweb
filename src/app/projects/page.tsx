@@ -9,7 +9,7 @@ const prisma = new PrismaClient();
 export const dynamic = "force-dynamic";
 
 export default async function ProjectsPage() {
-  const projects = await prisma.project.findMany({
+  const dbProjects = await prisma.project.findMany({
     where: { clientVisibility: "PUBLIC" },
     include: {
       teamMembers: {
@@ -18,6 +18,13 @@ export default async function ProjectsPage() {
     },
     orderBy: { createdAt: "desc" }
   });
+
+  const projects = dbProjects.map(p => ({
+    ...p,
+    createdAt: p.createdAt.toISOString(),
+    updatedAt: p.updatedAt.toISOString(),
+    publishedAt: p.publishedAt ? p.publishedAt.toISOString() : null
+  }));
 
   return (
     <>

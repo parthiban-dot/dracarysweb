@@ -15,21 +15,35 @@ export default async function EditProjectPage({ params }: { params: { id: string
     redirect("/dashboard");
   }
 
-  const project = await prisma.project.findUnique({
+  const dbProject = await prisma.project.findUnique({
     where: { id: params.id },
     include: {
       teamMembers: true
     }
   });
 
+  const project = dbProject ? {
+    ...dbProject,
+    createdAt: dbProject.createdAt.toISOString(),
+    updatedAt: dbProject.updatedAt.toISOString(),
+    publishedAt: dbProject.publishedAt ? dbProject.publishedAt.toISOString() : null
+  } : null;
+
   if (!project) {
     redirect("/dashboard/admin/projects");
   }
 
-  const allUsers = await prisma.user.findMany({
+  const dbUsers = await prisma.user.findMany({
     where: { status: "APPROVED" },
     orderBy: { name: "asc" }
   });
+
+  const allUsers = dbUsers.map(u => ({
+    ...u,
+    createdAt: u.createdAt.toISOString(),
+    updatedAt: u.updatedAt.toISOString(),
+    emailVerified: u.emailVerified ? u.emailVerified.toISOString() : null
+  }));
 
   return (
     <div className="space-y-8 max-w-3xl mx-auto">
