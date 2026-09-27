@@ -1,10 +1,10 @@
 import { Container } from "@/components/layout/container";
 import { Section } from "@/components/layout/section";
 import { SectionHeader } from "@/components/shared/section-header";
-import { PrismaClient } from "@prisma/client";
+import { db as prisma } from "@/lib/db";
 import { ProjectsClient } from "./projects-client";
 
-const prisma = new PrismaClient();
+
 
 export const revalidate = 30;
 

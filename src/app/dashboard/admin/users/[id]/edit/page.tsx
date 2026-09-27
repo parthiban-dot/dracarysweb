@@ -1,11 +1,11 @@
 import { auth } from "@/auth";
 import { redirect } from "next/navigation";
-import { PrismaClient } from "@prisma/client";
+import { db as prisma } from "@/lib/db";
 import { LiquidGlass } from "@/components/shared/liquid-glass";
 import { UserCog } from "lucide-react";
 import { EditMemberForm } from "./edit-member-form";
 
-const prisma = new PrismaClient();
+
 
 export default async function EditMemberPage({ params }: { params: Promise<{ id: string }> }) {
   const { id } = await params;

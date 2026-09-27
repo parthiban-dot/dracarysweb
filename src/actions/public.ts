@@ -1,8 +1,8 @@
 "use server";
 
-import { PrismaClient } from "@prisma/client";
+import { db as prisma } from "@/lib/db";
 
-const prisma = new PrismaClient();
+
 
 export async function submitJoinApplication(data: any) {
   try {

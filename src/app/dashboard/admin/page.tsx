@@ -1,11 +1,11 @@
 import { auth } from "@/auth";
 import { redirect } from "next/navigation";
-import { PrismaClient } from "@prisma/client";
+import { db as prisma } from "@/lib/db";
 import { LiquidGlass } from "@/components/shared/liquid-glass";
 import { ShieldAlert, Users, FolderGit2, Trophy, FileText, Activity } from "lucide-react";
 import Link from "next/link";
 
-const prisma = new PrismaClient();
+
 
 export default async function AdminOverviewPage() {
   const session = await auth();

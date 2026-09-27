@@ -1,11 +1,11 @@
 import { auth } from "@/auth";
 import { redirect } from "next/navigation";
-import { PrismaClient } from "@prisma/client";
+import { db as prisma } from "@/lib/db";
 import { LiquidGlass } from "@/components/shared/liquid-glass";
 import { Megaphone, Plus } from "lucide-react";
 import { AnnouncementForm } from "./announcement-form";
 
-const prisma = new PrismaClient();
+
 
 export default async function AdminAnnouncementsPage() {
   const session = await auth();

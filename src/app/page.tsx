@@ -1,8 +1,8 @@
-import { PrismaClient } from "@prisma/client";
+import { db as prisma } from "@/lib/db";
 import { HomeClient } from "./home-client";
 import { coreTechnologies } from "@/lib/demo-data";
 
-const prisma = new PrismaClient();
+
 
 export const revalidate = 30;
 

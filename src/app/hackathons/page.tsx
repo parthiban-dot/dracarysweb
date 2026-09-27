@@ -2,10 +2,10 @@ import { Container } from "@/components/layout/container";
 import { Section } from "@/components/layout/section";
 import { SectionHeader } from "@/components/shared/section-header";
 import { HackathonCard } from "@/components/features/hackathon-card";
-import { PrismaClient } from "@prisma/client";
+import { db as prisma } from "@/lib/db";
 import { HackathonsClient } from "./hackathons-client";
 
-const prisma = new PrismaClient();
+
 
 export const revalidate = 30;
 

@@ -1,12 +1,12 @@
 import { auth } from "@/auth";
 import { redirect } from "next/navigation";
-import { PrismaClient } from "@prisma/client";
+import { db as prisma } from "@/lib/db";
 import { LiquidGlass } from "@/components/shared/liquid-glass";
 import { FolderGit2, Plus, Users } from "lucide-react";
 import Link from "next/link";
 import { ProjectForm } from "./project-form";
 
-const prisma = new PrismaClient();
+
 
 export default async function AdminProjectsPage() {
   const session = await auth();

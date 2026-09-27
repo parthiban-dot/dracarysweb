@@ -1,13 +1,13 @@
 import { auth } from "@/auth";
 import { redirect } from "next/navigation";
-import { PrismaClient } from "@prisma/client";
+import { db as prisma } from "@/lib/db";
 import { LiquidGlass } from "@/components/shared/liquid-glass";
 import { ShieldAlert, Check, X, Shield, User as UserIcon, Trash2, Pencil } from "lucide-react";
 import { updateUserApproval, promoteToAdmin, deleteUser } from "@/actions/admin";
 import Link from "next/link";
 import { ActionIconButton } from "@/components/ui/submit-button";
 
-const prisma = new PrismaClient();
+
 
 export default async function AdminUsersPage() {
   const session = await auth();

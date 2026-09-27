@@ -1,12 +1,12 @@
 import { auth } from "@/auth";
 import { redirect } from "next/navigation";
-import { PrismaClient } from "@prisma/client";
+import { db as prisma } from "@/lib/db";
 import { LiquidGlass } from "@/components/shared/liquid-glass";
 import { ArrowLeft } from "lucide-react";
 import Link from "next/link";
 import { EditHackathonForm } from "./edit-hackathon-form";
 
-const prisma = new PrismaClient();
+
 
 export default async function EditHackathonPage({ params }: { params: Promise<{ id: string }> }) {
   const { id } = await params;

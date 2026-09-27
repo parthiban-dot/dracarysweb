@@ -1,8 +1,8 @@
-import { PrismaClient } from "@prisma/client";
+import { db as prisma } from "@/lib/db";
 
 import { TeamClient, TeamMemberItem } from "./team-client";
 
-const prisma = new PrismaClient();
+
 
 export const revalidate = 60;
 

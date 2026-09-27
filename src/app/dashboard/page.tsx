@@ -1,10 +1,10 @@
 import { auth } from "@/auth";
-import { PrismaClient } from "@prisma/client";
+import { db as prisma } from "@/lib/db";
 import { LiquidGlass } from "@/components/shared/liquid-glass";
 import { FolderGit2, Megaphone, Terminal, User as UserIcon } from "lucide-react";
 import Link from "next/link";
 
-const prisma = new PrismaClient();
+
 
 export default async function DashboardOverview() {
   const session = await auth();

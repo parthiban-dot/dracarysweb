@@ -1,11 +1,11 @@
 import { auth } from "@/auth";
 import { redirect } from "next/navigation";
-import { PrismaClient } from "@prisma/client";
+import { db as prisma } from "@/lib/db";
 import { LiquidGlass } from "@/components/shared/liquid-glass";
 import { Briefcase } from "lucide-react";
 import { InquiryStatusActions } from "./inquiry-status-actions";
 
-const prisma = new PrismaClient();
+
 
 export default async function AdminInquiriesPage() {
   const session = await auth();
@@ -45,7 +45,7 @@ export default async function AdminInquiriesPage() {
                     {inq.status}
                   </span>
                 </h3>
-                <p className="text-muted-foreground text-sm mt-1">{inq.email} {inq.phone ? `• ${inq.phone}` : ""}</p>
+                <p className="text-muted-foreground text-sm mt-1">{inq.email} {inq.phone ? `â€¢ ${inq.phone}` : ""}</p>
               </div>
               
               <InquiryStatusActions id={inq.id} currentStatus={inq.status} adminNotes={inq.adminNotes || ""} />

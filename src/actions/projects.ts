@@ -1,10 +1,11 @@
 "use server";
+import { db as prisma } from "@/lib/db";
 
 import { auth } from "@/auth";
 import { PrismaClient, ProjectStatus, Visibility } from "@prisma/client";
 import { revalidatePath } from "next/cache";
 
-const prisma = new PrismaClient();
+
 
 async function requireAdmin() {
   const session = await auth();
