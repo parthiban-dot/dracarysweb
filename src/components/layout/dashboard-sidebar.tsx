@@ -5,7 +5,7 @@ import Image from "next/image";
 import logoImage from "../../../public/dracarys-logo.jpg";
 import { usePathname } from "next/navigation";
 import { cn } from "@/lib/utils";
-import { LayoutDashboard, User, FolderGit2, Bell, LogOut, Settings, ShieldAlert, FileText, MessageSquare, Megaphone, Users, UserPlus } from "lucide-react";
+import { LayoutDashboard, User, FolderGit2, Bell, LogOut, Settings, ShieldAlert, FileText, MessageSquare, Megaphone, Users, UserPlus , Trophy } from "lucide-react";
 import { signOut } from "next-auth/react";
 import type { Session } from "next-auth";
 
