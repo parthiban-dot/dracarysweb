@@ -7,6 +7,7 @@ import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
 import { UserPlus } from "lucide-react";
 import { adminAddMember } from "@/actions/admin-add-member";
+import { SubmitButton } from "@/components/ui/submit-button";
 
 export default async function AddMemberPage() {
   const session = await auth();
@@ -134,9 +135,9 @@ export default async function AddMemberPage() {
             </div>
           </div>
 
-          <Button type="submit" size="lg" className="w-full dragon-glow font-bold mt-4">
-            Add Team Member
-          </Button>
+          <SubmitButton size="lg" className="w-full dragon-glow font-bold mt-4" pendingText="Adding Member...">
+              Add Team Member
+            </SubmitButton>
         </form>
       </LiquidGlass>
     </div>

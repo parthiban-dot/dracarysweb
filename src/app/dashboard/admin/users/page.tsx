@@ -5,6 +5,7 @@ import { LiquidGlass } from "@/components/shared/liquid-glass";
 import { ShieldAlert, Check, X, Shield, User as UserIcon, Trash2, Pencil } from "lucide-react";
 import { updateUserApproval, promoteToAdmin, deleteUser } from "@/actions/admin";
 import Link from "next/link";
+import { ActionIconButton } from "@/components/ui/submit-button";
 
 const prisma = new PrismaClient();
 
@@ -81,23 +82,17 @@ export default async function AdminUsersPage() {
                   <div className="flex items-center justify-end gap-2">
                     {u.status !== "APPROVED" && (
                       <form action={updateUserApproval.bind(null, u.id, "APPROVED")}>
-                        <button type="submit" className="p-2 rounded-md bg-emerald-500/10 text-emerald-500 hover:bg-emerald-500/20 transition-colors" title="Approve">
-                          <Check className="w-4 h-4" />
-                        </button>
+                        <ActionIconButton className="p-2 rounded-md bg-emerald-500/10 text-emerald-500 hover:bg-emerald-500/20 transition-colors" title="Approve"><Check className="w-4 h-4" /></ActionIconButton>
                       </form>
                     )}
                     {u.status !== "REJECTED" && (
                       <form action={updateUserApproval.bind(null, u.id, "REJECTED")}>
-                        <button type="submit" className="p-2 rounded-md bg-red-500/10 text-red-500 hover:bg-red-500/20 transition-colors" title="Reject">
-                          <X className="w-4 h-4" />
-                        </button>
+                        <ActionIconButton className="p-2 rounded-md bg-red-500/10 text-red-500 hover:bg-red-500/20 transition-colors" title="Reject"><X className="w-4 h-4" /></ActionIconButton>
                       </form>
                     )}
                     {session?.user?.role === "SUPER_ADMIN" && u.role !== "SUPER_ADMIN" && u.role !== "ADMIN" && u.status === "APPROVED" && (
                       <form action={promoteToAdmin.bind(null, u.id)}>
-                        <button type="submit" className="px-3 py-1.5 rounded-md bg-primary/10 text-primary text-xs font-bold hover:bg-primary/20 transition-colors">
-                          Make Admin
-                        </button>
+                        <ActionIconButton className="px-3 py-1.5 rounded-md bg-primary/10 text-primary text-xs font-bold hover:bg-primary/20 transition-colors" pendingText="Wait...">Make Admin</ActionIconButton>
                       </form>
                     )}
                     <Link href={`/dashboard/admin/users/${u.id}/edit`} className="p-2 rounded-md bg-primary/10 text-primary hover:bg-primary/20 transition-colors ml-2" title="Edit Member">
@@ -105,9 +100,7 @@ export default async function AdminUsersPage() {
                     </Link>
                     {session?.user?.id !== u.id && (
                       <form action={deleteUser.bind(null, u.id)}>
-                        <button type="submit" className="p-2 rounded-md bg-red-500/10 text-red-500 hover:bg-red-500/20 transition-colors ml-2" title="Remove Member">
-                          <Trash2 className="w-4 h-4" />
-                        </button>
+                        <ActionIconButton className="p-2 rounded-md bg-red-500/10 text-red-500 hover:bg-red-500/20 transition-colors ml-2" title="Remove Member"><Trash2 className="w-4 h-4" /></ActionIconButton>
                       </form>
                     )}
                   </div>
