@@ -45,13 +45,18 @@ export default async function AdminProjectsPage() {
           {projects.map(project => (
             <LiquidGlass key={project.id} className="p-6 border-white/10 relative group">
               <div className="flex justify-between items-start mb-4">
-                <div>
+                <div className="w-full flex items-center justify-between">
                   <h3 className="text-xl font-bold text-white flex items-center gap-2">
                     {project.title}
                     <span className="text-xs px-2 py-1 rounded-full bg-primary/10 text-primary border border-primary/20">
                       {project.status}
                     </span>
                   </h3>
+                  <Link href={`/dashboard/admin/projects/${project.id}/edit`}>
+                    <button className="text-xs font-semibold bg-white/10 hover:bg-white/20 text-white px-3 py-1.5 rounded transition-colors ml-4 shrink-0">
+                      Edit Project
+                    </button>
+                  </Link>
                   <p className="text-muted-foreground text-sm mt-1">{project.summary}</p>
                 </div>
               </div>

@@ -88,3 +88,43 @@ export async function updateProjectStatus(projectId: string, status: ProjectStat
   revalidatePath("/dashboard/admin/projects");
   revalidatePath("/dashboard");
 }
+export async function updateProject(id: string, data: {
+  title: string;
+  summary: string;
+  type: string;
+  status: ProjectStatus;
+  memberIds?: string[];
+}) {
+  await requireAdmin();
+  
+  await prisma.$transaction(async (tx) => {
+    await tx.project.update({
+      where: { id },
+      data: {
+        title: data.title,
+        summary: data.summary,
+        type: data.type,
+        status: data.status,
+      }
+    });
+
+    if (data.memberIds !== undefined) {
+      await tx.projectMember.deleteMany({
+        where: { projectId: id }
+      });
+
+      if (data.memberIds.length > 0) {
+        await tx.projectMember.createMany({
+          data: data.memberIds.map(userId => ({
+            projectId: id,
+            userId,
+            role: "Developer"
+          }))
+        });
+      }
+    }
+  });
+
+  revalidatePath("/dashboard/admin/projects");
+  revalidatePath("/projects");
+}
