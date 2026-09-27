@@ -7,7 +7,7 @@ import { HackathonsClient } from "./hackathons-client";
 
 const prisma = new PrismaClient();
 
-export const dynamic = "force-dynamic";
+export const revalidate = 30;
 
 export default async function HackathonsPage() {
   const dbHackathons = await prisma.hackathon.findMany({
