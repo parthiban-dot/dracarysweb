@@ -70,10 +70,10 @@ export function HomeClient({ stats, featuredProjects, featuredHackathons, featur
         <Container>
           <div className="grid grid-cols-2 md:grid-cols-4 gap-8 py-12">
             {[
-              { label: "Projects Delivered", value: stats.projects },
-              { label: "Hackathons Participated", value: stats.hackathons },
-              { label: "Team Members", value: stats.members },
-              { label: "Technologies", value: stats.technologies },
+              { label: "Projects Delivered", value: stats.projects, href: "/projects" },
+              { label: "Hackathons Participated", value: stats.hackathons, href: "/hackathons" },
+              { label: "Team Members", value: stats.members, href: "/team" },
+              { label: "Technologies", value: stats.technologies, href: "#technologies" },
             ].map((stat, i) => (
               <motion.div 
                 key={stat.label}
@@ -81,14 +81,15 @@ export function HomeClient({ stats, featuredProjects, featuredHackathons, featur
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}
                 transition={{ delay: i * 0.1 }}
-                className="text-center"
               >
-                <div className="text-4xl md:text-5xl font-extrabold text-white mb-2 font-mono">
-                  {stat.value}+
-                </div>
-                <div className="text-xs md:text-sm font-bold text-muted-foreground uppercase tracking-widest">
-                  {stat.label}
-                </div>
+                <Link href={stat.href} className="block text-center group cursor-pointer">
+                  <div className="text-4xl md:text-5xl font-extrabold text-white mb-2 font-mono group-hover:text-primary transition-colors">
+                    {stat.value}+
+                  </div>
+                  <div className="text-xs md:text-sm font-bold text-muted-foreground uppercase tracking-widest group-hover:text-white transition-colors">
+                    {stat.label}
+                  </div>
+                </Link>
               </motion.div>
             ))}
           </div>
@@ -134,7 +135,7 @@ export function HomeClient({ stats, featuredProjects, featuredHackathons, featur
       </Section>
 
       {/* 4. TECHNOLOGY ARSENAL */}
-      <Section className="relative z-10 py-24 border-t border-white/5 bg-background/20">
+      <Section id="technologies" className="relative z-10 py-24 border-t border-white/5 bg-background/20">
         <Container>
           <div className="text-center mb-12">
             <h3 className="text-sm font-bold tracking-[0.2em] text-primary uppercase mb-8">Our Technology Arsenal</h3>
