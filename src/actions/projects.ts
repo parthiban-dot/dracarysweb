@@ -16,83 +16,69 @@ async function requireAdmin() {
 
 export async function createProject(data: {
   title: string;
+  slug: string;
   summary: string;
   type: string;
   year: string;
   problem: string;
   solution: string;
+  architecture?: string;
+  features: string[];
+  technologyStack: string[];
+  repositoryUrl?: string;
+  demoUrl?: string;
   memberIds?: string[];
 }) {
   await requireAdmin();
   
-  const slug = data.title.toLowerCase().replace(/[^a-z0-9]+/g, '-') + '-' + Date.now();
-  
-  await prisma.project.create({
-    data: {
-      title: data.title,
-      slug,
-      summary: data.summary,
-      type: data.type,
-      year: data.year,
-      problem: data.problem,
-      solution: data.solution,
-      status: "IN_PROGRESS",
-      clientVisibility: "PUBLIC",
-      teamMembers: (data.memberIds && data.memberIds.length > 0) ? {
-        create: data.memberIds.map(userId => ({
+  await prisma.$transaction(async (tx) => {
+    const project = await tx.project.create({
+      data: {
+        title: data.title,
+        slug: data.slug,
+        summary: data.summary,
+        type: data.type,
+        year: data.year,
+        problem: data.problem,
+        solution: data.solution,
+        features: data.features,
+        technologyStack: data.technologyStack,
+        repositoryUrl: data.repositoryUrl || null,
+        demoUrl: data.demoUrl || null,
+        status: "IN_PROGRESS",
+        clientVisibility: "PUBLIC",
+      }
+    });
+
+    if (data.memberIds && data.memberIds.length > 0) {
+      await tx.projectMember.createMany({
+        data: data.memberIds.map(userId => ({
+          projectId: project.id,
           userId,
-          role: "Developer"
+          role: "Developer",
         }))
-      } : undefined
+      });
     }
   });
 
   revalidatePath("/dashboard/admin/projects");
   revalidatePath("/projects");
+  revalidatePath("/");
 }
 
-export async function assignProjectMember(projectId: string, userId: string, role: string) {
-  await requireAdmin();
-  
-  await prisma.projectMember.create({
-    data: {
-      projectId,
-      userId,
-      role
-    }
-  });
-
-  revalidatePath("/dashboard/admin/projects");
-  revalidatePath("/dashboard");
-}
-
-export async function removeProjectMember(assignmentId: string) {
-  await requireAdmin();
-  
-  await prisma.projectMember.delete({
-    where: { id: assignmentId }
-  });
-
-  revalidatePath("/dashboard/admin/projects");
-  revalidatePath("/dashboard");
-}
-
-export async function updateProjectStatus(projectId: string, status: ProjectStatus) {
-  await requireAdmin();
-  
-  await prisma.project.update({
-    where: { id: projectId },
-    data: { status }
-  });
-
-  revalidatePath("/dashboard/admin/projects");
-  revalidatePath("/dashboard");
-}
 export async function updateProject(id: string, data: {
   title: string;
+  slug: string;
   summary: string;
   type: string;
   status: ProjectStatus;
+  year: string;
+  problem: string;
+  solution: string;
+  features: string[];
+  technologyStack: string[];
+  repositoryUrl?: string;
+  demoUrl?: string;
   memberIds?: string[];
 }) {
   await requireAdmin();
@@ -102,9 +88,17 @@ export async function updateProject(id: string, data: {
       where: { id },
       data: {
         title: data.title,
+        slug: data.slug,
         summary: data.summary,
         type: data.type,
         status: data.status,
+        year: data.year,
+        problem: data.problem,
+        solution: data.solution,
+        features: data.features,
+        technologyStack: data.technologyStack,
+        repositoryUrl: data.repositoryUrl || null,
+        demoUrl: data.demoUrl || null,
       }
     });
 
@@ -118,7 +112,7 @@ export async function updateProject(id: string, data: {
           data: data.memberIds.map(userId => ({
             projectId: id,
             userId,
-            role: "Developer"
+            role: "Developer",
           }))
         });
       }
@@ -127,4 +121,5 @@ export async function updateProject(id: string, data: {
 
   revalidatePath("/dashboard/admin/projects");
   revalidatePath("/projects");
+  revalidatePath("/");
 }
