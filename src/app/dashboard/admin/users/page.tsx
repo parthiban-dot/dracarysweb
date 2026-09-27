@@ -6,6 +6,7 @@ import { ShieldAlert, Check, X, Shield, User as UserIcon, Trash2, Pencil } from 
 import { updateUserApproval, promoteToAdmin, deleteUser } from "@/actions/admin";
 import Link from "next/link";
 import { ActionIconButton } from "@/components/ui/submit-button";
+import { ExportCsvButton } from "@/components/shared/export-button";
 
 
 
@@ -23,11 +24,14 @@ export default async function AdminUsersPage() {
 
   return (
     <div className="space-y-8">
-      <div className="mb-10">
-        <h1 className="text-3xl font-extrabold tracking-tighter text-white mb-2 flex items-center gap-3">
+      <div className="mb-10 flex flex-col md:flex-row md:items-center justify-between gap-4">
+        <div>
+          <h1 className="text-3xl font-extrabold tracking-tighter text-white mb-2 flex items-center gap-3">
           <ShieldAlert className="w-8 h-8 text-primary" /> Manage Members
         </h1>
         <p className="text-muted-foreground text-lg">Manage member approvals, roles, and platform access.</p>
+        </div>
+        <ExportCsvButton data={JSON.parse(JSON.stringify(users))} filename="dracarys-members" />
       </div>
 
       <LiquidGlass className="p-1 overflow-x-auto border-white/10">

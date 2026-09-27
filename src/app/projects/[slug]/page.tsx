@@ -1,28 +1,32 @@
 import { Container } from "@/components/layout/container";
 import { Section } from "@/components/layout/section";
 import { LiquidGlass } from "@/components/shared/liquid-glass";
-import { demoProjects } from "@/lib/demo-data";
 import { notFound } from "next/navigation";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { ArrowLeft, CheckCircle2, Layout, ShieldAlert } from "lucide-react";
 import Link from "next/link";
 import { GithubIcon } from "@/components/shared/icons";
+import { db as prisma } from "@/lib/db";
 
 interface ProjectPageProps {
   params: Promise<{ slug: string }>;
 }
 
-// Generate static params for demo projects
-export function generateStaticParams() {
-  return demoProjects.map((project) => ({
+export const revalidate = 30; // Edge cache for performance
+
+export async function generateStaticParams() {
+  const projects = await prisma.project.findMany({ select: { slug: true } });
+  return projects.map((project) => ({
     slug: project.slug,
   }));
 }
 
 export async function generateMetadata({ params }: ProjectPageProps): Promise<import("next").Metadata> {
   const resolvedParams = await params;
-  const project = demoProjects.find((p) => p.slug === resolvedParams.slug);
+  const project = await prisma.project.findUnique({
+    where: { slug: resolvedParams.slug },
+  });
 
   if (!project) return { title: "Project Not Found" };
 
@@ -33,13 +37,34 @@ export async function generateMetadata({ params }: ProjectPageProps): Promise<im
       title: `${project.title} | DRACARYS`,
       description: project.summary,
       type: "article",
+      images: [
+        {
+          url: project.coverImage || "/og-image.jpg",
+          width: 1200,
+          height: 630,
+          alt: project.title,
+        }
+      ]
     },
+    twitter: {
+      card: "summary_large_image",
+      title: project.title,
+      description: project.summary,
+      images: [project.coverImage || "/og-image.jpg"],
+    }
   };
 }
 
 export default async function ProjectDetailPage({ params }: ProjectPageProps) {
   const resolvedParams = await params;
-  const project = demoProjects.find((p) => p.slug === resolvedParams.slug);
+  const project = await prisma.project.findUnique({
+    where: { slug: resolvedParams.slug },
+    include: {
+      teamMembers: {
+        include: { user: true }
+      }
+    }
+  });
 
   if (!project) {
     notFound();
@@ -48,7 +73,7 @@ export default async function ProjectDetailPage({ params }: ProjectPageProps) {
   const isPrivate = project.clientVisibility === "PRIVATE";
 
   return (
-    <>
+    <main className="min-h-screen">
       {/* Hero Section */}
       <Section className="pt-24 pb-12 border-b border-white/5 relative overflow-hidden">
         <div className="absolute inset-0 bg-gradient-to-br from-primary/10 via-background to-background pointer-events-none" />
@@ -59,10 +84,10 @@ export default async function ProjectDetailPage({ params }: ProjectPageProps) {
 
           <div className="flex flex-wrap gap-3 mb-6">
             <Badge variant="secondary" className="bg-primary/20 text-primary hover:bg-primary/30 border-primary/20">
-              {project.status}
+              {project.status.replace(/_/g, ' ')}
             </Badge>
             <Badge variant="outline" className="border-white/10">
-              {project.type}
+              {project.type.replace(/_/g, ' ')}
             </Badge>
             <Badge variant="outline" className="border-white/10">
               {project.year}
@@ -93,12 +118,12 @@ export default async function ProjectDetailPage({ params }: ProjectPageProps) {
               <div className="space-y-8">
                 <LiquidGlass className="p-8 border-l-4 border-l-red-500/50">
                   <h3 className="text-xl font-bold mb-4 text-red-400">The Problem</h3>
-                  <p className="text-muted-foreground leading-relaxed">{project.problem}</p>
+                  <p className="text-muted-foreground leading-relaxed whitespace-pre-wrap">{project.problem}</p>
                 </LiquidGlass>
 
                 <LiquidGlass className="p-8 border-l-4 border-l-primary/50">
                   <h3 className="text-xl font-bold mb-4 text-primary">The Solution</h3>
-                  <p className="text-muted-foreground leading-relaxed">{project.solution}</p>
+                  <p className="text-muted-foreground leading-relaxed whitespace-pre-wrap">{project.solution}</p>
                 </LiquidGlass>
               </div>
 
@@ -118,13 +143,14 @@ export default async function ProjectDetailPage({ params }: ProjectPageProps) {
               </div>
 
               {/* Outcome */}
-              <LiquidGlass heavy className="p-8 dragon-eye">
-                <h3 className="text-2xl font-bold mb-4">Outcome & Impact</h3>
-                <p className="text-lg text-foreground/90 leading-relaxed font-medium">
-                  {project.outcome}
-                </p>
-              </LiquidGlass>
-
+              {project.outcome && (
+                <LiquidGlass heavy className="p-8 dragon-eye">
+                  <h3 className="text-2xl font-bold mb-4">Outcome & Impact</h3>
+                  <p className="text-lg text-foreground/90 leading-relaxed font-medium whitespace-pre-wrap">
+                    {project.outcome}
+                  </p>
+                </LiquidGlass>
+              )}
             </div>
 
             {/* Sidebar */}
@@ -146,14 +172,17 @@ export default async function ProjectDetailPage({ params }: ProjectPageProps) {
               <LiquidGlass className="p-6">
                 <h3 className="font-bold mb-4 claw-border pl-3">Team</h3>
                 <ul className="space-y-3">
-                  {project.teamMembers.map((member, i) => (
+                  {project.teamMembers.length > 0 ? project.teamMembers.map((member, i) => (
                     <li key={i} className="text-muted-foreground flex items-center gap-2">
                       <div className="w-6 h-6 rounded-full bg-primary/20 flex items-center justify-center text-[10px] text-primary font-bold">
-                        {member.charAt(0)}
+                        {member.user.name?.charAt(0) || "U"}
                       </div>
-                      {member}
+                      {member.user.name || "Unknown Member"}
+                      <span className="text-[10px] uppercase text-primary/70 ml-auto">{member.role}</span>
                     </li>
-                  ))}
+                  )) : (
+                    <li className="text-muted-foreground text-sm italic">No assigned members</li>
+                  )}
                 </ul>
               </LiquidGlass>
 
@@ -183,6 +212,6 @@ export default async function ProjectDetailPage({ params }: ProjectPageProps) {
           </div>
         </Container>
       </Section>
-    </>
+    </main>
   );
 }

@@ -4,6 +4,7 @@ import { db as prisma } from "@/lib/db";
 import { LiquidGlass } from "@/components/shared/liquid-glass";
 import { FileText } from "lucide-react";
 import { ApplicationStatusActions } from "./application-status-actions";
+import { ExportCsvButton } from "@/components/shared/export-button";
 
 
 
@@ -45,7 +46,7 @@ export default async function AdminApplicationsPage() {
                     {app.status}
                   </span>
                 </h3>
-                <p className="text-muted-foreground text-sm mt-1">{app.email} {app.phone ? `â€¢ ${app.phone}` : ""}</p>
+                <p className="text-muted-foreground text-sm mt-1">{app.email} {app.phone ? `Ã¢â‚¬Â¢ ${app.phone}` : ""}</p>
               </div>
               
               <ApplicationStatusActions id={app.id} currentStatus={app.status} />
