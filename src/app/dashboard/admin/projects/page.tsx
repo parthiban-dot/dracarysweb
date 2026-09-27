@@ -60,10 +60,8 @@ export default async function AdminProjectsPage() {
                         {project.status}
                       </span>
                     </h3>
-                    <Link href={`/dashboard/admin/projects/${project.id}/edit`}>
-                      <button className="text-xs font-semibold bg-white/10 hover:bg-white/20 text-white px-3 py-1.5 rounded transition-colors ml-4 shrink-0">
+                    <Link href={`/dashboard/admin/projects/${project.id}/edit`} className="text-xs font-semibold bg-white/10 hover:bg-white/20 text-white px-3 py-1.5 rounded transition-colors ml-4 shrink-0 inline-block text-center cursor-pointer relative z-10">
                         Edit Project
-                      </button>
                     </Link>
                   </div>
                   <p className="text-muted-foreground text-sm mt-1">{project.summary}</p>
