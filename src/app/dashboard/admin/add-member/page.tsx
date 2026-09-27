@@ -17,14 +17,19 @@ export default async function AddMemberPage() {
 
   return (
     <div className="max-w-4xl space-y-8">
-      <div>
-        <h1 className="text-3xl font-extrabold tracking-tighter text-white mb-2 flex items-center gap-3">
-          <UserPlus className="w-8 h-8 text-primary" /> Manually Add Member
+      <LiquidGlass className="relative overflow-hidden p-8 md:p-12 border-white/10 mb-8 flex flex-col items-center justify-center text-center">
+        <div className="absolute inset-0 scale-texture opacity-[0.05]" />
+        <div className="absolute top-0 right-20 w-80 h-80 bg-fuchsia-600/20 rounded-full blur-[100px]" />
+        
+        <UserPlus className="w-12 h-12 text-primary mb-6 animate-pulse" />
+        
+        <h1 className="heading-dragon text-4xl md:text-5xl mb-4 text-white">
+          ADD <span className="text-transparent bg-clip-text bg-gradient-to-r from-fuchsia-400 to-primary">MEMBER</span>
         </h1>
-        <p className="text-muted-foreground text-lg">
-          Add a custom member to the DRACARYS public team roster.
+        <p className="text-lg text-muted-foreground max-w-2xl relative z-10">
+          Manually bypass onboarding and inject a custom member directly into the DRACARYS roster.
         </p>
-      </div>
+      </LiquidGlass>
 
       <LiquidGlass className="p-8 border-white/10">
         <form action={adminAddMember} className="space-y-6">

@@ -20,14 +20,19 @@ export default async function AdminInquiriesPage() {
 
   return (
     <div className="space-y-8">
-      <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 mb-10">
-        <div>
-          <h1 className="text-3xl font-extrabold tracking-tighter text-white mb-2 flex items-center gap-3">
-            <Briefcase className="w-8 h-8 text-primary" /> Customer Inquiries
-          </h1>
-          <p className="text-muted-foreground text-lg">Manage incoming project requests.</p>
-        </div>
-      </div>
+      <LiquidGlass className="relative overflow-hidden p-8 md:p-12 border-white/10 mb-10 flex flex-col items-center justify-center text-center">
+        <div className="absolute inset-0 scale-texture opacity-[0.05]" />
+        <div className="absolute top-0 right-20 w-80 h-80 bg-green-600/20 rounded-full blur-[100px]" />
+        
+        <Briefcase className="w-12 h-12 text-primary mb-6 animate-pulse" />
+        
+        <h1 className="heading-dragon text-4xl md:text-5xl mb-4 text-white">
+          CLIENT <span className="text-transparent bg-clip-text bg-gradient-to-r from-green-400 to-primary">INQUIRIES</span>
+        </h1>
+        <p className="text-lg text-muted-foreground max-w-2xl relative z-10">
+          Manage incoming commercial projects, client leads, and business opportunities.
+        </p>
+      </LiquidGlass>
 
       <div className="space-y-6">
         {inquiries.map(inq => (
@@ -45,7 +50,7 @@ export default async function AdminInquiriesPage() {
                     {inq.status}
                   </span>
                 </h3>
-                <p className="text-muted-foreground text-sm mt-1">{inq.email} {inq.phone ? `• ${inq.phone}` : ""}</p>
+                <p className="text-muted-foreground text-sm mt-1">{inq.email} {inq.phone ? `â€¢ ${inq.phone}` : ""}</p>
               </div>
               
               <InquiryStatusActions id={inq.id} currentStatus={inq.status} adminNotes={inq.adminNotes || ""} />

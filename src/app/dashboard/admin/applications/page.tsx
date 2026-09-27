@@ -20,14 +20,19 @@ export default async function AdminApplicationsPage() {
 
   return (
     <div className="space-y-8">
-      <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 mb-10">
-        <div>
-          <h1 className="text-3xl font-extrabold tracking-tighter text-white mb-2 flex items-center gap-3">
-            <FileText className="w-8 h-8 text-primary" /> Join Applications
-          </h1>
-          <p className="text-muted-foreground text-lg">Review and manage member applications.</p>
-        </div>
-      </div>
+      <LiquidGlass className="relative overflow-hidden p-8 md:p-12 border-white/10 mb-10 flex flex-col items-center justify-center text-center">
+        <div className="absolute inset-0 scale-texture opacity-[0.05]" />
+        <div className="absolute -top-40 right-20 w-80 h-80 bg-teal-600/20 rounded-full blur-[100px]" />
+        
+        <FileText className="w-12 h-12 text-primary mb-6 animate-pulse" />
+        
+        <h1 className="heading-dragon text-4xl md:text-5xl mb-4 text-white">
+          JOIN <span className="text-transparent bg-clip-text bg-gradient-to-r from-teal-400 to-primary">APPLICATIONS</span>
+        </h1>
+        <p className="text-lg text-muted-foreground max-w-2xl relative z-10">
+          Review candidate portfolios, vet incoming talent, and expand the collective.
+        </p>
+      </LiquidGlass>
 
       <div className="space-y-6">
         {applications.map(app => (
@@ -45,7 +50,7 @@ export default async function AdminApplicationsPage() {
                     {app.status}
                   </span>
                 </h3>
-                <p className="text-muted-foreground text-sm mt-1">{app.email} {app.phone ? `• ${app.phone}` : ""}</p>
+                <p className="text-muted-foreground text-sm mt-1">{app.email} {app.phone ? `â€¢ ${app.phone}` : ""}</p>
               </div>
               
               <ApplicationStatusActions id={app.id} currentStatus={app.status} />

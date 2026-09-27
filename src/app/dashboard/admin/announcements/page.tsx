@@ -20,14 +20,19 @@ export default async function AdminAnnouncementsPage() {
 
   return (
     <div className="space-y-8">
-      <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 mb-10">
-        <div>
-          <h1 className="text-3xl font-extrabold tracking-tighter text-white mb-2 flex items-center gap-3">
-            <Megaphone className="w-8 h-8 text-primary" /> Manage Announcements
-          </h1>
-          <p className="text-muted-foreground text-lg">Broadcast messages to all DRACARYS members.</p>
-        </div>
-      </div>
+      <LiquidGlass className="relative overflow-hidden p-8 md:p-12 border-white/10 mb-10 flex flex-col items-center justify-center text-center">
+        <div className="absolute inset-0 scale-texture opacity-[0.05]" />
+        <div className="absolute top-0 left-20 w-80 h-80 bg-orange-600/20 rounded-full blur-[100px]" />
+        
+        <Megaphone className="w-12 h-12 text-primary mb-6 animate-pulse" />
+        
+        <h1 className="heading-dragon text-4xl md:text-5xl mb-4 text-white">
+          BROADCAST <span className="text-transparent bg-clip-text bg-gradient-to-r from-orange-400 to-primary">MESSAGES</span>
+        </h1>
+        <p className="text-lg text-muted-foreground max-w-2xl relative z-10">
+          Create, edit, and broadcast high-priority announcements to all collective members.
+        </p>
+      </LiquidGlass>
 
       <div className="grid lg:grid-cols-3 gap-8">
         <div className="lg:col-span-2 space-y-6">

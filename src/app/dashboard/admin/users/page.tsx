@@ -22,12 +22,19 @@ export default async function AdminUsersPage() {
 
   return (
     <div className="space-y-8">
-      <div className="mb-10">
-        <h1 className="text-3xl font-extrabold tracking-tighter text-white mb-2 flex items-center gap-3">
-          <ShieldAlert className="w-8 h-8 text-primary" /> Manage Members
+      <LiquidGlass className="relative overflow-hidden p-8 md:p-12 border-white/10 mb-10 flex flex-col items-center justify-center text-center">
+        <div className="absolute inset-0 scale-texture opacity-[0.05]" />
+        <div className="absolute -top-40 right-20 w-80 h-80 bg-violet-600/20 rounded-full blur-[100px]" />
+        
+        <ShieldAlert className="w-12 h-12 text-primary mb-6 animate-pulse" />
+        
+        <h1 className="heading-dragon text-4xl md:text-5xl mb-4 text-white">
+          MANAGE <span className="text-transparent bg-clip-text bg-gradient-to-r from-violet-400 to-primary">MEMBERS</span>
         </h1>
-        <p className="text-muted-foreground text-lg">Manage member approvals, roles, and platform access.</p>
-      </div>
+        <p className="text-lg text-muted-foreground max-w-2xl relative z-10">
+          Manage member approvals, roles, platform access, and security permissions.
+        </p>
+      </LiquidGlass>
 
       <LiquidGlass className="p-1 overflow-x-auto border-white/10">
         <table className="w-full text-left border-collapse">

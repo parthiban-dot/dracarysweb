@@ -35,14 +35,20 @@ export default async function AdminProjectsPage() {
 
   return (
     <div className="space-y-8">
-      <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 mb-10">
-        <div>
-          <h1 className="text-3xl font-extrabold tracking-tighter text-white mb-2 flex items-center gap-3">
-            <FolderGit2 className="w-8 h-8 text-primary" /> Manage Projects
-          </h1>
-          <p className="text-muted-foreground text-lg">Create projects and assign members.</p>
-        </div>
-      </div>
+      <LiquidGlass className="relative overflow-hidden p-8 md:p-12 border-white/10 mb-10 flex flex-col items-center justify-center text-center">
+        <div className="absolute inset-0 scale-texture opacity-[0.05]" />
+        <div className="absolute -top-40 right-20 w-80 h-80 bg-blue-600/20 rounded-full blur-[100px]" />
+        <div className="absolute -bottom-40 left-20 w-80 h-80 bg-primary/10 rounded-full blur-[100px]" />
+        
+        <FolderGit2 className="w-12 h-12 text-primary mb-6 animate-pulse" />
+        
+        <h1 className="heading-dragon text-4xl md:text-5xl mb-4 text-white">
+          MANAGE <span className="text-transparent bg-clip-text bg-gradient-to-r from-blue-400 to-primary">PROJECTS</span>
+        </h1>
+        <p className="text-lg text-muted-foreground max-w-2xl relative z-10">
+          Create new initiatives, manage deployments, and assign collective members.
+        </p>
+      </LiquidGlass>
 
       <div className="grid lg:grid-cols-3 gap-8">
         <div className="lg:col-span-2 space-y-6">
