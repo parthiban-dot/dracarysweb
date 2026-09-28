@@ -8,7 +8,7 @@ import { DragonAtmosphere } from "@/components/shared/dragon-atmosphere";
 const inter = Inter({ subsets: ["latin"] });
 
 export const metadata: Metadata = {
-  metadataBase: new URL(process.env.NEXT_PUBLIC_APP_URL || "https://dracarys.local"),
+  metadataBase: new URL(process.env.NEXT_PUBLIC_APP_URL || "https://dracarysweb.vercel.app"),
   title: {
     default: "DRACARYS | Ancient Dragon × Modern Technology",
     template: "%s | DRACARYS"
