@@ -4,6 +4,7 @@ import { Container } from "@/components/layout/container";
 import { Section } from "@/components/layout/section";
 import { motion } from "framer-motion";
 import { GithubIcon, LinkedinIcon, InstagramIcon } from "@/components/shared/icons";
+import { Globe, ExternalLink } from "lucide-react";
 import Link from "next/link";
 import { Button } from "@/components/ui/button";
 import { founderProfile } from "@/lib/demo-data";
@@ -34,7 +35,10 @@ export default function FounderPage() {
               {founderProfile.tag} • {founderProfile.role}
             </p>
             
-            <div className="flex gap-6 justify-center items-center">
+            <div className="flex flex-wrap gap-6 justify-center items-center">
+              <Link href="https://portfolio-parthi.vercel.app" target="_blank" rel="noopener noreferrer" className="text-primary hover:text-primary/80 transition-colors flex items-center text-sm font-semibold border border-primary/30 px-3 py-1.5 rounded-full bg-primary/10">
+                <Globe className="w-4 h-4 mr-2" /> Portfolio Site
+              </Link>
               <Link href={founderProfile.socials.github} target="_blank" className="text-white/60 hover:text-white transition-colors flex items-center text-sm font-medium">
                 <GithubIcon className="w-5 h-5 mr-2" /> GitHub
               </Link>
@@ -126,9 +130,14 @@ export default function FounderPage() {
             </div>
           </motion.section>
 
-          <motion.div initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} className="pt-12 text-center">
-             <Button asChild size="lg" className="bg-primary text-primary-foreground hover:bg-primary/90 font-bold px-8 shadow-[0_0_20px_rgba(59,130,246,0.3)]">
+          <motion.div initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} className="pt-12 text-center flex flex-col sm:flex-row gap-4 justify-center items-center">
+             <Button asChild size="lg" className="bg-primary text-primary-foreground hover:bg-primary/90 font-bold px-8 shadow-[0_0_20px_rgba(59,130,246,0.3)] w-full sm:w-auto">
                <Link href="/projects">Explore DRACARYS</Link>
+             </Button>
+             <Button asChild size="lg" variant="outline" className="border-white/10 hover:bg-white/5 font-bold px-8 text-white w-full sm:w-auto">
+               <Link href="https://portfolio-parthi.vercel.app" target="_blank" rel="noopener noreferrer">
+                 Visit Personal Portfolio <ExternalLink className="w-4 h-4 ml-2" />
+               </Link>
              </Button>
           </motion.div>
           

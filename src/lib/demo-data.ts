@@ -293,7 +293,8 @@ export const founderProfile = {
   ],
   socials: {
     github: "https://github.com",
-    linkedin: "https://linkedin.com"
+    linkedin: "https://linkedin.com",
+    website: "https://portfolio-parthi.vercel.app"
   }
 };
 
