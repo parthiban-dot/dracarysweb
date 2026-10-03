@@ -10,7 +10,10 @@ export const revalidate = 30;
 
 export default async function ProjectsPage() {
   const dbProjects = await prisma.project.findMany({
-    where: { clientVisibility: "PUBLIC" },
+    where: { 
+      clientVisibility: "PUBLIC",
+      slug: { notIn: ["siet-bgv", "llm-evaluator"] }
+    },
     include: {
       teamMembers: {
         include: { user: true }
