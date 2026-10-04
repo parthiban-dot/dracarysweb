@@ -20,7 +20,7 @@ export default async function HomePage() {
     prisma.user.count({ where: { status: "APPROVED" } }),
     prisma.project.findMany({
       where: {
-        slug: { notIn: ["siet-bgv", "llm-evaluator"] }
+        slug: { notIn: ["siet-bgv"] }
       },
       take: 3,
       orderBy: { createdAt: "desc" },

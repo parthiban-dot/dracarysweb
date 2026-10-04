@@ -12,7 +12,7 @@ export default async function ProjectsPage() {
   const dbProjects = await prisma.project.findMany({
     where: { 
       clientVisibility: "PUBLIC",
-      slug: { notIn: ["siet-bgv", "llm-evaluator"] }
+      slug: { notIn: ["siet-bgv"] }
     },
     include: {
       teamMembers: {
