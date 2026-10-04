@@ -10,6 +10,7 @@ export function ProjectForm({ users }: { users: any[] }) {
   const [selectedMembers, setSelectedMembers] = useState<string[]>([]);
   const [techInput, setTechInput] = useState("");
   const [featuresInput, setFeaturesInput] = useState("");
+  const [manualMembersInput, setManualMembersInput] = useState("");
 
   const toggleMember = (userId: string) => {
     setSelectedMembers(prev => 
@@ -23,6 +24,7 @@ export function ProjectForm({ users }: { users: any[] }) {
     const formData = new FormData(e.currentTarget);
     const techArray = techInput.split(",").map((t: string) => t.trim()).filter(Boolean);
     const featuresArray = featuresInput.split(",").map((f: string) => f.trim()).filter(Boolean);
+    const manualMembersArray = manualMembersInput.split(",").map((m: string) => m.trim()).filter(Boolean);
 
     try {
       await createProject({
@@ -38,12 +40,14 @@ export function ProjectForm({ users }: { users: any[] }) {
         repositoryUrl: formData.get("repositoryUrl") as string,
         demoUrl: formData.get("demoUrl") as string,
         memberIds: selectedMembers,
+        manualMembers: manualMembersArray,
       });
       setSuccess("Project created successfully!");
       e.currentTarget.reset();
       setSelectedMembers([]);
       setTechInput("");
       setFeaturesInput("");
+      setManualMembersInput("");
     } catch (err) {
       console.error(err);
       alert("Failed to create project");
@@ -133,7 +137,7 @@ export function ProjectForm({ users }: { users: any[] }) {
       </div>
 
       <div>
-        <label className="block text-xs font-semibold text-muted-foreground uppercase tracking-wider mb-2">Assign Team Members</label>
+        <label className="block text-xs font-semibold text-muted-foreground uppercase tracking-wider mb-2">Assign Team Members (Registered Users)</label>
         <div className="max-h-40 overflow-y-auto space-y-2 bg-white/5 border border-white/10 rounded-md p-3">
           {users.map(u => (
             <div key={u.id} className="flex items-center space-x-2">
@@ -151,6 +155,17 @@ export function ProjectForm({ users }: { users: any[] }) {
           ))}
           {users.length === 0 && <p className="text-xs text-muted-foreground">No approved members found.</p>}
         </div>
+      </div>
+
+      <div>
+        <label className="block text-xs font-semibold text-muted-foreground uppercase tracking-wider mb-2">Manual Team Members (Unregistered Users)</label>
+        <input 
+          value={manualMembersInput}
+          onChange={(e) => setManualMembersInput(e.target.value)}
+          placeholder="e.g. John Doe - Frontend, Jane Smith - UI/UX"
+          className="w-full bg-white/5 border border-white/10 rounded-md p-2.5 text-white text-sm focus:outline-none focus:border-primary/50" 
+        />
+        <p className="text-xs text-muted-foreground mt-1">Comma separated list of members who are not in the platform.</p>
       </div>
 
       <SubmitButton className="w-full dragon-glow mt-4" pendingText="Creating...">

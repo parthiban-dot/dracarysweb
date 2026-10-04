@@ -26,6 +26,7 @@ export async function createProject(data: {
   architecture?: string;
   features: string[];
   technologyStack: string[];
+  manualMembers: string[];
   repositoryUrl?: string;
   demoUrl?: string;
   memberIds?: string[];
@@ -44,6 +45,7 @@ export async function createProject(data: {
         solution: data.solution,
         features: data.features,
         technologyStack: data.technologyStack,
+        manualMembers: data.manualMembers,
         repositoryUrl: data.repositoryUrl || null,
         demoUrl: data.demoUrl || null,
         status: "IN_PROGRESS",
@@ -78,6 +80,7 @@ export async function updateProject(id: string, data: {
   solution: string;
   features: string[];
   technologyStack: string[];
+  manualMembers: string[];
   repositoryUrl?: string;
   demoUrl?: string;
   memberIds?: string[];
@@ -98,6 +101,7 @@ export async function updateProject(id: string, data: {
         solution: data.solution,
         features: data.features,
         technologyStack: data.technologyStack,
+        manualMembers: data.manualMembers,
         repositoryUrl: data.repositoryUrl || null,
         demoUrl: data.demoUrl || null,
       }

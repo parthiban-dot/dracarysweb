@@ -13,6 +13,7 @@ export function EditProjectForm({ project, users }: { project: any, users: any[]
   );
   const [techInput, setTechInput] = useState(project.technologyStack?.join(", ") || "");
   const [featuresInput, setFeaturesInput] = useState(project.features?.join(", ") || "");
+  const [manualMembersInput, setManualMembersInput] = useState(project.manualMembers?.join(", ") || "");
 
   const toggleMember = (userId: string) => {
     setSelectedMembers(prev => 
@@ -26,6 +27,7 @@ export function EditProjectForm({ project, users }: { project: any, users: any[]
     const formData = new FormData(e.currentTarget);
     const techArray = techInput.split(",").map((t: string) => t.trim()).filter(Boolean);
     const featuresArray = featuresInput.split(",").map((f: string) => f.trim()).filter(Boolean);
+    const manualMembersArray = manualMembersInput.split(",").map((m: string) => m.trim()).filter(Boolean);
 
     try {
       await updateProject(project.id, {
@@ -42,6 +44,7 @@ export function EditProjectForm({ project, users }: { project: any, users: any[]
         repositoryUrl: formData.get("repositoryUrl") as string,
         demoUrl: formData.get("demoUrl") as string,
         memberIds: selectedMembers,
+        manualMembers: manualMembersArray,
       });
       setSuccess("Project updated successfully!");
     } catch (err) {
@@ -142,7 +145,7 @@ export function EditProjectForm({ project, users }: { project: any, users: any[]
       </div>
 
       <div>
-        <label className="block text-xs font-semibold text-muted-foreground uppercase tracking-wider mb-2">Assign Team Members</label>
+        <label className="block text-xs font-semibold text-muted-foreground uppercase tracking-wider mb-2">Assign Team Members (Registered Users)</label>
         <div className="max-h-60 overflow-y-auto space-y-2 bg-white/5 border border-white/10 rounded-md p-3">
           {users.map(u => (
             <div key={u.id} className="flex items-center space-x-2">
@@ -160,6 +163,17 @@ export function EditProjectForm({ project, users }: { project: any, users: any[]
           ))}
           {users.length === 0 && <p className="text-xs text-muted-foreground">No approved members found.</p>}
         </div>
+      </div>
+
+      <div>
+        <label className="block text-xs font-semibold text-muted-foreground uppercase tracking-wider mb-2">Manual Team Members (Unregistered Users)</label>
+        <input 
+          value={manualMembersInput}
+          onChange={(e) => setManualMembersInput(e.target.value)}
+          placeholder="e.g. John Doe - Frontend, Jane Smith - UI/UX"
+          className="w-full bg-white/5 border border-white/10 rounded-md p-2.5 text-white text-sm focus:outline-none focus:border-primary/50" 
+        />
+        <p className="text-xs text-muted-foreground mt-1">Comma separated list of members who are not in the platform.</p>
       </div>
 
       <SubmitButton className="w-full dragon-glow mt-4" pendingText="Saving...">

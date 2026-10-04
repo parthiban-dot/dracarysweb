@@ -172,7 +172,7 @@ export default async function ProjectDetailPage({ params }: ProjectPageProps) {
               <LiquidGlass className="p-6">
                 <h3 className="font-bold mb-4 claw-border pl-3">Team</h3>
                 <ul className="space-y-3">
-                  {project.teamMembers.length > 0 ? project.teamMembers.map((member, i) => (
+                  {project.teamMembers.map((member, i) => (
                     <li key={i} className="text-muted-foreground flex items-center gap-2">
                       <div className="w-6 h-6 rounded-full bg-primary/20 flex items-center justify-center text-[10px] text-primary font-bold">
                         {member.user.name?.charAt(0) || "U"}
@@ -180,7 +180,22 @@ export default async function ProjectDetailPage({ params }: ProjectPageProps) {
                       {member.user.name || "Unknown Member"}
                       <span className="text-[10px] uppercase text-primary/70 ml-auto">{member.role}</span>
                     </li>
-                  )) : (
+                  ))}
+                  {project.manualMembers?.map((member, i) => {
+                    const parts = member.split('-');
+                    const name = parts[0]?.trim() || member;
+                    const role = parts.length > 1 ? parts.slice(1).join('-').trim() : "Member";
+                    return (
+                      <li key={`manual-${i}`} className="text-muted-foreground flex items-center gap-2">
+                        <div className="w-6 h-6 rounded-full bg-white/10 flex items-center justify-center text-[10px] text-white/50 font-bold">
+                          {name.charAt(0)}
+                        </div>
+                        {name}
+                        <span className="text-[10px] uppercase text-muted-foreground/70 ml-auto">{role}</span>
+                      </li>
+                    );
+                  })}
+                  {(project.teamMembers.length === 0 && (!project.manualMembers || project.manualMembers.length === 0)) && (
                     <li className="text-muted-foreground text-sm italic">No assigned members</li>
                   )}
                 </ul>
