@@ -1,4 +1,5 @@
-import { Resend } from "resend";
+﻿import { Resend } from "resend";
+import nodemailer from "nodemailer";
 
 const resend = new Resend(process.env.RESEND_API_KEY || "mock-key");
 
@@ -9,10 +10,9 @@ interface EmailPayload {
 }
 
 export async function sendEmail({ to, subject, html }: EmailPayload) {
-  // Mock email in development or if API key is missing
-  if (process.env.NODE_ENV === "development" || !process.env.RESEND_API_KEY) {
+  if (process.env.NODE_ENV === "development" && !process.env.RESEND_API_KEY && !process.env.EMAIL_PASS) {
     console.log("==========================================");
-    console.log("ðŸ“¨ MOCK EMAIL INTERCEPTED");
+    console.log("🚀 MOCK EMAIL INTERCEPTED");
     console.log(`To: ${to}`);
     console.log(`Subject: ${subject}`);
     console.log("Body:");
@@ -22,6 +22,24 @@ export async function sendEmail({ to, subject, html }: EmailPayload) {
   }
 
   try {
+    if (process.env.EMAIL_USER && process.env.EMAIL_PASS) {
+      const transporter = nodemailer.createTransport({
+        service: "gmail",
+        auth: {
+          user: process.env.EMAIL_USER,
+          pass: process.env.EMAIL_PASS,
+        },
+      });
+
+      const info = await transporter.sendMail({
+        from: `"DRACARYS" <${process.env.EMAIL_USER}>`,
+        to,
+        subject,
+        html,
+      });
+      return { success: true, data: info };
+    }
+
     const data = await resend.emails.send({
       from: process.env.EMAIL_FROM || "onboarding@resend.dev",
       to,
