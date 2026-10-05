@@ -11,8 +11,7 @@ export const revalidate = 30;
 export default async function ProjectsPage() {
   const dbProjects = await prisma.project.findMany({
     where: { 
-      clientVisibility: "PUBLIC",
-      slug: { notIn: ["siet-bgv"] }
+      clientVisibility: "PUBLIC"
     },
     include: {
       teamMembers: {
