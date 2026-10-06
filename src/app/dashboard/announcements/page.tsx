@@ -1,4 +1,4 @@
-import { auth } from "@/auth";
+﻿import { auth } from "@/auth";
 import { redirect } from "next/navigation";
 import { LiquidGlass } from "@/components/shared/liquid-glass";
 import { db } from "@/lib/db";
@@ -26,7 +26,7 @@ export default async function DashboardAnnouncementsPage() {
   }
 
   return (
-    <div className="max-w-4xl space-y-8 animate-in fade-in slide-in-from-bottom-4 duration-500">
+    <div className="max-w-4xl space-y-8">
       <header>
         <h1 className="text-3xl font-bold mb-2">Announcements</h1>
         <p className="text-muted-foreground">Important updates and broadcasts from the collective leadership.</p>

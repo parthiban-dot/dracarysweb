@@ -1,4 +1,4 @@
-import { auth } from "@/auth";
+﻿import { auth } from "@/auth";
 import { redirect } from "next/navigation";
 import { LiquidGlass } from "@/components/shared/liquid-glass";
 import { Settings, Shield, User, Mail, Key } from "lucide-react";
@@ -13,7 +13,7 @@ export default async function SettingsPage() {
   }
 
   return (
-    <div className="max-w-4xl space-y-8 animate-in fade-in slide-in-from-bottom-4 duration-500">
+    <div className="max-w-4xl space-y-8">
       <header>
         <h1 className="text-3xl font-bold mb-2 flex items-center gap-3">
           <Settings className="w-8 h-8 text-primary" /> Settings

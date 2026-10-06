@@ -1,4 +1,4 @@
-import { auth } from "@/auth";
+﻿import { auth } from "@/auth";
 import { redirect } from "next/navigation";
 import { db as prisma } from "@/lib/db";
 import { LiquidGlass } from "@/components/shared/liquid-glass";
@@ -40,7 +40,7 @@ export default async function AdminOverviewPage() {
   ]);
 
   return (
-    <div className="space-y-8 animate-in fade-in slide-in-from-bottom-4 duration-500">
+    <div className="space-y-8">
       
       <LiquidGlass className="relative overflow-hidden p-8 md:p-12 border-white/10 mb-8 flex flex-col items-center justify-center text-center">
         <div className="absolute inset-0 scale-texture opacity-[0.05]" />
@@ -49,7 +49,7 @@ export default async function AdminOverviewPage() {
         <Activity className="w-12 h-12 text-primary mb-6 animate-pulse" />
         
         <h1 className="heading-dragon text-4xl md:text-5xl mb-4 text-white">
-          ADMIN <span className="text-transparent bg-clip-text bg-gradient-to-r from-primary to-secondary">ANALYTICS</span>
+          ADMIN <span className="text-primary">ANALYTICS</span>
         </h1>
         <p className="text-lg text-muted-foreground max-w-2xl relative z-10">
           Command center overview. Monitor collective growth, incoming applications, and active builds.

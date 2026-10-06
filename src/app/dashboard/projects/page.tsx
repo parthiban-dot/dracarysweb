@@ -1,4 +1,4 @@
-import { auth } from "@/auth";
+﻿import { auth } from "@/auth";
 import { redirect } from "next/navigation";
 import { LiquidGlass } from "@/components/shared/liquid-glass";
 import { db } from "@/lib/db";
@@ -31,7 +31,7 @@ export default async function DashboardProjectsPage() {
   }
 
   return (
-    <div className="max-w-6xl space-y-8 animate-in fade-in slide-in-from-bottom-4 duration-500">
+    <div className="max-w-6xl space-y-8">
       <header>
         <h1 className="text-3xl font-bold mb-2">My Projects</h1>
         <p className="text-muted-foreground">Projects you are actively assigned to or have contributed to.</p>

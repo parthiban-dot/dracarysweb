@@ -1,4 +1,4 @@
-import { auth } from "@/auth";
+﻿import { auth } from "@/auth";
 import { db as prisma } from "@/lib/db";
 import { LiquidGlass } from "@/components/shared/liquid-glass";
 import { FolderGit2, Megaphone, Terminal, User as UserIcon } from "lucide-react";
@@ -27,7 +27,7 @@ export default async function DashboardOverview() {
   });
 
   return (
-    <div className="space-y-8 animate-in fade-in slide-in-from-bottom-4 duration-500">
+    <div className="space-y-8">
       
       {/* Header */}
       <div className="flex items-center justify-between mb-8">

@@ -1,4 +1,4 @@
-"use client";
+﻿"use client";
 
 import Link from "next/link";
 import Image from "next/image";
@@ -27,7 +27,7 @@ export function DashboardSidebar({ session }: { session: Session | null }) {
       <div className="h-16 flex items-center px-6 border-b border-white/5">
         <Link prefetch={true} className="flex items-center gap-3 group" href="/">
           <Image src={logoImage} alt="DRACARYS" width={32} height={32} className="w-8 h-8 rounded-md object-cover border border-white/10 shadow-[0_0_10px_rgba(239,68,68,0.2)] group-hover:border-primary/50 transition-colors" />
-          <span className="text-xl font-extrabold tracking-tighter text-transparent bg-clip-text bg-gradient-to-r from-primary to-secondary group-hover:opacity-80 transition-opacity">
+          <span className="text-xl font-bold text-white group-hover:text-white/80 transition-opacity" style={{ fontFamily: "var(--font-kaushan)", letterSpacing: "0.02em" }}>
             DRACARYS
           </span>
         </Link>
