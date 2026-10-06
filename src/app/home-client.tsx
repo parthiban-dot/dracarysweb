@@ -45,7 +45,7 @@ export function HomeClient({ stats, featuredProjects, featuredHackathons, featur
           <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.8 }}>
             <h1 className="text-5xl md:text-7xl lg:text-8xl font-extrabold heading-dragon mb-6 tracking-tight text-white drop-shadow-lg">
               Forge The <br />
-              <span className="text-transparent bg-clip-text bg-gradient-to-r from-primary to-secondary">
+              <span className="text-primary">
                 Future.
               </span>
             </h1>
@@ -105,7 +105,7 @@ export function HomeClient({ stats, featuredProjects, featuredHackathons, featur
             <motion.div initial={{ opacity: 0, x: -30 }} whileInView={{ opacity: 1, x: 0 }} viewport={{ once: true }} transition={{ duration: 0.6 }}>
               
               <h2 className="text-4xl md:text-5xl font-extrabold text-white mb-6 tracking-tight">
-                Built Beyond the <span className="text-transparent bg-clip-text bg-gradient-to-r from-primary to-secondary">Classroom.</span>
+                Built Beyond the <span className="text-primary">Classroom.</span>
               </h2>
               
               <p className="text-lg text-white/70 leading-relaxed mb-8">
