@@ -37,7 +37,7 @@ export function Navbar() {
             <div className="flex items-center gap-8">
               <Link prefetch={true} href="/" className="flex items-center space-x-3 group">
                 <Image src={logoImage} alt="DRACARYS Logo" width={32} height={32} className="w-8 h-8 rounded-md object-cover border border-white/10 group-hover:border-primary/50 transition-colors" />
-                <span className="text-xl font-bold text-white group-hover:text-white/80 transition-opacity hidden sm:inline-block" style={{ fontFamily: "var(--font-kaushan)", letterSpacing: "0.02em" }}>
+                <span className="text-xl font-extrabold tracking-tighter text-transparent bg-clip-text bg-gradient-to-r from-primary to-secondary group-hover:opacity-80 transition-opacity hidden sm:inline-block">
                   DRACARYS
                 </span>
               </Link>
@@ -92,7 +92,7 @@ export function Navbar() {
           <div className="flex items-center justify-between px-6 py-4 border-b border-white/10">
             <Link href="/" onClick={() => setMobileOpen(false)} className="flex items-center gap-3">
               <Image src={logoImage} alt="DRACARYS Logo" width={36} height={36} className="w-9 h-9 rounded-md object-cover border border-primary/30" />
-              <span className="text-lg font-bold text-white" style={{ fontFamily: "var(--font-kaushan)", letterSpacing: "0.02em" }}>
+              <span className="text-lg font-extrabold tracking-tighter text-transparent bg-clip-text bg-gradient-to-r from-primary to-secondary">
                 DRACARYS
               </span>
             </Link>
@@ -147,7 +147,7 @@ export function Navbar() {
             <div className="flex items-center gap-2 mb-3">
               <Flame className="w-4 h-4 text-primary" />
               <p className="text-xs font-bold tracking-[0.2em] uppercase text-foreground/40">
-                Build • Compete • Learn • Ship
+                Build · Compete · Learn · Ship
               </p>
             </div>
             <p className="text-xs text-foreground/25">
