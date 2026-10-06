@@ -42,7 +42,7 @@ export function Footer() {
                 height={44}
                 className="w-11 h-11 rounded-xl object-cover border border-white/10 shadow-[0_0_20px_rgba(59,130,246,0.15)] group-hover:border-primary/40 transition-colors"
               />
-              <span className="text-2xl font-extrabold tracking-tighter text-transparent bg-clip-text bg-gradient-to-r from-primary to-secondary">
+              <span className="text-2xl font-bold text-white" style={{ fontFamily: "var(--font-kaushan)", letterSpacing: "0.02em" }}>
                 DRACARYS
               </span>
             </Link>
@@ -98,7 +98,7 @@ export function Footer() {
                     rel={link.external ? "noopener noreferrer" : undefined}
                     className="text-sm text-muted-foreground hover:text-primary transition-colors"
                   >
-                    {link.label} {link.external && "↗"}
+                    {link.label} {link.external && "â†—"}
                   </Link>
                 </li>
               ))}
@@ -119,11 +119,11 @@ export function Footer() {
           <div className="flex items-center gap-2">
             <Flame className="w-3.5 h-3.5 text-primary" />
             <p className="text-xs font-bold tracking-[0.18em] uppercase text-foreground/30">
-              Build · Compete · Learn · Ship
+              Build Â· Compete Â· Learn Â· Ship
             </p>
           </div>
           <p className="text-xs text-muted-foreground">
-            © {new Date().getFullYear()} DRACARYS. All rights reserved.
+            Â© {new Date().getFullYear()} DRACARYS. All rights reserved.
           </p>
           <div className="flex gap-5">
             <Link href="#" className="text-xs text-muted-foreground hover:text-primary transition-colors">
