@@ -4,6 +4,7 @@ import "./globals.css";
 import { Navbar } from "@/components/layout/navbar";
 import { Footer } from "@/components/layout/footer";
 import { DragonAtmosphere } from "@/components/shared/dragon-atmosphere";
+import { PageTransition } from "@/components/layout/page-transition";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -41,7 +42,9 @@ export default function RootLayout({
         <DragonAtmosphere />
         <Navbar />
         <main className="flex-1 flex flex-col relative">
-          {children}
+          <PageTransition>
+            {children}
+          </PageTransition>
         </main>
         <Footer />
       </body>

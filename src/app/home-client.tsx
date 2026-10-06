@@ -19,6 +19,7 @@ import { MemberCard } from "@/components/features/member-card";
 
 // New components
 import { TerminalAnimation } from "@/components/features/terminal-animation";
+import { AnimatedCounter } from "@/components/shared/animated-counter";
 
 export function HomeClient({ stats, featuredProjects, featuredHackathons, featuredMembers }: { stats: any, featuredProjects: any[], featuredHackathons: any[], featuredMembers: any[] }) {
   const jsonLd = {
@@ -84,7 +85,7 @@ export function HomeClient({ stats, featuredProjects, featuredHackathons, featur
               >
                 <Link href={stat.href} className="block text-center group cursor-pointer">
                   <div className="text-4xl md:text-5xl font-extrabold text-white mb-2 font-mono group-hover:text-primary transition-colors">
-                    {stat.value}+
+                    <AnimatedCounter target={stat.value} />+
                   </div>
                   <div className="text-xs md:text-sm font-bold text-muted-foreground uppercase tracking-widest group-hover:text-white transition-colors">
                     {stat.label}
