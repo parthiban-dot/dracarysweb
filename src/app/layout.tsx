@@ -1,10 +1,9 @@
-import type { Metadata } from "next";
+﻿import type { Metadata } from "next";
 import { Manrope, Kaushan_Script } from "next/font/google";
 import "./globals.css";
 import { Navbar } from "@/components/layout/navbar";
 import { Footer } from "@/components/layout/footer";
 import { DragonAtmosphere } from "@/components/shared/dragon-atmosphere";
-import { PageTransition } from "@/components/layout/page-transition";
 
 const manrope = Manrope({ subsets: ["latin"], variable: "--font-manrope" });
 export const kaushanScript = Kaushan_Script({ subsets: ["latin"], weight: "400", variable: "--font-kaushan" });
@@ -43,9 +42,7 @@ export default function RootLayout({
         <DragonAtmosphere />
         <Navbar />
         <main className="flex-1 flex flex-col relative">
-          <PageTransition>
-            {children}
-          </PageTransition>
+          {children}
         </main>
         <Footer />
       </body>
