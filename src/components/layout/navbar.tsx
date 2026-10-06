@@ -147,11 +147,11 @@ export function Navbar() {
             <div className="flex items-center gap-2 mb-3">
               <Flame className="w-4 h-4 text-primary" />
               <p className="text-xs font-bold tracking-[0.2em] uppercase text-foreground/40">
-                Build Â· Compete Â· Learn Â· Ship
+                Build • Compete • Learn • Ship
               </p>
             </div>
             <p className="text-xs text-foreground/25">
-              Â© {new Date().getFullYear()} DRACARYS Engineering Team
+              © {new Date().getFullYear()} DRACARYS Engineering Team
             </p>
           </div>
         </div>

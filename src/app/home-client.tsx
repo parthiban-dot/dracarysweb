@@ -108,7 +108,7 @@ export function HomeClient({ stats, featuredProjects, featuredHackathons, featur
             <motion.div initial={{ opacity: 0, x: -30 }} whileInView={{ opacity: 1, x: 0 }} viewport={{ once: true }} transition={{ duration: 0.6 }}>
               
               <h2 className="text-4xl md:text-5xl font-extrabold text-white mb-6 tracking-tight">
-                Built Beyond the <span className="text-transparent bg-clip-text bg-gradient-to-r from-primary to-secondary">Classroom.</span>
+                Built Beyond the <span className="text-white italic" style={{ fontFamily: "var(--font-kaushan)", fontWeight: 400, fontSize: "1.05em" }}>Classroom.</span>
               </h2>
               
               <p className="text-lg text-white/70 leading-relaxed mb-8">

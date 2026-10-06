@@ -98,7 +98,7 @@ export function Footer() {
                     rel={link.external ? "noopener noreferrer" : undefined}
                     className="text-sm text-muted-foreground hover:text-primary transition-colors"
                   >
-                    {link.label} {link.external && "â†—"}
+                    {link.label} {link.external && "↗"}
                   </Link>
                 </li>
               ))}
@@ -119,11 +119,11 @@ export function Footer() {
           <div className="flex items-center gap-2">
             <Flame className="w-3.5 h-3.5 text-primary" />
             <p className="text-xs font-bold tracking-[0.18em] uppercase text-foreground/30">
-              Build Â· Compete Â· Learn Â· Ship
+              Build • Compete • Learn • Ship
             </p>
           </div>
           <p className="text-xs text-muted-foreground">
-            Â© {new Date().getFullYear()} DRACARYS. All rights reserved.
+            © {new Date().getFullYear()} DRACARYS. All rights reserved.
           </p>
           <div className="flex gap-5">
             <Link href="#" className="text-xs text-muted-foreground hover:text-primary transition-colors">
