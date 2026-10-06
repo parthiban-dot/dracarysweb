@@ -20,6 +20,7 @@ import { MemberCard } from "@/components/features/member-card";
 // New components
 import { TerminalAnimation } from "@/components/features/terminal-animation";
 import { AnimatedCounter } from "@/components/shared/animated-counter";
+import { TechMarquee } from "@/components/shared/tech-marquee";
 
 export function HomeClient({ stats, featuredProjects, featuredHackathons, featuredMembers }: { stats: any, featuredProjects: any[], featuredHackathons: any[], featuredMembers: any[] }) {
   const jsonLd = {
