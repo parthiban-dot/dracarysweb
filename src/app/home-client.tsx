@@ -45,7 +45,10 @@ export function HomeClient({ stats, featuredProjects, featuredHackathons, featur
           <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.8 }}>
             <h1 className="text-5xl md:text-7xl lg:text-8xl font-extrabold heading-dragon mb-6 tracking-tight text-white drop-shadow-lg">
               Forge The <br />
-              <span className="text-transparent bg-clip-text bg-gradient-to-r from-primary to-secondary">
+              <span
+                className="text-white italic"
+                style={{ fontFamily: "var(--font-kaushan)", fontWeight: 400, fontSize: "1.05em" }}
+              >
                 Future.
               </span>
             </h1>
